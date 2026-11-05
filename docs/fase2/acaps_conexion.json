@@ -1,15 +1,20 @@
 {
-  "fecha_utc": "2026-11-05T23:50:48.936999+00:00",
+  "fecha_utc": "2026-11-05T23:51:42.869952+00:00",
   "fuente": "ACAPS API",
   "secreto_configurado": true,
-  "estado": "REDIRECCION",
-  "http_status": 302,
-  "content_type_json": false,
-  "recursos_disponibles": [],
+  "estado": "CONECTADO",
+  "http_status": 200,
+  "content_type_json": true,
+  "recursos_disponibles": [
+    "count",
+    "next",
+    "previous",
+    "results"
+  ],
   "redirige_a": {
-    "host": "mismo_dominio",
-    "ruta": "Nov2026/"
+    "host": "api.acaps.org",
+    "ruta": "/api/v1/inform-severity-index/Nov2026/"
   },
   "prueba_sin_token_http": 302,
-  "nota": "El endpoint de datos redirige; verificar autenticación y ruta."
+  "nota": "Prueba del endpoint INFORM Severity (no del índice web que redirige a login). No implica integración al dashboard."
 }
