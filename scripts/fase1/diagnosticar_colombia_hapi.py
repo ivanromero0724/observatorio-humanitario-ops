@@ -10,11 +10,11 @@ from datetime import datetime
 
 key=os.environ["HDX_APP_IDENTIFIER"].strip()
 r=requests.get("https://hapi.humdata.org/api/v2/coordination-context/conflict-events",
- params={"app_identifier":key,"location_code":"COL","limit":10000,"offset":0,
+ params={"app_identifier":key,"location_code":"COL","limit":10000,"offset":270000,
          "start_date":"2020-01-01","output_format":"json"},timeout=70)
 r.raise_for_status()
 a=r.json().get("data",[])
-print("Filas primera página:",len(a))
+print("Filas página final:",len(a))
 counter=Counter(str(x.get("admin_level")) for x in a)
 print("Distribución niveles:",dict(counter))
 d=defaultdict(list)
@@ -24,7 +24,7 @@ for x in a:
  k=(str(x.get("reference_period_start"))[:7],str(x.get("event_type")),str(x.get("admin_level")),geo)
  d[k].append(x)
 rep=[(k,rows) for k,rows in d.items() if len(rows)>1]
-print("Claves geográficas repetidas en primera página:",len(rep))
+print("Claves geográficas repetidas en página final:",len(rep))
 for k,rows in rep[:5]:
  print("Ejemplo seguro",{"periodo":k[0],"tipo":k[1],"nivel":k[2],
  "geo":k[3],"numero":len(rows),
