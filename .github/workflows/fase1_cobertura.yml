@@ -7,6 +7,9 @@ on:
       - scripts/fase1/extraer_cobertura.py
       - .github/workflows/fase1_cobertura.yml
       - scripts/fase1/validar_datos.py
+concurrency:
+  group: fase1-cobertura-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
