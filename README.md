@@ -2,6 +2,27 @@
 
 Proyecto de información humanitaria en la Región de las Américas. **Todavía no existe un dashboard operativo ni un índice oficial OPS de prioridades:** las categorías y los umbrales necesitan validación con el equipo técnico.
 
+## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
+
+**El alcance vigente es de 35 países soberanos, no únicamente los 5 países utilizados en la exploración original de ACNUR.** El catálogo regional de referencia es [`data/catalogos/paises_americas.csv`](data/catalogos/paises_americas.csv), agrupado en América del Norte (3), Centroamérica (7), Caribe (13) y Sudamérica (12).
+
+La primera ejecución de [`piloto_americas.yml`](.github/workflows/piloto_americas.yml) verificó las tres fuentes con las credenciales institucionales:
+
+| Fuente | Países evaluados | Disponibilidad bajo filtros aplicados |
+|---|---:|---|
+| HDX HAPI / conflicto desde 2020 | 35 | 33 consultas completas; Colombia y Venezuela con paginación parcial (admin2) |
+| OIM DTM Baseline (IDP) | 35 | 12 países con registros Admin0; 23 sin país en el catálogo de la API |
+| OIM DTM Humanitarian Needs Assessment (HNA) | 35 | Ningún país americano en el catálogo actual de 4 filas globales |
+
+**No se interpreta ausencia de datos como ausencia de amenaza, personas desplazadas o necesidades.** Las filas HAPI representan registros agregados por periodo/categoría/territorio, **no son eventos individuales**; sus tres categorías de ACLED se superponen y no pueden sumarse sin reglas metodológicas. Las fechas, grados de disponibilidad y límites se conservan explícitamente.
+
+- [Cobertura región × fuente, 105 registros](docs/fase1/cobertura_hapi_oim_americas.csv)
+- [Resumen regional con estados y límites](docs/fase1/resumen_piloto_regional.json)
+- [Matriz de 35 países](data/catalogos/cobertura_piloto.csv)
+- [Metodología y alcance](docs/fase1/alcance_piloto_americas.md)
+
+La exploración preliminar de ACNUR para cinco países sigue documentada como antecedente; no representa el alcance final del observatorio. La cobertura regional de ACNUR podrá completarse en un flujo de trabajo independiente.
+
 ## Fase 1 — Datos, factibilidad y extracción inicial (05/11/2026)
 
 **Datos realmente descargados y procesados** mediante GitHub Actions:
