@@ -1,0 +1,951 @@
+{
+  "INFORM_Risk": [
+    {
+      "hoja": "About",
+      "filas_leidas": 75,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "release:"
+      ]
+    },
+    {
+      "hoja": "INFORM Risk 2026 (a-z)",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "INFORM RISK",
+        "RISK CLASS",
+        "Rank",
+        "Lack of Reliability (*)",
+        "HAZARD & EXPOSURE",
+        "Natural",
+        "Earthquake",
+        "River Flood",
+        "Tsunami",
+        "Tropical Cyclone",
+        "Coastal flood",
+        "Drought"
+      ]
+    },
+    {
+      "hoja": "Hazard & Exposure",
+      "filas_leidas": 195,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "Physical exposure to earthquake MMI VI (absolute)",
+        "Physical exposure to earthquake MMI VIII (absolute)",
+        "Physical exposure to earthquake (absolute)",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Cyclone's Wind (absolute)",
+        "Physical exposure to coastal flood (absolute)",
+        "People affected by droughts (absolute)",
+        "Physical exposure to earthquake MMI VI (relative)",
+        "Physical exposure to earthquake MMI VIII (relative)",
+        "Physical exposure to river flood (relative)",
+        "Physical exposure to tsunami (relative)"
+      ]
+    },
+    {
+      "hoja": "Vulnerability",
+      "filas_leidas": 195,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "Human Development Index",
+        "Multidimensional Poverty Index",
+        "Development & Deprivation",
+        "Gender Inequality Index",
+        "Gini Index",
+        "Inequality",
+        "Humanitarian Aid per capita (US$)",
+        "Humanitarian Aid per capita (US$)",
+        "Humanitarian Aid per capita instability",
+        "Humanitarian Aid",
+        "ODA per capita (US$)",
+        "ODA per capita (US$)",
+        "ODA per capita instability",
+        "ODA per capita"
+      ]
+    },
+    {
+      "hoja": "Lack of Coping Capacity",
+      "filas_leidas": 195,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "SFM Indicator E-1 Score",
+        "SFM Indicator E-1 Frequency of Reporting",
+        "DRR",
+        "Corruption Perception Index",
+        "Government Effectiveness",
+        "Governance",
+        "INFORM Institutional",
+        "Adult literacy rate",
+        "Access to electricity",
+        "Internet users",
+        "Mobile cellular subscriptions",
+        "Communication",
+        "Road density",
+        "Road density"
+      ]
+    },
+    {
+      "hoja": "Indicator Data",
+      "filas_leidas": 195,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)",
+        "Population exposed to Lassa Fever (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Population Data",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3"
+      ]
+    },
+    {
+      "hoja": "Indicator Date",
+      "filas_leidas": 194,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Indicator Date hidden",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Indicator Date hidden2",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)",
+        "Population exposed to Lassa Fever (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Indicator Source",
+      "filas_leidas": 194,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Indicator Data imputation",
+      "filas_leidas": 194,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Imputed and missing data hidden",
+      "filas_leidas": 197,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to River Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Coastal Floods",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "Population exposed to CCHF (zoonoses)",
+        "Population exposed to EVD (zoonoses)",
+        "Population exposed to Lassa Fever (zoonoses)"
+      ]
+    },
+    {
+      "hoja": "Lack of Reliability Index",
+      "filas_leidas": 197,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "ISO",
+        "Number of Missing Indicators",
+        "Countries in HVC",
+        "Recentness data (average years)",
+        "Number of Missing Indicators",
+        "Countries in HVC - Factor",
+        "Recentness data (average years)",
+        "Average of Missing and Recentness + factor for conflict"
+      ]
+    },
+    {
+      "hoja": "Indicator Metadata",
+      "filas_leidas": 91,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Dimension",
+        "Category",
+        "Component",
+        "Sub-Component",
+        "INFORM Id",
+        "Indicator Name",
+        "Indicator Long Name",
+        "Description",
+        "Relevance",
+        "Global framework",
+        "Validity / Limitation of indicator",
+        "Data Provider",
+        "Citation",
+        "URL"
+      ]
+    },
+    {
+      "hoja": "Thresholds",
+      "filas_leidas": 32,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Classes Thresholds in INFORM",
+        "Classes Thresholds in INFORM"
+      ]
+    },
+    {
+      "hoja": "Regions",
+      "filas_leidas": 192,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "M49",
+        "FAOST_CODE",
+        "WB Region",
+        "WB IncomeGroup",
+        "UN-OCHA Region",
+        "EC-ECHO Region",
+        "UN Geographical Region",
+        "UN Geographical Sub-Region"
+      ]
+    }
+  ],
+  "INFORM_Severity": [
+    {
+      "hoja": "About",
+      "filas_leidas": 16,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "release:"
+      ]
+    },
+    {
+      "hoja": "INFORM Severity - hidden",
+      "filas_leidas": 123,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "CRISIS",
+        "Website name",
+        "CRISIS ID",
+        "COUNTRY",
+        "ISO3",
+        "DRIVERS",
+        "INFORM Severity Index",
+        "INFORM Severity category",
+        "INFORM Severity category",
+        "Trend (last 3 months)",
+        "Reliability",
+        "Impact of the crisis",
+        "Geographical Impact",
+        "Human Impact"
+      ]
+    },
+    {
+      "hoja": "INFORM Severity - all crises",
+      "filas_leidas": 104,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "INFORM Severity Index - all crises. Release: September 2026"
+      ]
+    },
+    {
+      "hoja": "INFORM Severity - country",
+      "filas_leidas": 72,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "INFORM Severity Index - all countries. Release: September 2026"
+      ]
+    },
+    {
+      "hoja": "Impact of the crisis",
+      "filas_leidas": 124,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Area affected - absolute",
+        "% of total area affected",
+        "Area affected - relative",
+        "Area affected",
+        "People living in the affected area - absolute",
+        "% of total population living in the affected area",
+        "People living in the affected area - relative",
+        "People in the affected area",
+        "Geographical",
+        "People affected - absolute",
+        "% of people affected on the total population exposed",
+        "People affected - relative",
+        "People affected",
+        "People displaced - absolute"
+      ]
+    },
+    {
+      "hoja": "Conditions of people affected",
+      "filas_leidas": 124,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "# of people in none/minimal conditions - Level 1",
+        "# of people in stressed conditions - level 2",
+        "# of people in moderate conditions - level 3",
+        "# of people severe conditions - level 4",
+        "# of people extreme conditions - level 5",
+        "People in Need",
+        "% of people in none/minimal conditions - Level 1",
+        "% of people in stressed conditions - level 2",
+        "% of people in moderate conditions - level 3",
+        "% of people severe conditions - level 4",
+        "% of people extreme conditions - level 5",
+        "Concentration of conditions",
+        "Conditions of people affected"
+      ]
+    },
+    {
+      "hoja": "Complexity of the crisis",
+      "filas_leidas": 124,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Empowerment",
+        "BTI - Democracy Status",
+        "Trust in society",
+        "Ethnic Fractionalisation",
+        "size of excluded ethnic groups",
+        "Ethnic fractionalisation",
+        "Gender Inequality",
+        "Income Gini coefficient",
+        "Inequality",
+        "Social cohesion",
+        "Conflict Intensity",
+        "Total killed in all crisis",
+        "Safety and security",
+        "Corruption Perception"
+      ]
+    },
+    {
+      "hoja": "Core Indicators",
+      "filas_leidas": 122,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Crisis",
+        "Drivers",
+        "Crisis ID",
+        "Country",
+        "ISO3 code",
+        "Total population",
+        "Landmass affected",
+        "People exposed",
+        "People affected",
+        "People displaced",
+        "Injuries reported",
+        "Illness cases reported",
+        "Fatalities reported",
+        "Buildings damaged"
+      ]
+    },
+    {
+      "hoja": "Crisis Indicator Data",
+      "filas_leidas": 122,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Crisis",
+        "DRIVERS",
+        "CRISIS ID",
+        "COUNTRY",
+        "ISO3",
+        "Landmass affected by disaster",
+        "People living in the affected area",
+        "Total # of people affected by the crisis",
+        "Total # of crisis related displaced people",
+        "Total # of crisis related Injuries",
+        "Total # of illness cases reported",
+        "Total # of crisis related fatalities",
+        "Building partially damaged",
+        "Building totally damaged"
+      ]
+    },
+    {
+      "hoja": "Country Indicator Data",
+      "filas_leidas": 220,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "Country",
+        "ISO3",
+        "Ethnic Fractionalisation Index",
+        "Empowerment Rights Index",
+        "size of excluded ethnic groups",
+        "BTI - Democracy Status",
+        "Gender Inequality Index",
+        "Income Gini coefficient",
+        "Conflict Intensity (GPI)",
+        "People killed in all crises",
+        "Rule of Law (WGI)",
+        "Rule of Law (BTI)",
+        "Freedom in the World Index",
+        "CPI"
+      ]
+    },
+    {
+      "hoja": "Data Reliability",
+      "filas_leidas": 121,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "CrisisID",
+        "Data Reliability",
+        "Information gaps (# indicator missing)",
+        "Impact of the crisis",
+        "Area affected",
+        "People in the affected area",
+        "Geographical",
+        "People affected",
+        "People displaced",
+        "Crisis related fatalities",
+        "People affected by categories",
+        "Human",
+        "Conditions of people affected",
+        "# of people facing minimal humanitarian needs (level 1)"
+      ]
+    },
+    {
+      "hoja": "Reliability_updated",
+      "filas_leidas": 123,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Crisis ID",
+        "Area affected by disaster",
+        "People living in the affected area",
+        "Total # of people affected by the crisis",
+        "Total # of crisis related displaced people",
+        "Total # of crisis related fatalities",
+        "# of people affected facing minimal humanitarian needs (level 1)",
+        "# of people affected facing stressed humanitarian needs (level 2)",
+        "# of people affected facing moderate humanitarian conditions and needs (level 3)",
+        "# of people affected facing severe humanitarian conditions and needs (level 4)",
+        "# of people affected facing extreme humanitarian conditions and needs (level 5)",
+        "# of different types of affected population groups",
+        "Impediments to entry into country (bureaucratic and administrative)",
+        "Restriction of movement (impediments to freedom of movement and/or administrative restrict"
+      ]
+    },
+    {
+      "hoja": "Reliability",
+      "filas_leidas": 121,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Crisis ID",
+        "Reliability Index",
+        "Data Reliability",
+        "Recentness data",
+        "Information gaps",
+        "Data Reliability",
+        "Recentness data (# days)",
+        "Information gaps (# indicator missing)",
+        "Reliability"
+      ]
+    },
+    {
+      "hoja": "Indicator Metadata",
+      "filas_leidas": 43,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Dimension",
+        "Category",
+        "Component",
+        "Indicator Name",
+        "Description",
+        "Relevance",
+        "Validity / Limitation of indicator",
+        "Data Sources",
+        "Citation",
+        "URL"
+      ]
+    },
+    {
+      "hoja": "Trends",
+      "filas_leidas": 379,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Country",
+        "Crisis",
+        "Crisis ID",
+        "Trend",
+        "43466",
+        "43497",
+        "43525",
+        "43556",
+        "43586",
+        "43617",
+        "43647",
+        "43678",
+        "43709",
+        "43739"
+      ]
+    },
+    {
+      "hoja": "Crisis info",
+      "filas_leidas": 121,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Crisis ID",
+        "GlideNumber",
+        "SeverityGlideNumber",
+        "Country",
+        "Crisis",
+        "ISO3 code",
+        "Region",
+        "Drivers",
+        "First country",
+        "Website name",
+        "Crisis description",
+        "Connected crises",
+        "Starting date",
+        "Duration (days)"
+      ]
+    },
+    {
+      "hoja": "Lists",
+      "filas_leidas": 121,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 16,
+      "muestra_primera_fila": [
+        "Country",
+        "Crisis",
+        "Crisis ID",
+        "ISO3 code",
+        "Region",
+        "Drivers",
+        "Website name",
+        "Country level",
+        "Individual or aggregated",
+        "Indicator",
+        "Reliability",
+        "Type of entry"
+      ]
+    },
+    {
+      "hoja": "Log",
+      "filas_leidas": 1500,
+      "iso3_pilotos": [],
+      "iso3_americas_en_muestra": 0,
+      "muestra_primera_fila": [
+        "Crisis",
+        "Crisis ID",
+        "Country",
+        "Indicator",
+        "Figure",
+        "Source and Date",
+        "Reliability",
+        "Reliability Score",
+        "Link",
+        "Justification",
+        "Helper",
+        "Date of entry",
+        "Type of entry"
+      ]
+    },
+    {
+      "hoja": "Indicator Date hidden",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "COUNTRY",
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Cyclone Surge",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "GCRI Violent Conflict probability",
+        "GCRI Highly Violent Conflict probability"
+      ]
+    },
+    {
+      "hoja": "Indicator Date hidden2",
+      "filas_leidas": 193,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Cyclone Surge",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "GCRI Violent Conflict probability",
+        "GCRI Highly Violent Conflict probability",
+        "National Power Conflict Intensity (Highly Violent)"
+      ]
+    },
+    {
+      "hoja": "Imputed and missing data hidden",
+      "filas_leidas": 192,
+      "iso3_pilotos": [
+        "COL",
+        "ECU",
+        "HTI",
+        "PAN",
+        "VEN"
+      ],
+      "iso3_americas_en_muestra": 35,
+      "muestra_primera_fila": [
+        "ISO3",
+        "Physical exposure to earthquake MMI VI",
+        "Physical exposure to earthquake MMI VIII",
+        "Annual Expected Exposed People to Floods",
+        "Annual Expected Exposed People to Tsunamis",
+        "Annual Expected Exposed People to Cyclone's Wind SS1",
+        "Annual Expected Exposed People to Cyclone's Wind SS3",
+        "Annual Expected Exposed People to Cyclone Surge",
+        "Total affected by Drought",
+        "Frequency of Drought events",
+        "Agriculture Drought probability",
+        "GCRI Violent Conflict probability",
+        "GCRI Highly Violent Conflict probability",
+        "National Power Conflict Intensity (Highly Violent)"
+      ]
+    }
+  ],
+  "OPS": {
+    "csv": "PAHO-Core-Indicators-2026-20261023.csv",
+    "headers": [
+      "country_code_iso3",
+      "indicator_id",
+      "label_en",
+      "period_id",
+      "VALUE_STRING",
+      "val",
+      "VALUE_LOWER",
+      "VALUE_UPPER",
+      "collection_method",
+      "source_data",
+      "type_statistics",
+      "public_private",
+      "public_private_sp",
+      "collection_specific",
+      "source_data_specific",
+      "source_url",
+      "preliminary",
+      "remarks",
+      "created_at",
+      "modified_at",
+      "etl_timestamp",
+      "status",
+      "tooltip_en",
+      "tooltip_es"
+    ],
+    "indicadores_filtrados": [
+      "Coeficiente de GINI",
+      "Años de escolaridad promedio (en años)",
+      "Razón de camas hospitalarias (1 000 habs)",
+      "Densidad de Médicos/as (10 000 habs) [nuevo]",
+      "Densidad de personal de enfermería (10 000 habs) [nuevo]",
+      "Cobertura de inmunización en menores de 1 año (%), DTP3-vc",
+      "Cobertura de inmunización en niños de 1 año (%), SRP1",
+      "Tasa de mortalidad por homicidio (ajustada por edad por 100 000 habs)"
+    ],
+    "filas_pais_indicador": 0
+  }
+}

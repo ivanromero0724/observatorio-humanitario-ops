@@ -1,0 +1,30 @@
+{
+  "fecha_utc": "2026-11-05T17:56:55Z",
+  "estado": {
+    "WarMonit": {
+      "estado": "descarga_ok",
+      "detalle": "{'total_mundial': 20, 'americas': 2, 'fecha': '2026-11-05', 'licencia': 'CC-BY-4.0'}"
+    },
+    "INFORM_Risk": {
+      "estado": "descarga_ok",
+      "detalle": "{'bytes': 2546463, 'hojas': 17, 'candidatas': 14}"
+    },
+    "INFORM_Severity": {
+      "estado": "descarga_ok",
+      "detalle": "{'bytes': 2098489, 'hojas': 21, 'candidatas': 14}"
+    },
+    "OPS": {
+      "estado": "descarga_ok",
+      "detalle": "{'bytes': 7381128, 'registros_pais_indicador': 0, 'csv': 'PAHO-Core-Indicators-2026-20261023.csv'}"
+    },
+    "ACNUR": {
+      "estado": "descarga_ok",
+      "detalle": "{'consultas': 10, 'respuestas_json': 10}"
+    },
+    "HAPI": {
+      "estado": "requiere_identificador_institucional",
+      "detalle": "No generar identificadores con correos inventados"
+    }
+  },
+  "observacion": "Cobertura exploratoria; no equivale a aprobación metodológica"
+}
