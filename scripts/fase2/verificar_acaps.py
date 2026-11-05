@@ -13,7 +13,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs/fase2/acaps_conexion.json"
-BASE = "https://api.acaps.org/api/v1/"
+BASE = "https://api.acaps.org/api/v1/inform-severity-index/"
 
 def main():
     token = os.environ.get("ACAPS_API_TOKEN", "").strip()
@@ -25,7 +25,7 @@ def main():
         "http_status": None,
         "content_type_json": False,
         "recursos_disponibles": [],
-        "nota": "Prueba de autenticación, aún no implica integración de datos al dashboard.",
+        "nota": "Prueba del endpoint INFORM Severity (no del índice web que redirige a login). No implica integración al dashboard.",
     }
     if token:
         try:
@@ -53,7 +53,7 @@ def main():
                 record["estado"] = "ACCESO_RECHAZADO"
             elif res.status_code in (301, 302, 303, 307, 308):
                 record["estado"] = "REDIRECCION"
-                record["nota"] = "La raíz de API redirige; revisar ruta y política de acceso."
+                record["nota"] = "El endpoint de datos redirige; verificar autenticación y ruta."
             else:
                 record["estado"] = "RESPUESTA_INESPERADA"
         except (requests.RequestException, ValueError):
