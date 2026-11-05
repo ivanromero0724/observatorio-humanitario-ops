@@ -1,0 +1,14 @@
+id,fuente,acceso,limitacion,url
+F01,OCHA HDX HAPI - Conflict events,API con app_identifier,Eventos y muertes reportadas; clases solapadas,https://hdx-hapi.readthedocs.io/en/latest/data_usage_guides/coordination_and_context/
+F02,OCHA HDX HAPI - Humanitarian needs,API con app_identifier,PiN no aditivo entre sectores,https://hdx-hapi.readthedocs.io/en/latest/data_usage_guides/affected_people/
+F03,INFORM Risk Mid 2026,XLSX,Riesgo estructural país,https://drmkc.jrc.ec.europa.eu/inform-index/INFORM-Risk/Results-and-data
+F04,INFORM Severity Sep 2026,XLSX,Gravedad de crisis; escala 0-10,https://drmkc.jrc.ec.europa.eu/inform-index/INFORM-Severity/Results-and-data
+F05,OPS Indicadores Básicos Oct 2026,ZIP CSV,Sociales, salud y demografía con años distintos,https://opendata.paho.org/es/indicadores-basicos/descarga-datos
+F06,ACNUR Refugee Data Portal,API abierta,Stock y flujo; origen y asilo,https://refugeedata.unhcr.org/en/documentation/technical-reference/api/
+F07,OIM DTM API v3,API con clave,Desplazamiento interno; cobertura por país,https://dtm.iom.int/es/node/38776
+F08,OMS SSA,Exportar Excel,Ataques a salud; cobertura selectiva,https://extranet.who.int/ssa/index.aspx
+F09,WarMonit CII,JSON CSV,20 países; VEN y USA entre Américas; CC BY 4.0,https://warmonit.com/press
+F10,ReliefWeb,API con appname aprobado,Reportes y curaduría; no serie comparable,https://apidoc.reliefweb.int/
+F11,GI-TOC Organized Crime Index 2025,XLSX,Crimen organizado e índices; no eventos,https://ocindex.net/downloads
+F12,UNODC World Drug Report 2026,Portal / informes,Cultivos ilícitos en países con reportes,https://data.unodc.org/wdr2026
+F13,ACLED datos detallados,API bajo licencia,OPS requiere licencia de sector público,https://acleddata.com/eula
