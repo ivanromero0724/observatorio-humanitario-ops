@@ -1,6 +1,35 @@
 # Observatorio Regional de Amenazas y Vulnerabilidad Humanitaria — OPS/OMS
 
-Proyecto de información humanitaria en la Región de las Américas. **Todavía no existe un dashboard operativo ni un índice oficial OPS de prioridades:** las categorías y los umbrales necesitan validación con el equipo técnico.
+Proyecto de información humanitaria en la Región de las Américas. **Ya existe un prototipo de dashboard en Streamlit** y sus pruebas automáticas, pero la aplicación todavía debe desplegarse en Streamlit Cloud. No existe un índice oficial OPS de prioridades: las categorías y umbrales necesitan validación con el equipo técnico.
+
+## Dashboard Streamlit — prototipo regional
+
+La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye seis páginas: panorama regional, conflicto y violencia, desplazamiento y movilidad, salud y vulnerabilidad, perfiles por país, y fuentes/metodología.
+
+- **Mapa regional:** INFORM Risk Mid 2026 (35 países) y detalle de 25 crisis INFORM Severity.
+- **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
+- **Desplazamiento:** cobertura OIM DTM para 35 países sin imputar ceros ni sumar rondas incompatibles.
+- **Conflicto:** solo muestra agregados mensuales de HAPI cuando la extracción país-a-país está completa y pasa validaciones geográficas y numéricas; no sumar categorías ACLED.
+- **Países:** ficha con crisis, riesgo, indicadores OPS, y disponibilidad de fuentes.
+- **Fuentes:** fechas y limitaciones para permitir revisión metodológica.
+
+### Ejecutar localmente
+
+```bash
+git clone https://github.com/ivanromero0724/observatorio-humanitario-ops.git
+cd observatorio-humanitario-ops
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Publicar en Streamlit Community Cloud
+
+1. Ingresar a [share.streamlit.io](https://share.streamlit.io/) con la cuenta de GitHub con acceso al repositorio.
+2. **Create app → From existing repo**; seleccionar `ivanromero0724/observatorio-humanitario-ops`, rama `main`, archivo principal `app.py`.
+3. Presionar **Deploy**. No es necesario cargar los secretos HAPI/DTM en Streamlit: la app consume las **tablas derivadas y verificadas** publicadas por GitHub Actions, no consulta directamente las API protegidas.
+4. Revisar la URL asignada y los permisos de visibilidad antes de compartir la aplicación con OPS. El repositorio es público y este despliegue es exploratorio.
+
+El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las seis secciones.
 
 ## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
 
@@ -36,13 +65,13 @@ La exploración preliminar de ACNUR para cinco países sigue documentada como an
 
 **ACNUR API:** 9 de 10 consultas del piloto de 5 países devolvieron al menos un registro; la combinación Haití/solicitantes de asilo no devolvió filas **con los filtros empleados**. Son pruebas de conectividad y cobertura muestral; no equivalen a análisis completo de flujos. No se han publicado cifras derivadas de esta API.
 
-**HDX HAPI conflicto:** pendiente de un `HDX_APP_IDENTIFIER` institucional real. **ACLED detallado:** verificar licencia de sector público aplicable a OPS. **OIM DTM:** requiere clave. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** acceso institucional para uso API. No se inventaron resultados para esas fuentes.
+**HDX HAPI conflicto y OIM DTM:** claves configuradas y autenticación verificada; la extracción completa de HAPI cuenta con controles explícitos de exclusión. **ACLED detallado:** en espera de licencia de sector público aplicable a OPS. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** solicitud de appname presentada y pendiente de aprobación. No se inventaron resultados para esas fuentes.
 
 ### Estructura del proyecto
 - `docs/fase1/diagnostico.md`: inventario de 13 fuentes, metodología inicial, límites y decisiones pendientes.
 - `docs/fase1/resultados_cobertura.csv`: 400 observaciones de disponibilidad/extracción por país y fuente (incluye las 280 combinaciones OPS).
 - `docs/fase1/ejecucion_fuentes.json`, `esquemas_fuentes.json`, `qa_normalizados.json`: controles verificables.
-- `data/catalogos/`: 39 indicadores preliminares, taxonomía de 13 categorías, 5 países piloto, plan de trabajo, fuentes.
+- `data/catalogos/`: 39 indicadores preliminares, taxonomía de 13 categorías, 35 países en el piloto regional, plan de trabajo, fuentes.
 - `data/observaciones/`: cuatro CSV normalizados por edición.
 - `scripts/fase1/extraer_cobertura.py`: descarga y normalización de INFORM, OPS, WarMonit, consulta piloto ACNUR e interfaz HAPI.
 - `scripts/fase1/validar_datos.py`: validación de rangos, duplicados, integridad SHA-256.
