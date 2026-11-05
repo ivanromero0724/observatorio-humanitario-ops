@@ -73,7 +73,7 @@ def adm_level(v):
 def norm_group(raw,iso):
     grouped=defaultdict(lambda: {"events":0,"fatalities":0,"fatalities_missing":0,
                                   "levels":set(),"n_rows":0,
-                                  "geographies":set()})
+                                  "geographies":{}})
     suspicious=Counter()
     removed_identical=0
     for rec in raw:
