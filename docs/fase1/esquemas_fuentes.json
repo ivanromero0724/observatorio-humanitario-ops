@@ -412,6 +412,28 @@
       ]
     }
   ],
+  "INFORM_Risk_parse": {
+    "hoja": "INFORM Risk 2026 (a-z)",
+    "paises_con_puntaje": 35,
+    "registros_entre_paises": 35,
+    "ejemplo_piloto": {
+      "COL": [
+        5.3
+      ],
+      "HTI": [
+        7.6
+      ],
+      "VEN": [
+        6.4
+      ],
+      "ECU": [
+        5.8
+      ],
+      "PAN": [
+        4.0
+      ]
+    }
+  },
   "INFORM_Severity": [
     {
       "hoja": "About",
@@ -908,6 +930,35 @@
       ]
     }
   ],
+  "INFORM_Severity_parse": {
+    "hoja": "INFORM Severity - hidden",
+    "paises_con_puntaje": 16,
+    "registros_entre_paises": 25,
+    "ejemplo_piloto": {
+      "COL": [
+        8.4,
+        6.9,
+        8.5,
+        4.5
+      ],
+      "HTI": [
+        8.9
+      ],
+      "VEN": [
+        8.2,
+        6.8,
+        8.5
+      ],
+      "ECU": [
+        7.4,
+        5.5,
+        7.2
+      ],
+      "PAN": [
+        3.8
+      ]
+    }
+  },
   "OPS": {
     "csv": "PAHO-Core-Indicators-2026-20261023.csv",
     "headers": [
@@ -936,16 +987,83 @@
       "tooltip_en",
       "tooltip_es"
     ],
-    "indicadores_filtrados": [
-      "Coeficiente de GINI",
-      "Años de escolaridad promedio (en años)",
-      "Razón de camas hospitalarias (1 000 habs)",
-      "Densidad de Médicos/as (10 000 habs) [nuevo]",
-      "Densidad de personal de enfermería (10 000 habs) [nuevo]",
-      "Cobertura de inmunización en menores de 1 año (%), DTP3-vc",
-      "Cobertura de inmunización en niños de 1 año (%), SRP1",
-      "Tasa de mortalidad por homicidio (ajustada por edad por 100 000 habs)"
+    "etiquetas_ejemplo": [
+      "Median age (years)",
+      "Demand for family planning satisfied by any modern method (%); married or in union women",
+      "Prevalence of raised blood glucose/diabetes in adults (%)",
+      "Prevalence of raised blood glucose/diabetes in adults(%); female",
+      "Prevalence of raised blood glucose/diabetes in adults(%); male",
+      "Leprosy cases in treatment",
+      "Prevalence of raised blood pressure in adults (%)",
+      "Prevalence of raised blood pressure in adults (%); female",
+      "Prevalence of overweight in children under age 5 (%); female",
+      "Under age 5 deaths due to acute respiratory infections (%)",
+      "Public health expenditure as % of GDP",
+      "Deaths from communicable diseases (%)",
+      "Private health expenditure as % of GDP",
+      "Deaths from communicable diseases (%); female",
+      "Out-of-pocket expenditure as % of current health expenditure",
+      "Deaths from communicable diseases (%); male",
+      "Prevalence of raised blood pressure in adults (%); male",
+      "Exclusive breastfeeding under 6 months (%)",
+      "Prevalence of insufficient physical activity in adults (%)",
+      "Prevalence of insufficient physical activity in adults (%); female",
+      "Prevalence of insufficient physical activity in adults (%); male",
+      "Prevalence of insufficient physical activity in adolescents (%)",
+      "Communicable diseases mortality rate (100 000 pop)",
+      "Communicable diseases mortality rate (100 000 pop); female",
+      "Communicable diseases mortality rate (100 000 pop); male",
+      "Demand for family planning satisfied by any modern method (%); unmarried women",
+      "Gross domestic product (US$ per capita), current international (PPP-adjusted)",
+      "Gross national income (US$ per capita), current international (PPP-adjusted)",
+      "Youth literacy rate (%)",
+      "Estimated infant mortality rate (1 000 lb)"
     ],
-    "filas_pais_indicador": 0
+    "etiquetas_seleccionadas": {
+      "Escolaridad": [
+        "Mean years of schooling (years)",
+        "Mean years of schooling (years); female",
+        "Mean years of schooling (years); male"
+      ],
+      "Camas hospitalarias": [
+        "Hospital beds ratio (1 000 pop)",
+        "Number of ICU hospital beds"
+      ],
+      "Médicos": [
+        "Density of medical doctors (10 000 pop)",
+        "Number of medical doctors",
+        "Number of physicians - v2021",
+        "Number of physicians; female - v2021",
+        "Number of physicians; male - v2021",
+        "Number of physicians; unknown - v2021",
+        "Percentage of medical doctors by sex; female",
+        "Percentage of medical doctors by sex; male"
+      ],
+      "Enfermería": [
+        "Density of nursing personnel (10 000 pop)",
+        "Number of nursing personnel",
+        "Percentage of nursing personnel by sex; female",
+        "Percentage of nursing personnel by sex; male"
+      ],
+      "DTP3": [
+        "Immunization coverage of under-1 year old (%), DTP3-cv",
+        "Municipalities with DTP3 coverage >= 95%"
+      ],
+      "SRP1": [
+        "Immunization coverage of 1 year old (%), MMR1"
+      ],
+      "Mortalidad por homicidio": [
+        "Homicide mortality rate (100 000 pop)",
+        "Homicide mortality rate (100 000 pop); female",
+        "Homicide mortality rate (100 000 pop); male",
+        "Homicide mortality rate (age-adjusted per 100 000 pop)",
+        "Homicide mortality rate (age-adjusted per 100 000 pop); female",
+        "Homicide mortality rate (age-adjusted per 100 000 pop); male"
+      ],
+      "GINI": [
+        "GINI Index"
+      ]
+    },
+    "filas_pais_indicador": 266
   }
 }

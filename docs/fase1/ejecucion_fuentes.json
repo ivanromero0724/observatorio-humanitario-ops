@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-05T17:56:55Z",
+  "fecha_utc": "2026-11-05T17:59:04Z",
   "estado": {
     "WarMonit": {
       "estado": "descarga_ok",
@@ -7,15 +7,15 @@
     },
     "INFORM_Risk": {
       "estado": "descarga_ok",
-      "detalle": "{'bytes': 2546463, 'hojas': 17, 'candidatas': 14}"
+      "detalle": "{'bytes': 2546463, 'hojas': 17, 'paises_con_puntaje': 35}"
     },
     "INFORM_Severity": {
       "estado": "descarga_ok",
-      "detalle": "{'bytes': 2098489, 'hojas': 21, 'candidatas': 14}"
+      "detalle": "{'bytes': 2098489, 'hojas': 21, 'paises_con_puntaje': 16}"
     },
     "OPS": {
       "estado": "descarga_ok",
-      "detalle": "{'bytes': 7381128, 'registros_pais_indicador': 0, 'csv': 'PAHO-Core-Indicators-2026-20261023.csv'}"
+      "detalle": "{'bytes': 7381128, 'registros_pais_indicador': 266, 'csv': 'PAHO-Core-Indicators-2026-20261023.csv'}"
     },
     "ACNUR": {
       "estado": "descarga_ok",
