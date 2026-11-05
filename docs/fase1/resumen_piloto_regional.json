@@ -1,13 +1,12 @@
 {
-  "fecha_ejecucion_utc": "2026-11-05T21:59:26.470381+00:00",
+  "fecha_ejecucion_utc": "2026-11-05T22:35:27.498881+00:00",
   "alcance": "35 países soberanos de las Américas; los territorios dependientes no están incluidos",
   "paises_catalogo": 35,
   "fuentes": {
     "HAPI conflicto 2020+": {
       "paises_evaluados": 35,
       "estados": {
-        "cobertura_verificada": 33,
-        "paginacion_incompleta": 2
+        "cobertura_verificada": 35
       },
       "paises_con_registros": [
         "CAN",
