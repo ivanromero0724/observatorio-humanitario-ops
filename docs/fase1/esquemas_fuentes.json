@@ -1020,48 +1020,29 @@
       "Estimated infant mortality rate (1 000 lb)"
     ],
     "etiquetas_seleccionadas": {
-      "Escolaridad": [
-        "Mean years of schooling (years)",
-        "Mean years of schooling (years); female",
-        "Mean years of schooling (years); male"
-      ],
       "Camas hospitalarias": [
-        "Hospital beds ratio (1 000 pop)",
-        "Number of ICU hospital beds"
+        "Hospital beds ratio (1 000 pop)"
       ],
-      "Médicos": [
-        "Density of medical doctors (10 000 pop)",
-        "Number of medical doctors",
-        "Number of physicians - v2021",
-        "Number of physicians; female - v2021",
-        "Number of physicians; male - v2021",
-        "Number of physicians; unknown - v2021",
-        "Percentage of medical doctors by sex; female",
-        "Percentage of medical doctors by sex; male"
-      ],
-      "Enfermería": [
-        "Density of nursing personnel (10 000 pop)",
-        "Number of nursing personnel",
-        "Percentage of nursing personnel by sex; female",
-        "Percentage of nursing personnel by sex; male"
+      "Escolaridad": [
+        "Mean years of schooling (years)"
       ],
       "DTP3": [
-        "Immunization coverage of under-1 year old (%), DTP3-cv",
-        "Municipalities with DTP3 coverage >= 95%"
+        "Immunization coverage of under-1 year old (%), DTP3-cv"
       ],
       "SRP1": [
         "Immunization coverage of 1 year old (%), MMR1"
       ],
       "Mortalidad por homicidio": [
-        "Homicide mortality rate (100 000 pop)",
-        "Homicide mortality rate (100 000 pop); female",
-        "Homicide mortality rate (100 000 pop); male",
-        "Homicide mortality rate (age-adjusted per 100 000 pop)",
-        "Homicide mortality rate (age-adjusted per 100 000 pop); female",
-        "Homicide mortality rate (age-adjusted per 100 000 pop); male"
+        "Homicide mortality rate (age-adjusted per 100 000 pop)"
       ],
       "GINI": [
         "GINI Index"
+      ],
+      "Médicos": [
+        "Density of medical doctors (10 000 pop)"
+      ],
+      "Enfermería": [
+        "Density of nursing personnel (10 000 pop)"
       ]
     },
     "filas_pais_indicador": 266
