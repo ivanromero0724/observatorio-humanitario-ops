@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-05T22:23:03.283592+00:00",
+  "fecha_utc": "2026-11-05T22:28:50.063514+00:00",
   "fecha_inicio": "2020-01-01",
   "paises_esperados": 35,
   "paises_completos": 34,
@@ -18,7 +18,8 @@
       "registros_api": 210,
       "registros_mensuales": 210,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "USA",
@@ -28,7 +29,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "MEX",
@@ -38,7 +40,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "BLZ",
@@ -48,7 +51,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "CRI",
@@ -58,7 +62,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "SLV",
@@ -68,7 +73,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "GTM",
@@ -78,7 +84,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "HND",
@@ -88,7 +95,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "NIC",
@@ -98,7 +106,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "PAN",
@@ -108,7 +117,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "ATG",
@@ -118,7 +128,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "BHS",
@@ -128,7 +139,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "BRB",
@@ -138,7 +150,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "CUB",
@@ -148,7 +161,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "DMA",
@@ -158,7 +172,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "DOM",
@@ -168,7 +183,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "GRD",
@@ -178,7 +194,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "HTI",
@@ -188,7 +205,8 @@
       "registros_api": 10332,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "JAM",
@@ -198,7 +216,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "KNA",
@@ -208,7 +227,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "LCA",
@@ -218,7 +238,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "VCT",
@@ -228,7 +249,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "TTO",
@@ -238,7 +260,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "ARG",
@@ -248,7 +271,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "BOL",
@@ -258,7 +282,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "BRA",
@@ -268,7 +293,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "CHL",
@@ -278,7 +304,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "COL",
@@ -290,11 +317,12 @@
       "motivo_exclusion": "validacion_geografica_o_numerica",
       "resumen_inconsistencias": {
         "errores": {
-          "repeated_geo_month_type": 246
+          "conflicting_geo_month_type": 8
         },
         "mezclas_niveles": 0,
         "muestra": "[]"
-      }
+      },
+      "duplicados_identicos_eliminados": 238
     },
     {
       "iso3": "ECU",
@@ -304,7 +332,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "GUY",
@@ -314,7 +343,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "PRY",
@@ -324,7 +354,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "PER",
@@ -334,7 +365,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "SUR",
@@ -344,7 +376,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "URY",
@@ -354,7 +387,8 @@
       "registros_api": 246,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     },
     {
       "iso3": "VEN",
@@ -364,7 +398,8 @@
       "registros_api": 82656,
       "registros_mensuales": 246,
       "motivo_exclusion": "",
-      "resumen_inconsistencias": {}
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 0
     }
   ]
 }
