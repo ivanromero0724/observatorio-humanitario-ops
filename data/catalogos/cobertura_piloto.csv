@@ -1,6 +1,36 @@
-iso3,pais,estado_cobertura_fuentes,warMonit_json_2026_11_05
-COL,Colombia,Por verificar,Sin fila
-HTI,Haití,Por verificar,Sin fila
-VEN,Venezuela,Por verificar,Con fila
-ECU,Ecuador,Por verificar,Sin fila
-PAN,Panamá,Por verificar,Sin fila
+iso3,pais,alcance,estado_cobertura_fuentes
+CAN,Canadá,Piloto regional — 35 países,Pendiente de evaluación por fuente
+USA,Estados Unidos,Piloto regional — 35 países,Pendiente de evaluación por fuente
+MEX,México,Piloto regional — 35 países,Pendiente de evaluación por fuente
+BLZ,Belice,Piloto regional — 35 países,Pendiente de evaluación por fuente
+CRI,Costa Rica,Piloto regional — 35 países,Pendiente de evaluación por fuente
+SLV,El Salvador,Piloto regional — 35 países,Pendiente de evaluación por fuente
+GTM,Guatemala,Piloto regional — 35 países,Pendiente de evaluación por fuente
+HND,Honduras,Piloto regional — 35 países,Pendiente de evaluación por fuente
+NIC,Nicaragua,Piloto regional — 35 países,Pendiente de evaluación por fuente
+PAN,Panamá,Piloto regional — 35 países,Pendiente de evaluación por fuente
+ATG,Antigua y Barbuda,Piloto regional — 35 países,Pendiente de evaluación por fuente
+BHS,Bahamas,Piloto regional — 35 países,Pendiente de evaluación por fuente
+BRB,Barbados,Piloto regional — 35 países,Pendiente de evaluación por fuente
+CUB,Cuba,Piloto regional — 35 países,Pendiente de evaluación por fuente
+DMA,Dominica,Piloto regional — 35 países,Pendiente de evaluación por fuente
+DOM,República Dominicana,Piloto regional — 35 países,Pendiente de evaluación por fuente
+GRD,Granada,Piloto regional — 35 países,Pendiente de evaluación por fuente
+HTI,Haití,Piloto regional — 35 países,Pendiente de evaluación por fuente
+JAM,Jamaica,Piloto regional — 35 países,Pendiente de evaluación por fuente
+KNA,San Cristóbal y Nieves,Piloto regional — 35 países,Pendiente de evaluación por fuente
+LCA,Santa Lucía,Piloto regional — 35 países,Pendiente de evaluación por fuente
+VCT,San Vicente y las Granadinas,Piloto regional — 35 países,Pendiente de evaluación por fuente
+TTO,Trinidad y Tobago,Piloto regional — 35 países,Pendiente de evaluación por fuente
+ARG,Argentina,Piloto regional — 35 países,Pendiente de evaluación por fuente
+BOL,Bolivia,Piloto regional — 35 países,Pendiente de evaluación por fuente
+BRA,Brasil,Piloto regional — 35 países,Pendiente de evaluación por fuente
+CHL,Chile,Piloto regional — 35 países,Pendiente de evaluación por fuente
+COL,Colombia,Piloto regional — 35 países,Pendiente de evaluación por fuente
+ECU,Ecuador,Piloto regional — 35 países,Pendiente de evaluación por fuente
+GUY,Guyana,Piloto regional — 35 países,Pendiente de evaluación por fuente
+PRY,Paraguay,Piloto regional — 35 países,Pendiente de evaluación por fuente
+PER,Perú,Piloto regional — 35 países,Pendiente de evaluación por fuente
+SUR,Surinam,Piloto regional — 35 países,Pendiente de evaluación por fuente
+URY,Uruguay,Piloto regional — 35 países,Pendiente de evaluación por fuente
+VEN,Venezuela,Piloto regional — 35 países,Pendiente de evaluación por fuente
