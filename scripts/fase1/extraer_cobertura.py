@@ -81,14 +81,24 @@ def war(coverage,logs):
         if not isinstance(rows,list) or len(rows)<10:
             raise ValueError("JSON sin arreglo rows válido")
         by_iso2={r.get("country_code"):r for r in rows}
+        selected=[]
         for iso,alpha2,name in PAISES:
             d=by_iso2.get(alpha2)
+            if d:
+                selected.append({"iso3":iso,"pais":name,"fecha":d.get("date"),
+                    "score":d.get("score"),"baseline":d.get("baseline"),
+                    "dynamic":d.get("dynamic"),"trend":d.get("trend"),
+                    "fuente":WAR_URL,"licencia":"CC BY 4.0"})
             coverage.append(registro("WarMonit",iso,name,
                 "registro_verificado" if d else "sin_registro_en_archivo",
                 d.get("date","") if d else "",d.get("date","") if d else "",
                 1 if d else 0,
                 f"puntaje={d.get('score')}; tendencia={d.get('trend')}" if d else "No equivale a riesgo cero",
                 WAR_URL))
+        if selected:
+            directory=Path("data/observaciones");directory.mkdir(parents=True,exist_ok=True)
+            with (directory/"warmonit_cii_ultimo.csv").open("w",encoding="utf-8",newline="") as fh:
+                w=csv.DictWriter(fh,fieldnames=list(selected[0]));w.writeheader();w.writerows(selected)
         return {"total_mundial":len(rows),"americas":sum(1 for _,s,_ in PAISES if s in by_iso2),
                 "fecha":body.get("date"),"licencia":body.get("license",{}).get("id")}
     return try_source("WarMonit",run,logs)
@@ -159,6 +169,7 @@ def inform(kind,url,coverage,logs,schema):
                   else "INFORM Severity - hidden")
         target = next(((n,rs) for n,rs in sheets if n == wanted),None)
         found={}
+        normalized=[]
         if target:
             rows=target[1]
             header=next((r for r in rows[:12] if "ISO3" in r.values()
@@ -176,6 +187,24 @@ def inform(kind,url,coverage,logs,schema):
                     except (TypeError,ValueError):continue
                     if 0<=score<=10:
                         found.setdefault(iso,[]).append(score)
+                        normalized.append({
+                            "iso3":iso,
+                            "pais":next(n for k,a,n in PAISES if k==iso),
+                            "edicion":"Mid 2026" if kind=="INFORM_Risk" else "Septiembre 2026",
+                            "puntuacion":score,
+                            "crisis_id":row.get(reverse.get("CRISIS ID",""),"") if kind=="INFORM_Severity" else "",
+                            "crisis":row.get(reverse.get("CRISIS",""),"") if kind=="INFORM_Severity" else "",
+                            "fuente":url
+                        })
+        if normalized:
+            directory=Path("data/observaciones")
+            directory.mkdir(parents=True,exist_ok=True)
+            filename=("inform_risk_mid_2026.csv" if kind=="INFORM_Risk"
+                      else "inform_severity_2026_09_crisis.csv")
+            with (directory/filename).open("w",encoding="utf-8",newline="") as fh:
+                writer=csv.DictWriter(fh,fieldnames=list(normalized[0]))
+                writer.writeheader()
+                writer.writerows(normalized)
         schema[kind+"_parse"]={"hoja":wanted,"paises_con_puntaje":len(found),
             "registros_entre_paises":sum(len(x) for x in found.values()),
             "ejemplo_piloto":{iso:found.get(iso,[])[:4] for iso in PILOTO}}
@@ -230,7 +259,7 @@ def paho(coverage,logs,schema):
         candidates=[k for k in z.namelist() if k.lower().endswith(".csv")]
         if not candidates: raise ValueError("ZIP sin CSV")
         largest=max(candidates,key=lambda k:z.getinfo(k).file_size)
-        found={};samples=[];matched={}
+        found={};samples=[];matched={};records={};conflicts=0
         headers=[]
         with z.open(largest) as f:
             reader=csv.DictReader(io.TextIOWrapper(f,encoding="utf-8-sig",errors="replace",newline=""))
@@ -248,9 +277,35 @@ def paho(coverage,logs,schema):
                 if re.match(r"^20[0-9]{2}$",yr):
                     found.setdefault(key,set()).add(int(yr))
                     matched.setdefault(kind,set()).add(name)
+                    try:
+                        numeric=float(row.get("val",""))
+                    except (TypeError,ValueError):
+                        continue
+                    record={"iso3":iso,"indicador":kind,"periodo":int(yr),
+                        "valor":numeric,"etiqueta_fuente":name,
+                        "indicator_id":row.get("indicator_id",""),
+                        "source_url":row.get("source_url","") or PAHO_PAGE,
+                        "preliminar":row.get("preliminary",""),
+                        "edicion":"OPS octubre 2026"}
+                    records.setdefault((iso,kind,int(yr)),[]).append(record)
+        normalized=[]
+        for key,group in sorted(records.items()):
+            uniques={x["valor"] for x in group}
+            if len(uniques)!=1:
+                conflicts += 1
+                continue
+            normalized.append(group[0])
+        if normalized:
+            directory=Path("data/observaciones")
+            directory.mkdir(parents=True,exist_ok=True)
+            with (directory/"ops_8_indicadores_pais_anio.csv").open("w",encoding="utf-8",newline="") as fh:
+                w=csv.DictWriter(fh,fieldnames=list(normalized[0]))
+                w.writeheader();w.writerows(normalized)
         schema["OPS"]={"csv":largest,"headers":headers,"etiquetas_ejemplo":samples,
                        "etiquetas_seleccionadas":{k:sorted(v)[:12] for k,v in matched.items()},
-                       "filas_pais_indicador":len(found)}
+                       "filas_pais_indicador":len(found),
+                       "filas_pais_anio_normalizadas":len(normalized),
+                       "claves_con_valores_contradictorios_excluidas":conflicts}
         for iso,a,pais in PAISES:
             for name in PAHO_PATTERNS:
                 ys=found.get((iso,name),set())
@@ -258,7 +313,9 @@ def paho(coverage,logs,schema):
                     "registro_verificado" if ys else "sin_registro_en_extraccion",
                     min(ys) if ys else "",max(ys) if ys else "",len(ys),
                     "Serie país-año; no sumar sexos, urbano/rural y categorías",u))
-        return {"bytes":len(data),"registros_pais_indicador":len(found),"csv":largest}
+        return {"bytes":len(data),"registros_pais_indicador":len(found),
+                "registros_pais_anio":len(normalized),"conflictos_excluidos":conflicts,
+                "csv":largest}
     return try_source("OPS",run,logs)
 
 def unhcr(coverage,logs):
