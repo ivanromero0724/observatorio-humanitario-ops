@@ -1,6 +1,22 @@
 # Fase 1 — Informe de resultados de extracción y factibilidad
 **Corte de ejecución:** 5 de noviembre de 2026 · **Estado técnico:** aprobado por pruebas automatizadas · **Aprobación metodológica OPS:** pendiente.
 
+## Ampliación posterior: piloto de los 35 países soberanos (05/11/2026)
+
+Después de la exploración inicial de cinco países, el piloto de seguimiento de HAPI y OIM-DTM se amplió a **los 35 países soberanos de América**, todos representados en el [catálogo maestro](../../data/catalogos/paises_americas.csv). La ejecución de GitHub Actions completó la verificación de claves y consultas.
+
+| Fuente | Resultado real | Advertencias |
+|---|---|---|
+| HAPI Conflicto, desde 2020 | 35 países consultados; 33 con paginación completa, 2 parciales (Colombia y Venezuela, admin2) | Filas agregadas mensuales, NO eventos individuales; clases no excluyentes |
+| OIM DTM Baseline | 12 países con registros Admin0: El Salvador, Guatemala, Honduras, Antigua y Barbuda, Bahamas, Dominica, Granada, Haití, San Vicente y las Granadinas, Bolivia, Ecuador y Perú | Ausencia en catálogo no equivale a cero desplazamiento |
+| OIM DTM HNA | Catálogo mundial de cuatro registros sin países del grupo de 35 | No significa ausencia de necesidades humanitarias |
+ 
+La tabla país×fuente incluye **105 filas y no contiene valores cero imputados para países ausentes**. Los registros de DTM pueden corresponder a diferentes rondas, años u operaciones y no se deben sumar automáticamente. Las dos series HAPI parciales precisan una futura extracción paginada adicional o periodos temporales más acotados.
+
+**Documentación:** [alcance](alcance_piloto_americas.md), [matriz de cobertura](cobertura_hapi_oim_americas.csv), [resumen verificable](resumen_piloto_regional.json).
+
+---
+
 ## Resultado cuantitativo verificado
 
 | Componente | Registros o consultas | Interpretación |
