@@ -1,0 +1,9 @@
+id,actividad,responsable_propuesto,estado
+1.1,Validar taxonomía e indicadores,Laura e Iván,Pendiente
+1.2,Probar HDX HAPI para 5 países,Iván,Pendiente: identificador
+1.3,Descargar y depurar INFORM Risk y Severity,Iván,Pendiente
+1.4,Descargar y filtrar OPS indicadores básicos,Iván,Pendiente
+1.5,Consultar licencias ACLED/ACNUR y credenciales OIM,OPS/ITS,Pendiente
+1.6,Calcular cobertura real por país×fuente×año,Iván,Pendiente
+1.7,Aprobar indicadores mínimos,Laura y Mauricio,Pendiente
+1.8,Definir hosting/autorización institucional,OPS/ITS,Pendiente
