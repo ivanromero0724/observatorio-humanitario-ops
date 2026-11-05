@@ -71,8 +71,9 @@ def adm_level(v):
     return 0
 
 def norm_group(raw,iso):
-    grouped=defaultdict(lambda: {"events":0,"fatalities":0,"levels":set(),"n_rows":0,
-                                  "geographies":set(),"resource_ids":set()})
+    grouped=defaultdict(lambda: {"events":0,"fatalities":0,"fatalities_missing":0,
+                                  "levels":set(),"n_rows":0,
+                                  "geographies":set()})
     suspicious=Counter()
     for rec in raw:
         if str(rec.get("location_code","")).upper()!=iso:
@@ -85,19 +86,33 @@ def norm_group(raw,iso):
             continue
         try:
             events=float(rec["events"])
-            fatalities=float(rec["fatalities"])
         except (TypeError,ValueError,KeyError):
-            suspicious["invalid_numeric"]+=1
+            suspicious["invalid_events"]+=1
             continue
-        if not (events>=0 and fatalities>=0 and events.is_integer() and fatalities.is_integer()):
-            suspicious["invalid_numeric"]+=1
+        if not (events>=0 and events.is_integer()):
+            suspicious["invalid_events"]+=1
             continue
+        raw_fatalities=rec.get("fatalities")
+        if raw_fatalities is None or str(raw_fatalities).strip()=="":
+            fatalities=None
+        else:
+            try:
+                fatalities=float(raw_fatalities)
+                if not (fatalities>=0 and fatalities.is_integer()):
+                    raise ValueError("invalid deaths")
+            except (TypeError,ValueError):
+                suspicious["invalid_fatalities"]+=1
+                continue
         level=adm_level(rec)
-        geo=(str(rec.get("admin1_code") or ""),
-             str(rec.get("admin2_code") or ""))
+        geo=(str(rec.get("admin1_code") or rec.get("admin1_name") or ""),
+             str(rec.get("admin2_code") or rec.get("admin2_name") or ""))
         key=(iso,d,typ)
         g=grouped[key]
-        g["events"]+=int(events);g["fatalities"]+=int(fatalities)
+        g["events"]+=int(events)
+        if fatalities is None:
+            g["fatalities_missing"]+=1
+        else:
+            g["fatalities"]+=int(fatalities)
         g["levels"].add(level)
         g["n_rows"]+=1
         # Dos recursos diferentes para el mismo mes, tipo y geo pueden solaparse
@@ -118,7 +133,8 @@ def norm_group(raw,iso):
     output=[]
     for (iso,d,typ),g in sorted(grouped.items()):
         output.append({"iso3":iso,"periodo":d,"tipo_evento":typ,
-            "eventos":g["events"],"muertes_reportadas":g["fatalities"],
+            "eventos":g["events"],
+            "muertes_reportadas":"" if g["fatalities_missing"] else g["fatalities"],
             "nivel_admin":next(iter(g["levels"])),"unidades_fuente":g["n_rows"],
             "fuente":"OCHA HDX HAPI / ACLED agregado",
             "consultado_utc":DATE_RUN})
