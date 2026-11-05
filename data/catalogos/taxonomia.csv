@@ -1,0 +1,14 @@
+codigo,tema_original,tipo_analitico,fuente_sugerida
+T01,Acciones armadas,Evento,F01
+T02,Ataques a civiles/instalaciones,Evento/impacto,F01/F08
+T03,Migración,Movilidad humana,F06
+T04,Desplazamiento forzado,Movilidad forzada,F07
+T05,Violencia generalizada,Patrón de eventos y contexto,F01/F10
+T06,Tensiones entre países,Contexto cualitativo,F10
+T07,Restricciones a la movilidad,Impacto/acceso,F10
+T08,Contexto político frágil,Vulnerabilidad contextual,F03/F10
+T09,Extracción de minería ilegal,Economías ilícitas/contexto,F11
+T10,Crimen organizado,Contexto estructural,F11
+T11,Drogas ilícitas y cultivos,Índice y cultivos por país,F11/F12
+T12,Delincuencia transnacional,Actores/redes/contexto,F11
+T13,Servicios esenciales afectados,Impacto reportado,F10
