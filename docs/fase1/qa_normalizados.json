@@ -1,0 +1,33 @@
+{
+  "evaluacion_utc": "2026-11-05T18:13:04.906180+00:00",
+  "aprobacion_metodologica_ops": false,
+  "estado": "pasa",
+  "validaciones": {
+    "riesgo_paises": 35,
+    "severity_crisis": 25,
+    "severity_paises": 16,
+    "ops_filas_pais_anio": 3038,
+    "ops_paises": 35,
+    "ops_indicadores": 8,
+    "warmonit_paises": 2
+  },
+  "archivos": {
+    "risk": {
+      "bytes": 4521,
+      "sha256": "0c5ec066dc7adae3893d935dc3867a60acb47dbde3246740178cd5eae074c733"
+    },
+    "severity": {
+      "bytes": 5278,
+      "sha256": "4128a89be012162d0972bee833b295f29ce070504cb144c53172d90b2d028107"
+    },
+    "ops": {
+      "bytes": 495949,
+      "sha256": "433afac01d740c5a646711698b5ab02ed873cdc5e3a06ede828f67fa84423f83"
+    },
+    "warmonit": {
+      "bytes": 239,
+      "sha256": "d1080bf175e2049f3782703c026beb54984bc7cbaccbabb822bdad4c331ebf3f"
+    }
+  },
+  "errores": []
+}
