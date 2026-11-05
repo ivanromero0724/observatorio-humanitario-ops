@@ -1,10 +1,10 @@
 {
-  "fecha_utc": "2026-11-05T23:49:28.425839+00:00",
+  "fecha_utc": "2026-11-05T23:50:12.142359+00:00",
   "fuente": "ACAPS API",
   "secreto_configurado": true,
   "estado": "REDIRECCION",
   "http_status": 302,
   "content_type_json": false,
   "recursos_disponibles": [],
-  "nota": "La raíz de API redirige; revisar ruta y política de acceso."
+  "nota": "El endpoint de datos redirige; verificar autenticación y ruta."
 }
