@@ -76,6 +76,7 @@ def norm_group(raw,iso):
                                   "geographies":{}})
     suspicious=Counter()
     removed_identical=0
+    conflict_examples=[]
     for rec in raw:
         if str(rec.get("location_code","")).upper()!=iso:
             suspicious["wrong_country"]+=1
@@ -122,6 +123,16 @@ def norm_group(raw,iso):
                 removed_identical+=1
                 continue
             suspicious["conflicting_geo_month_type"]+=1
+            if len(conflict_examples)<10:
+                previous=g["geographies"][stamp]
+                conflict_examples.append({
+                    "mes":d,"tipo":typ,"geo":str(stamp),
+                    "prev_events":previous[0],"actual_events":signature[0],
+                    "prev_fatalities":previous[1],"actual_fatalities":signature[1],
+                    "misma_fuente":previous[2]==signature[2],
+                    "mismo_fin_periodo":previous[3]==signature[3],
+                    "mismo_nombre_admin":previous[4:]==signature[4:],
+                })
             continue
         g["geographies"][stamp]=signature
         g["events"]+=int(events)
@@ -140,6 +151,7 @@ def norm_group(raw,iso):
             "errores":dict(suspicious),
             "mezclas_niveles":len(problems),
             "muestra":str(problems[:2])[:120],
+            "conflictos_muestra":conflict_examples,
         },removed_identical
     output=[]
     for (iso,d,typ),g in sorted(grouped.items()):
