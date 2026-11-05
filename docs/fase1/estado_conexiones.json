@@ -1,8 +1,7 @@
 {
-  "fecha_utc": "2026-11-05T21:49:11.850697+00:00",
+  "fecha_utc": "2026-11-05T21:50:20.800892+00:00",
   "alcance": "Prueba de disponibilidad y autenticación, no evaluación de cobertura regional",
   "sin_valores_secretos": true,
-  "verificacion": "GitHub Actions run 42115477685, intento 2",
   "resultados": [
     {
       "servicio": "HDX HAPI",
