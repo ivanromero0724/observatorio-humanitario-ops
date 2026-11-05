@@ -14,7 +14,7 @@
 
 ## Fuentes integradas en la prueba regional
 
-1. **HAPI/OCHA, conflicto:** búsqueda por ISO3, periodo desde 2020, paginación con límite documentado, primera y última fecha y escala administrativa disponible. Las filas de las tres categorías ACLED son **no excluyentes**; no sumar sus conteos de eventos o muertes sin criterio validado. Los registros de HAPI no equivalen a sucesos individuales.
+1. **HAPI/OCHA, conflicto:** búsqueda por ISO3 y periodo desde 2020. Se descargaron todas las páginas necesarias de los 35 países y se construyeron 8.574 agregados país–mes–categoría, sin truncamiento. Se eliminaron 238 duplicados idénticos de Colombia y se reconciliaron 8 marcadores cero con sus registros positivos para la misma fuente, área y mes. El control de calidad se conserva en `docs/fase1/hapi_extraccion_completa.json`. Las filas de las tres categorías ACLED son **no excluyentes**; no sumar sus conteos de eventos o muertes sin criterio validado. Los registros de HAPI no equivalen a sucesos individuales.
 2. **OIM DTM Baseline:** consulta del catálogo mundial; para países de América presentes, prueba de datos nacionales Admin0 y número de filas reportadas. Un país ausente del catálogo no significa que tenga cero desplazados.
 3. **OIM DTM HNA:** búsqueda en el catálogo mundial por país; la disponibilidad se determina por operación y año de evaluación. La prueba no suma necesidades de diferentes poblaciones, no publica microdatos y no inventa cobertura subnacional.
 
@@ -28,7 +28,7 @@ El archivo `docs/fase1/cobertura_hapi_oim_americas.csv` contiene **105 filas: 35
 - `consulta_error`, `error_consulta_admin0`, `error_catalogo`: la consulta falló, no se puede concluir cobertura.
 - `sin_credencial`: clave no disponible para el workflow.
 
-**No estamos generando niveles crítico/alto/elevado/moderado** hasta que Laura y OPS aprueben criterios. Tampoco existe todavía un tablero regional operativo con estas fuentes; esta es una evaluación verificable de factibilidad y cobertura.
+**No estamos generando niveles crítico/alto/elevado/moderado** hasta que Laura y OPS aprueben criterios. Ya existe un **prototipo de dashboard Streamlit** en `app.py`, con seis secciones. Su publicación en Streamlit Cloud está pendiente; no constituye aún un producto oficial OPS.
 
 ## Ejecución
 
@@ -42,4 +42,4 @@ No registrar los secretos en incidencias, tablas, capturas, scripts o archivos d
 
 ## Próxima fase
 
-Construir páginas de Panorama regional y Amenazas con un mapa de los 35 países, etiquetas de disponibilidad, filtros geográficos/temporales e indicadores sujetos a validación metodológica y autorización de las fuentes. La actualización debe hacer explícitas las diferentes fechas de referencia y cobertura temática.
+Desplegar en Streamlit Community Cloud el prototipo validado, revisar su diseño y métodos con OPS, y ampliar indicadores anuales de desplazamiento interno con IDMC GIDD y refugiados/asilo con ACNUR, preservando fechas, cobertura y fuentes. Consulta también `docs/fase2/fuentes_prioritarias.md`.
