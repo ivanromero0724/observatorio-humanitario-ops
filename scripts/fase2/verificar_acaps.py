@@ -40,11 +40,11 @@ def main():
                     "User-Agent": "observatorio-humanitario-ops/0.3 (ACAPS API check)",
                 },
                 timeout=35,
-                allow_redirects=False,
+                allow_redirects=True,
             )
             record["http_status"] = res.status_code
-            if res.is_redirect:
-                target=urlparse(res.headers.get("Location",""))
+            if res.history:
+                target=urlparse(res.url)
                 record["redirige_a"] = {"host":target.hostname or "mismo_dominio",
                                        "ruta":target.path[:180]}
             try:
@@ -66,7 +66,7 @@ def main():
                 record["estado"] = "ACCESO_RECHAZADO"
             elif res.status_code in (301, 302, 303, 307, 308):
                 record["estado"] = "REDIRECCION"
-                record["nota"] = "El endpoint de datos redirige; verificar autenticación y ruta."
+                record["nota"] = "El endpoint de datos sigue redirigiendo; verificar autenticación y ruta."
             else:
                 record["estado"] = "RESPUESTA_INESPERADA"
         except (requests.RequestException, ValueError):
