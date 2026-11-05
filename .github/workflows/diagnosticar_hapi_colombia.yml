@@ -1,0 +1,24 @@
+name: QA HAPI Colombia - diagnostico de duplicados
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase1/diagnosticar_colombia_hapi.py
+      - .github/workflows/diagnosticar_hapi_colombia.yml
+permissions:
+  contents: read
+jobs:
+  diagnostico:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.31,<3'
+      - name: Verificar duplicaciones nacionales HAPI
+        env:
+          HDX_APP_IDENTIFIER: ${{ secrets.HDX_APP_IDENTIFIER }}
+        run: python scripts/fase1/diagnosticar_colombia_hapi.py
