@@ -1,0 +1,40 @@
+id,indicador,id_fuente,estado
+A01,Eventos de violencia política,F01,Preliminar; validar con Laura
+A02,Muertes reportadas por violencia política,F01,Preliminar; validar con Laura
+A03,Eventos con civiles como objetivo,F01,Preliminar; validar con Laura
+A04,Manifestaciones y disturbios,F01,Preliminar; validar con Laura
+A05,Variación trimestral de eventos,F01,Preliminar; validar con Laura
+A06,Tensiones entre países documentadas,F10,Preliminar; validar con Laura
+A07,Restricciones de acceso y movilidad,F10,Preliminar; validar con Laura
+M01,Personas desplazadas internas (stock),F07,Preliminar; validar con Laura
+M02,Nuevos desplazamientos documentados,F07,Preliminar; validar con Laura
+M03,Refugiados por país de asilo,F06,Preliminar; validar con Laura
+M04,Solicitantes de asilo,F06,Preliminar; validar con Laura
+H01,Personas en necesidad (PiN intersectorial),F02,Preliminar; validar con Laura
+H02,Personas afectadas reportadas,F02,Preliminar; validar con Laura
+H03,INFORM Severity por crisis,F04,Preliminar; validar con Laura
+H04,Ataques a atención sanitaria,F08,Preliminar; validar con Laura
+H05,Muertes en ataques a salud,F08,Preliminar; validar con Laura
+H06,Lesiones en ataques a salud,F08,Preliminar; validar con Laura
+H07,Ataques a instalaciones sanitarias,F08,Preliminar; validar con Laura
+H08,Interrupción de servicios esenciales,F10,Preliminar; validar con Laura
+V01,INFORM Risk global,F03,Preliminar; validar con Laura
+V02,INFORM amenazas y exposición,F03,Preliminar; validar con Laura
+V03,INFORM vulnerabilidad,F03,Preliminar; validar con Laura
+V04,INFORM falta de capacidad afrontamiento,F03,Preliminar; validar con Laura
+V05,Coeficiente de Gini,F05,Preliminar; validar con Laura
+V06,Años promedio escolaridad,F05,Preliminar; validar con Laura
+V07,Concentración PM2.5 por ciudades,F05,Preliminar; validar con Laura
+V08,Población total,F05,Preliminar; validar con Laura
+S01,Médicos por 10000 habitantes,F05,Preliminar; validar con Laura
+S02,Enfermería por 10000 habitantes,F05,Preliminar; validar con Laura
+S03,Camas hospitalarias por 1000 habitantes,F05,Preliminar; validar con Laura
+S04,Cobertura DTP3,F05,Preliminar; validar con Laura
+S05,Cobertura SRP1,F05,Preliminar; validar con Laura
+S06,Mortalidad de contexto,F05,Preliminar; validar con Laura
+C01,Índice criminalidad organizada,F11,Preliminar; validar con Laura
+C02,Crímenes recursos no renovables,F11,Preliminar; validar con Laura
+C03,Mercados ilícitos cocaína,F11,Preliminar; validar con Laura
+C04,Área cultivada con coca,F12,Preliminar; validar con Laura
+C05,Fragilidad sociopolítica documentada,F10,Preliminar; validar con Laura
+W01,Índice de inestabilidad WarMonit,F09,Preliminar; validar con Laura
