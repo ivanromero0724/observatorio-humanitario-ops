@@ -1,0 +1,178 @@
+{
+  "fecha_ejecucion_utc": "2026-11-05T21:59:26.470381+00:00",
+  "alcance": "35 países soberanos de las Américas; los territorios dependientes no están incluidos",
+  "paises_catalogo": 35,
+  "fuentes": {
+    "HAPI conflicto 2020+": {
+      "paises_evaluados": 35,
+      "estados": {
+        "cobertura_verificada": 33,
+        "paginacion_incompleta": 2
+      },
+      "paises_con_registros": [
+        "CAN",
+        "USA",
+        "MEX",
+        "BLZ",
+        "CRI",
+        "SLV",
+        "GTM",
+        "HND",
+        "NIC",
+        "PAN",
+        "ATG",
+        "BHS",
+        "BRB",
+        "CUB",
+        "DMA",
+        "DOM",
+        "GRD",
+        "HTI",
+        "JAM",
+        "KNA",
+        "LCA",
+        "VCT",
+        "TTO",
+        "ARG",
+        "BOL",
+        "BRA",
+        "CHL",
+        "COL",
+        "ECU",
+        "GUY",
+        "PRY",
+        "PER",
+        "SUR",
+        "URY",
+        "VEN"
+      ],
+      "paises_sin_registros_catalogo": []
+    },
+    "OIM DTM Baseline": {
+      "paises_evaluados": 35,
+      "estados": {
+        "registros_verificados": 12,
+        "sin_registros_catalogo": 23
+      },
+      "paises_con_registros": [
+        "SLV",
+        "GTM",
+        "HND",
+        "ATG",
+        "BHS",
+        "DMA",
+        "GRD",
+        "HTI",
+        "VCT",
+        "BOL",
+        "ECU",
+        "PER"
+      ],
+      "paises_sin_registros_catalogo": [
+        "CAN",
+        "USA",
+        "MEX",
+        "BLZ",
+        "CRI",
+        "NIC",
+        "PAN",
+        "BRB",
+        "CUB",
+        "DOM",
+        "JAM",
+        "KNA",
+        "LCA",
+        "TTO",
+        "ARG",
+        "BRA",
+        "CHL",
+        "COL",
+        "GUY",
+        "PRY",
+        "SUR",
+        "URY",
+        "VEN"
+      ]
+    },
+    "OIM DTM HNA": {
+      "paises_evaluados": 35,
+      "estados": {
+        "sin_registros_catalogo": 35
+      },
+      "paises_con_registros": [],
+      "paises_sin_registros_catalogo": [
+        "CAN",
+        "USA",
+        "MEX",
+        "BLZ",
+        "CRI",
+        "SLV",
+        "GTM",
+        "HND",
+        "NIC",
+        "PAN",
+        "ATG",
+        "BHS",
+        "BRB",
+        "CUB",
+        "DMA",
+        "DOM",
+        "GRD",
+        "HTI",
+        "JAM",
+        "KNA",
+        "LCA",
+        "VCT",
+        "TTO",
+        "ARG",
+        "BOL",
+        "BRA",
+        "CHL",
+        "COL",
+        "ECU",
+        "GUY",
+        "PRY",
+        "PER",
+        "SUR",
+        "URY",
+        "VEN"
+      ]
+    }
+  },
+  "dtm_catalogo": {
+    "estado": "catalogo_descargado",
+    "filas_catalogo_mundial": 54,
+    "paises_americas_catalogo": [
+      "ATG",
+      "BHS",
+      "BOL",
+      "DMA",
+      "ECU",
+      "GRD",
+      "GTM",
+      "HND",
+      "HTI",
+      "PER",
+      "SLV",
+      "VCT"
+    ],
+    "columnas_catalogo": [
+      "admin0Name",
+      "admin0Pcode"
+    ]
+  },
+  "hna_catalogo": {
+    "estado": "catalogo_descargado",
+    "filas_catalogo_mundial": 4,
+    "paises_americas_catalogo": [],
+    "columnas_catalogo": [
+      "admin0Pcode",
+      "admin0Name",
+      "populationGroup",
+      "years"
+    ]
+  },
+  "interpretacion": "Una ausencia en API o catálogo no implica ausencia de amenazas o desplazamientos.",
+  "advertencia_hapi": "Las 3 categorías ACLED agregadas HAPI no son mutuamente excluyentes; no sumar.",
+  "advertencia_oim": "DTM cubre países/operaciones específicas y no necesariamente toda la región."
+}
