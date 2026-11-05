@@ -155,25 +155,55 @@ def inform(kind,url,coverage,logs,schema):
             summaries.append({"hoja":name,"filas_leidas":len(rs),"iso3_pilotos":[x for x in hits if x in PILOTO],
                 "iso3_americas_en_muestra":len(hits),"muestra_primera_fila":list(rs[0].values())[:14] if rs else []})
         schema[kind]=summaries[:45]
-        candidates=[x for x in summaries if x["iso3_americas_en_muestra"]>=5]
+        wanted = ("INFORM Risk 2026 (a-z)" if kind == "INFORM_Risk"
+                  else "INFORM Severity - hidden")
+        target = next(((n,rs) for n,rs in sheets if n == wanted),None)
+        found={}
+        if target:
+            rows=target[1]
+            header=next((r for r in rows[:12] if "ISO3" in r.values()
+                         and ("INFORM RISK" in r.values() or "INFORM Severity Index" in r.values())),None)
+            if header:
+                reverse={v:k for k,v in header.items()}
+                code_col=reverse["ISO3"]
+                score_col=(reverse["INFORM RISK"] if kind=="INFORM_Risk"
+                           else reverse["INFORM Severity Index"])
+                for row in rows:
+                    iso=row.get(code_col,"").strip().upper()
+                    if iso not in {x[0] for x in PAISES}:continue
+                    raw=row.get(score_col,"").strip()
+                    try:score=float(raw)
+                    except (TypeError,ValueError):continue
+                    if 0<=score<=10:
+                        found.setdefault(iso,[]).append(score)
+        schema[kind+"_parse"]={"hoja":wanted,"paises_con_puntaje":len(found),
+            "registros_entre_paises":sum(len(x) for x in found.values()),
+            "ejemplo_piloto":{iso:found.get(iso,[])[:4] for iso in PILOTO}}
         for iso,a,name in PAISES:
-            if candidates:
-                coverage.append(registro(kind,iso,name,"archivo_descargado_requiere_mapeo_columnas",
-                    detail="Archivo XLSX accesible; falta mapear hoja, campo ISO3, puntuación y fecha",
-                    url=url))
-            else:
-                coverage.append(registro(kind,iso,name,"archivo_descargado_sin_mapeo_de_filas",
-                    detail="No se identificó tabla estructurada; no inferir ausencia del país",url=url))
-        return {"bytes":len(r.content),"hojas":len(sheets),"candidatas":len(candidates)}
+            scores=found.get(iso,[])
+            coverage.append(registro(kind,iso,name,
+                "puntuacion_verificada" if scores else "sin_puntuacion_en_hoja",
+                "2026" if kind=="INFORM_Risk" and scores else ("2026-09" if scores else ""),
+                "2026" if kind=="INFORM_Risk" and scores else ("2026-09" if scores else ""),
+                len(scores),
+                ("valor="+str(scores[0]) if kind=="INFORM_Risk"
+                 else "crisis="+str(len(scores))+"; máximo="+str(max(scores))) if scores
+                else "Ausencia en tabla seleccionada no equivale a puntaje cero",
+                url=url))
+        return {"bytes":len(r.content),"hojas":len(sheets),
+                "paises_con_puntaje":len(found)}
     return try_source(kind,run,logs)
 
-PAHO_NAMES = ["Coeficiente de GINI","Años de escolaridad promedio (en años)",
- "Razón de camas hospitalarias (1 000 habs)",
- "Densidad de Médicos/as (10 000 habs) [nuevo]",
- "Densidad de personal de enfermería (10 000 habs) [nuevo]",
- "Cobertura de inmunización en menores de 1 año (%), DTP3-vc",
- "Cobertura de inmunización en niños de 1 año (%), SRP1",
- "Tasa de mortalidad por homicidio (ajustada por edad por 100 000 habs)"]
+PAHO_PATTERNS = {
+    "GINI": r"gini",
+    "Escolaridad": r"(mean|average) years of schooling",
+    "Camas hospitalarias": r"hospital beds",
+    "Médicos": r"(medical doctors|physicians)",
+    "Enfermería": r"nursing personnel",
+    "DTP3": r"dtp.?3",
+    "SRP1": r"(mmr.?1|measles.*first dose)",
+    "Mortalidad por homicidio": r"homicide",
+}
 def paho(coverage,logs,schema):
     def run():
         page=fetch(PAHO_PAGE,timeout=50)
@@ -200,24 +230,29 @@ def paho(coverage,logs,schema):
         candidates=[k for k in z.namelist() if k.lower().endswith(".csv")]
         if not candidates: raise ValueError("ZIP sin CSV")
         largest=max(candidates,key=lambda k:z.getinfo(k).file_size)
-        found={}
+        found={};samples=[];matched={}
         headers=[]
         with z.open(largest) as f:
             reader=csv.DictReader(io.TextIOWrapper(f,encoding="utf-8-sig",errors="replace",newline=""))
             headers=reader.fieldnames or []
             for row in reader:
-                name=row.get("nombre_indicador","").strip()
-                iso=row.get("spatial_dim","").upper().strip()
-                yr=row.get("time_dim","").strip()
-                if name not in PAHO_NAMES or iso not in {x for x,_,_ in PAISES}: continue
-                if not row.get("numeric_value","").strip():continue
-                key=(iso,name)
-                if yr.isdigit() and len(yr)==4:
+                name=row.get("label_en","").strip()
+                iso=row.get("country_code_iso3","").upper().strip()
+                yr=row.get("period_id","").strip()
+                if iso not in {x for x,_,_ in PAISES}:continue
+                if len(samples)<30 and name and name not in samples:samples.append(name)
+                kind=next((k for k,p in PAHO_PATTERNS.items()
+                           if re.search(p,name,re.I)),None)
+                if not kind or not row.get("val","").strip():continue
+                key=(iso,kind)
+                if re.match(r"^20[0-9]{2}$",yr):
                     found.setdefault(key,set()).add(int(yr))
-        schema["OPS"]={"csv":largest,"headers":headers,"indicadores_filtrados":PAHO_NAMES,
+                    matched.setdefault(kind,set()).add(name)
+        schema["OPS"]={"csv":largest,"headers":headers,"etiquetas_ejemplo":samples,
+                       "etiquetas_seleccionadas":{k:sorted(v)[:12] for k,v in matched.items()},
                        "filas_pais_indicador":len(found)}
         for iso,a,pais in PAISES:
-            for name in PAHO_NAMES:
+            for name in PAHO_PATTERNS:
                 ys=found.get((iso,name),set())
                 coverage.append(registro("OPS:"+name,iso,pais,
                     "registro_verificado" if ys else "sin_registro_en_extraccion",
