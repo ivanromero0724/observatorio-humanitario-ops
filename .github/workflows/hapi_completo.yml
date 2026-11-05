@@ -1,0 +1,50 @@
+name: HAPI completo - series mensuales por pais
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase1/descargar_hapi_completo.py
+      - .github/workflows/hapi_completo.yml
+permissions:
+  contents: write
+concurrency:
+  group: hapi-completo
+  cancel-in-progress: true
+jobs:
+  extraer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.31,<3'
+      - name: Descargar series HAPI exhaustivamente y validar por pais
+        env:
+          HDX_APP_IDENTIFIER: ${{ secrets.HDX_APP_IDENTIFIER }}
+        run: python scripts/fase1/descargar_hapi_completo.py
+      - name: Comprobar que todas las filas publicadas son de paises completos
+        run: |
+          python - <<'PY'
+          import json,csv
+          with open('docs/fase1/hapi_extraccion_completa.json') as f: j=json.load(f)
+          with open('data/observaciones/hapi_conflicto_pais_mes.csv') as f: a=list(csv.DictReader(f))
+          ok={c['iso3'] for c in j['paises'] if c['estado']=='COMPLETO'}
+          assert j['paises_esperados']==35
+          assert all(r['iso3'] in ok for r in a)
+          assert len({(r['iso3'],r['periodo'],r['tipo_evento']) for r in a})==len(a)
+          assert len(a)==j['filas_mensuales_publicadas']
+          print('OK, datos verificados por país y mes:',len(a),'países:',len(ok))
+          PY
+      - name: Publicar solo agregados verificados y reporte de calidad
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/observaciones/hapi_conflicto_pais_mes.csv docs/fase1/hapi_extraccion_completa.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: publicar HAPI completo y validado por país [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
