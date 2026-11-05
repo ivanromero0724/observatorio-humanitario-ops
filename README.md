@@ -9,7 +9,7 @@ La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye s
 - **Mapa regional:** INFORM Risk Mid 2026 (35 países) y detalle de 25 crisis INFORM Severity.
 - **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
 - **Desplazamiento:** cobertura OIM DTM para 35 países sin imputar ceros ni sumar rondas incompatibles.
-- **Conflicto:** solo muestra agregados mensuales de HAPI cuando la extracción país-a-país está completa y pasa validaciones geográficas y numéricas; no sumar categorías ACLED.
+- **Conflicto:** 8.574 agregados país–mes–categoría de HAPI, a partir de las 35 extracciones completas y con QA; no sumar categorías ACLED.
 - **Países:** ficha con crisis, riesgo, indicadores OPS, y disponibilidad de fuentes.
 - **Fuentes:** fechas y limitaciones para permitir revisión metodológica.
 
@@ -39,7 +39,7 @@ La primera ejecución de [`piloto_americas.yml`](.github/workflows/piloto_americ
 
 | Fuente | Países evaluados | Disponibilidad bajo filtros aplicados |
 |---|---:|---|
-| HDX HAPI / conflicto desde 2020 | 35 | 33 consultas completas; Colombia y Venezuela con paginación parcial (admin2) |
+| HDX HAPI / conflicto desde 2020 | 35 | 35 países con paginación exhaustiva y QA aprobada; 8.574 registros país–mes–categoría; Colombia: 238 duplicados idénticos eliminados y 8 marcadores cero reconciliados |
 | OIM DTM Baseline (IDP) | 35 | 12 países con registros Admin0; 23 sin país en el catálogo de la API |
 | OIM DTM Humanitarian Needs Assessment (HNA) | 35 | Ningún país americano en el catálogo actual de 4 filas globales |
 
@@ -65,7 +65,7 @@ La exploración preliminar de ACNUR para cinco países sigue documentada como an
 
 **ACNUR API:** 9 de 10 consultas del piloto de 5 países devolvieron al menos un registro; la combinación Haití/solicitantes de asilo no devolvió filas **con los filtros empleados**. Son pruebas de conectividad y cobertura muestral; no equivalen a análisis completo de flujos. No se han publicado cifras derivadas de esta API.
 
-**HDX HAPI conflicto y OIM DTM:** claves configuradas y autenticación verificada; la extracción completa de HAPI cuenta con controles explícitos de exclusión. **ACLED detallado:** en espera de licencia de sector público aplicable a OPS. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** solicitud de appname presentada y pendiente de aprobación. No se inventaron resultados para esas fuentes.
+**HDX HAPI conflicto y OIM DTM:** claves configuradas y autenticación verificada; extracción HAPI completada para 35/35 países y reglas de integridad documentadas. **ACLED detallado:** en espera de licencia de sector público aplicable a OPS. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** solicitud de appname presentada y pendiente de aprobación. No se inventaron resultados para esas fuentes.
 
 ### Estructura del proyecto
 - `docs/fase1/diagnostico.md`: inventario de 13 fuentes, metodología inicial, límites y decisiones pendientes.
