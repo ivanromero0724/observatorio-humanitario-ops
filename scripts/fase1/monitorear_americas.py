@@ -90,6 +90,36 @@ def request_hapi(iso,key,offset):
     raise RuntimeError("No se completó la solicitud HAPI")
 
 def hapi_regional(countries):
+    # Preferir la extracción exhaustiva y validada, no la vieja muestra
+    # limitada a 15 páginas. Las filas fuente nunca se publican aquí.
+    report_file=SALIDA/"hapi_extraccion_completa.json"
+    monthly_file=ROOT/"data/observaciones/hapi_conflicto_pais_mes.csv"
+    if report_file.exists() and monthly_file.exists():
+        try:
+            report=json.loads(report_file.read_text(encoding="utf-8"))
+            state={x["iso3"]:x for x in report.get("paises",[])}
+            if len(state)==len(countries)==35:
+                periods={}
+                with monthly_file.open(encoding="utf-8",newline="") as f:
+                    for rec in csv.DictReader(f):
+                        periods.setdefault(rec["iso3"],[]).append(rec["periodo"])
+                out=[]
+                for country in countries:
+                    iso=country["iso3"];x=state[iso]
+                    complete=x["estado"]=="COMPLETO"
+                    dd=periods.get(iso,[])
+                    out.append(fila(country,"HAPI conflicto 2020+",
+                        "cobertura_verificada" if complete else "excluido_qa",
+                        x["registros_api"] if complete else 0,
+                        min(dd) if dd else "",max(dd) if dd else "",
+                        "Extracción íntegra y control de duplicados HAPI; corte "+
+                        report.get("fecha_utc",""),
+                        "país-mes-tipo"))
+                print("HAPI",report.get("paises_completos"),
+                      "países completamente verificados en snapshot",flush=True)
+                return out
+        except (OSError,ValueError,KeyError,TypeError):
+            pass
     result=[]
     key=os.getenv("HDX_APP_IDENTIFIER","").strip()
     for country in countries:
