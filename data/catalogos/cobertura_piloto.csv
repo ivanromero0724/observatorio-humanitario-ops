@@ -1,36 +1,36 @@
-iso3,pais,alcance,estado_cobertura_fuentes
-CAN,Canadá,Piloto regional — 35 países,Pendiente de evaluación por fuente
-USA,Estados Unidos,Piloto regional — 35 países,Pendiente de evaluación por fuente
-MEX,México,Piloto regional — 35 países,Pendiente de evaluación por fuente
-BLZ,Belice,Piloto regional — 35 países,Pendiente de evaluación por fuente
-CRI,Costa Rica,Piloto regional — 35 países,Pendiente de evaluación por fuente
-SLV,El Salvador,Piloto regional — 35 países,Pendiente de evaluación por fuente
-GTM,Guatemala,Piloto regional — 35 países,Pendiente de evaluación por fuente
-HND,Honduras,Piloto regional — 35 países,Pendiente de evaluación por fuente
-NIC,Nicaragua,Piloto regional — 35 países,Pendiente de evaluación por fuente
-PAN,Panamá,Piloto regional — 35 países,Pendiente de evaluación por fuente
-ATG,Antigua y Barbuda,Piloto regional — 35 países,Pendiente de evaluación por fuente
-BHS,Bahamas,Piloto regional — 35 países,Pendiente de evaluación por fuente
-BRB,Barbados,Piloto regional — 35 países,Pendiente de evaluación por fuente
-CUB,Cuba,Piloto regional — 35 países,Pendiente de evaluación por fuente
-DMA,Dominica,Piloto regional — 35 países,Pendiente de evaluación por fuente
-DOM,República Dominicana,Piloto regional — 35 países,Pendiente de evaluación por fuente
-GRD,Granada,Piloto regional — 35 países,Pendiente de evaluación por fuente
-HTI,Haití,Piloto regional — 35 países,Pendiente de evaluación por fuente
-JAM,Jamaica,Piloto regional — 35 países,Pendiente de evaluación por fuente
-KNA,San Cristóbal y Nieves,Piloto regional — 35 países,Pendiente de evaluación por fuente
-LCA,Santa Lucía,Piloto regional — 35 países,Pendiente de evaluación por fuente
-VCT,San Vicente y las Granadinas,Piloto regional — 35 países,Pendiente de evaluación por fuente
-TTO,Trinidad y Tobago,Piloto regional — 35 países,Pendiente de evaluación por fuente
-ARG,Argentina,Piloto regional — 35 países,Pendiente de evaluación por fuente
-BOL,Bolivia,Piloto regional — 35 países,Pendiente de evaluación por fuente
-BRA,Brasil,Piloto regional — 35 países,Pendiente de evaluación por fuente
-CHL,Chile,Piloto regional — 35 países,Pendiente de evaluación por fuente
-COL,Colombia,Piloto regional — 35 países,Pendiente de evaluación por fuente
-ECU,Ecuador,Piloto regional — 35 países,Pendiente de evaluación por fuente
-GUY,Guyana,Piloto regional — 35 países,Pendiente de evaluación por fuente
-PRY,Paraguay,Piloto regional — 35 países,Pendiente de evaluación por fuente
-PER,Perú,Piloto regional — 35 países,Pendiente de evaluación por fuente
-SUR,Surinam,Piloto regional — 35 países,Pendiente de evaluación por fuente
-URY,Uruguay,Piloto regional — 35 países,Pendiente de evaluación por fuente
-VEN,Venezuela,Piloto regional — 35 países,Pendiente de evaluación por fuente
+iso3,pais,subregion,hapi_conflicto_2020_mas,dtm_baseline,dtm_hna,fecha_revision
+CAN,Canadá,América del Norte,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+USA,Estados Unidos,América del Norte,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+MEX,México,América del Norte,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+BLZ,Belice,Centroamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+CRI,Costa Rica,Centroamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+SLV,El Salvador,Centroamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+GTM,Guatemala,Centroamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+HND,Honduras,Centroamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+NIC,Nicaragua,Centroamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+PAN,Panamá,Centroamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+ATG,Antigua y Barbuda,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+BHS,Bahamas,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+BRB,Barbados,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+CUB,Cuba,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+DMA,Dominica,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+DOM,República Dominicana,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+GRD,Granada,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+HTI,Haití,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+JAM,Jamaica,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+KNA,San Cristóbal y Nieves,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+LCA,Santa Lucía,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+VCT,San Vicente y las Granadinas,Caribe,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+TTO,Trinidad y Tobago,Caribe,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+ARG,Argentina,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+BOL,Bolivia,Sudamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+BRA,Brasil,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+CHL,Chile,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+COL,Colombia,Sudamérica,paginacion_incompleta,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+ECU,Ecuador,Sudamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+GUY,Guyana,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+PRY,Paraguay,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+PER,Perú,Sudamérica,cobertura_verificada,registros_verificados,sin_registros_catalogo,2026-11-05
+SUR,Surinam,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+URY,Uruguay,Sudamérica,cobertura_verificada,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
+VEN,Venezuela,Sudamérica,paginacion_incompleta,sin_registros_catalogo,sin_registros_catalogo,2026-11-05
