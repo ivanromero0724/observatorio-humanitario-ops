@@ -76,6 +76,7 @@ def norm_group(raw,iso):
                                   "geographies":{}})
     suspicious=Counter()
     removed_identical=0
+    resolved_zero_placeholders=0
     conflict_examples=[]
     for rec in raw:
         if str(rec.get("location_code","")).upper()!=iso:
@@ -119,8 +120,27 @@ def norm_group(raw,iso):
                    str(rec.get("admin1_name") or ""),
                    str(rec.get("admin2_name") or ""))
         if stamp in g["geographies"]:
-            if g["geographies"][stamp]==signature:
+            previous=g["geographies"][stamp]
+            if previous==signature:
                 removed_identical+=1
+                continue
+            # Regla auditable: misma fuente y misma identidad, una fila es
+            # marcador cero y la otra contiene eventos. Mantener el valor
+            # no cero; no sumar ambas filas.
+            same_identity=(previous[2:]==signature[2:])
+            zero_previous=(previous[0]==0 and previous[1] in (None,0))
+            zero_actual=(signature[0]==0 and signature[1] in (None,0))
+            if same_identity and (zero_previous != zero_actual):
+                resolved_zero_placeholders+=1
+                if zero_previous:
+                    g["events"]+=int(events)
+                    if fatalities is not None:
+                        g["fatalities"]+=int(fatalities)
+                    if previous[1] is None and fatalities is not None:
+                        g["fatalities_missing"]-=1
+                    elif previous[1] is not None and fatalities is None:
+                        g["fatalities_missing"]+=1
+                    g["geographies"][stamp]=signature
                 continue
             suspicious["conflicting_geo_month_type"]+=1
             if len(conflict_examples)<10:
@@ -152,7 +172,7 @@ def norm_group(raw,iso):
             "mezclas_niveles":len(problems),
             "muestra":str(problems[:2])[:120],
             "conflictos_muestra":conflict_examples,
-        },removed_identical
+        },removed_identical,resolved_zero_placeholders
     output=[]
     for (iso,d,typ),g in sorted(grouped.items()):
         output.append({"iso3":iso,"periodo":d,"tipo_evento":typ,
@@ -161,7 +181,7 @@ def norm_group(raw,iso):
             "nivel_admin":next(iter(g["levels"])),"unidades_fuente":g["n_rows"],
             "fuente":"OCHA HDX HAPI / ACLED agregado",
             "consultado_utc":DATE_RUN})
-    return output,{},removed_identical
+    return output,{},removed_identical,resolved_zero_placeholders
 
 def main():
     key=os.getenv("HDX_APP_IDENTIFIER","").strip()
@@ -183,9 +203,9 @@ def main():
             reason="error_consulta_"+type(e).__name__
         if not complete and not reason:
             reason="paginacion_incompleta"
-        agg=[];issues={};removed_identical=0
+        agg=[];issues={};removed_identical=0;resolved_zero_placeholders=0
         if complete:
-            agg,issues,removed_identical=norm_group(raw,iso)
+            agg,issues,removed_identical,resolved_zero_placeholders=norm_group(raw,iso)
             if issues:
                 reason="validacion_geografica_o_numerica"
         if complete and not reason:
@@ -195,10 +215,13 @@ def main():
             "paginas_descargadas":(len(raw)+PAGE_SIZE-1)//PAGE_SIZE,
             "registros_api":len(raw),"registros_mensuales":len(agg) if not reason else 0,
             "motivo_exclusion":reason,"resumen_inconsistencias":issues,
-            "duplicados_identicos_eliminados":removed_identical})
+            "duplicados_identicos_eliminados":removed_identical,
+            "marcadores_cero_reconciliados":resolved_zero_placeholders})
         print(iso,statuses[-1]["estado"],"filas",len(raw),
               "mensuales",len(agg) if not reason else 0,
-              "duplicados_idénticos_eliminados",removed_identical,reason,flush=True)
+              "duplicados_idénticos_eliminados",removed_identical,
+              "marcadores_cero_reconciliados",resolved_zero_placeholders,
+              reason,flush=True)
     OUT.parent.mkdir(parents=True,exist_ok=True)
     fields=["iso3","periodo","tipo_evento","eventos","muertes_reportadas",
             "nivel_admin","unidades_fuente","fuente","consultado_utc"]
