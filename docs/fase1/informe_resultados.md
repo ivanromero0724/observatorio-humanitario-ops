@@ -7,11 +7,11 @@ Después de la exploración inicial de cinco países, el piloto de seguimiento d
 
 | Fuente | Resultado real | Advertencias |
 |---|---|---|
-| HAPI Conflicto, desde 2020 | 35 países consultados; 33 con paginación completa, 2 parciales (Colombia y Venezuela, admin2) | Filas agregadas mensuales, NO eventos individuales; clases no excluyentes |
+| HAPI Conflicto, desde 2020 | 35 países, 35 extracciones completas; 8.574 agregados país–mes–categoría | Colombia: 238 duplicados idénticos y 8 marcadores cero por geo/mes/fuente reconciliados; NO son eventos individuales ni categorías excluyentes |
 | OIM DTM Baseline | 12 países con registros Admin0: El Salvador, Guatemala, Honduras, Antigua y Barbuda, Bahamas, Dominica, Granada, Haití, San Vicente y las Granadinas, Bolivia, Ecuador y Perú | Ausencia en catálogo no equivale a cero desplazamiento |
 | OIM DTM HNA | Catálogo mundial de cuatro registros sin países del grupo de 35 | No significa ausencia de necesidades humanitarias |
  
-La tabla país×fuente incluye **105 filas y no contiene valores cero imputados para países ausentes**. Los registros de DTM pueden corresponder a diferentes rondas, años u operaciones y no se deben sumar automáticamente. Las dos series HAPI parciales precisan una futura extracción paginada adicional o periodos temporales más acotados.
+La tabla país×fuente incluye **105 filas y no contiene valores cero imputados para países ausentes**. Los registros de DTM pueden corresponder a diferentes rondas, años u operaciones y no se deben sumar automáticamente. La extracción HAPI completa quedó resuelta; no hay series truncadas. El método de conciliación de duplicados de Colombia está registrado en `hapi_extraccion_completa.json`.
 
 **Documentación:** [alcance](alcance_piloto_americas.md), [matriz de cobertura](cobertura_hapi_oim_americas.csv), [resumen verificable](resumen_piloto_regional.json).
 
