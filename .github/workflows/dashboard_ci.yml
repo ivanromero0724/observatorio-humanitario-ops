@@ -1,0 +1,29 @@
+name: Dashboard OPS - control de calidad
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - app.py
+      - requirements.txt
+      - scripts/probar_dashboard.py
+      - .github/workflows/dashboard_ci.yml
+      - data/observaciones/*.csv
+      - data/catalogos/paises_americas.csv
+permissions:
+  contents: read
+jobs:
+  test-streamlit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencias
+        run: python -m pip install -r requirements.txt
+      - name: Compilar archivos Python
+        run: python -m compileall -q app.py scripts/probar_dashboard.py scripts/fase1/descargar_hapi_completo.py
+      - name: Probar seis páginas de Streamlit
+        run: python scripts/probar_dashboard.py
