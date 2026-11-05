@@ -75,6 +75,7 @@ def norm_group(raw,iso):
                                   "levels":set(),"n_rows":0,
                                   "geographies":set()})
     suspicious=Counter()
+    removed_identical=0
     for rec in raw:
         if str(rec.get("location_code","")).upper()!=iso:
             suspicious["wrong_country"]+=1
@@ -108,6 +109,21 @@ def norm_group(raw,iso):
              str(rec.get("admin2_code") or rec.get("admin2_name") or ""))
         key=(iso,d,typ)
         g=grouped[key]
+        # Deduplicar solo si TODO coincide (misma fuente, área y cifras).
+        # Si hay valores en conflicto, el país sigue excluido por QA.
+        stamp=(level,geo)
+        signature=(int(events),None if fatalities is None else int(fatalities),
+                   str(rec.get("resource_hdx_id") or ""),
+                   str(rec.get("reference_period_end") or ""),
+                   str(rec.get("admin1_name") or ""),
+                   str(rec.get("admin2_name") or ""))
+        if stamp in g["geographies"]:
+            if g["geographies"][stamp]==signature:
+                removed_identical+=1
+                continue
+            suspicious["conflicting_geo_month_type"]+=1
+            continue
+        g["geographies"][stamp]=signature
         g["events"]+=int(events)
         if fatalities is None:
             g["fatalities_missing"]+=1
@@ -115,11 +131,6 @@ def norm_group(raw,iso):
             g["fatalities"]+=int(fatalities)
         g["levels"].add(level)
         g["n_rows"]+=1
-        # Dos recursos diferentes para el mismo mes, tipo y geo pueden solaparse
-        stamp=(level,geo)
-        if stamp in g["geographies"]:
-            suspicious["repeated_geo_month_type"]+=1
-        g["geographies"].add(stamp)
     problems=[]
     for key,g in grouped.items():
         if len(g["levels"])>1:
@@ -129,7 +140,7 @@ def norm_group(raw,iso):
             "errores":dict(suspicious),
             "mezclas_niveles":len(problems),
             "muestra":str(problems[:2])[:120],
-        }
+        },removed_identical
     output=[]
     for (iso,d,typ),g in sorted(grouped.items()):
         output.append({"iso3":iso,"periodo":d,"tipo_evento":typ,
@@ -138,7 +149,7 @@ def norm_group(raw,iso):
             "nivel_admin":next(iter(g["levels"])),"unidades_fuente":g["n_rows"],
             "fuente":"OCHA HDX HAPI / ACLED agregado",
             "consultado_utc":DATE_RUN})
-    return output,{}
+    return output,{},removed_identical
 
 def main():
     key=os.getenv("HDX_APP_IDENTIFIER","").strip()
@@ -160,9 +171,9 @@ def main():
             reason="error_consulta_"+type(e).__name__
         if not complete and not reason:
             reason="paginacion_incompleta"
-        agg=[];issues={}
+        agg=[];issues={};removed_identical=0
         if complete:
-            agg,issues=norm_group(raw,iso)
+            agg,issues,removed_identical=norm_group(raw,iso)
             if issues:
                 reason="validacion_geografica_o_numerica"
         if complete and not reason:
@@ -171,9 +182,11 @@ def main():
             "estado":"COMPLETO" if complete and not reason else "EXCLUIDO",
             "paginas_descargadas":(len(raw)+PAGE_SIZE-1)//PAGE_SIZE,
             "registros_api":len(raw),"registros_mensuales":len(agg) if not reason else 0,
-            "motivo_exclusion":reason,"resumen_inconsistencias":issues})
+            "motivo_exclusion":reason,"resumen_inconsistencias":issues,
+            "duplicados_identicos_eliminados":removed_identical})
         print(iso,statuses[-1]["estado"],"filas",len(raw),
-              "mensuales",len(agg) if not reason else 0,reason,flush=True)
+              "mensuales",len(agg) if not reason else 0,
+              "duplicados_idénticos_eliminados",removed_identical,reason,flush=True)
     OUT.parent.mkdir(parents=True,exist_ok=True)
     fields=["iso3","periodo","tipo_evento","eventos","muertes_reportadas",
             "nivel_admin","unidades_fuente","fuente","consultado_utc"]
