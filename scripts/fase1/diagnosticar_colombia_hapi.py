@@ -10,11 +10,12 @@ from datetime import datetime
 
 key=os.environ["HDX_APP_IDENTIFIER"].strip()
 r=requests.get("https://hapi.humdata.org/api/v2/coordination-context/conflict-events",
- params={"app_identifier":key,"location_code":"COL","limit":10000,"offset":270000,
-         "start_date":"2020-01-01","output_format":"json"},timeout=70)
+ params={"app_identifier":key,"location_code":"COL","limit":10000,"offset":0,
+         "start_date":"2025-01-01","end_date":"2025-01-31","output_format":"json"},timeout=70)
 r.raise_for_status()
 a=r.json().get("data",[])
-print("Filas página final:",len(a))
+print("Filas rango enero 2025:",len(a))
+print("Rango recibido:",min((str(x.get("reference_period_start")) for x in a),default=""),max((str(x.get("reference_period_start")) for x in a),default=""))
 counter=Counter(str(x.get("admin_level")) for x in a)
 print("Distribución niveles:",dict(counter))
 d=defaultdict(list)
