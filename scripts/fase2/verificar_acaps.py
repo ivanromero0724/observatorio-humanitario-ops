@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs/fase2/acaps_conexion.json"
@@ -25,6 +26,8 @@ def main():
         "http_status": None,
         "content_type_json": False,
         "recursos_disponibles": [],
+        "redirige_a": None,
+        "prueba_sin_token_http": None,
         "nota": "Prueba del endpoint INFORM Severity (no del índice web que redirige a login). No implica integración al dashboard.",
     }
     if token:
@@ -40,6 +43,16 @@ def main():
                 allow_redirects=False,
             )
             record["http_status"] = res.status_code
+            if res.is_redirect:
+                target=urlparse(res.headers.get("Location",""))
+                record["redirige_a"] = {"host":target.hostname or "mismo_dominio",
+                                       "ruta":target.path[:180]}
+            try:
+                public = requests.get(BASE, headers={"Accept":"application/json"},
+                                     timeout=25,allow_redirects=False)
+                record["prueba_sin_token_http"]=public.status_code
+            except requests.RequestException:
+                pass
             content_type = res.headers.get("Content-Type", "").lower()
             record["content_type_json"] = "json" in content_type
             if res.status_code == 200 and record["content_type_json"]:
