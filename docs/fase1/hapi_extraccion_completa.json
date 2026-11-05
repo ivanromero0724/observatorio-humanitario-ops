@@ -1,12 +1,10 @@
 {
-  "fecha_utc": "2026-11-05T22:30:14.850887+00:00",
+  "fecha_utc": "2026-11-05T22:32:27.181393+00:00",
   "fecha_inicio": "2020-01-01",
   "paises_esperados": 35,
-  "paises_completos": 34,
-  "paises_excluidos": [
-    "COL"
-  ],
-  "filas_mensuales_publicadas": 8328,
+  "paises_completos": 35,
+  "paises_excluidos": [],
+  "filas_mensuales_publicadas": 8574,
   "sin_credenciales_en_reporte": true,
   "metodologia": "Totales mensuales por tipo; NO sumar tipos. Una serie solo se incluye si se completó la paginación y pasó QA de geografía y números.",
   "paises": [
@@ -19,7 +17,8 @@
       "registros_mensuales": 210,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "USA",
@@ -30,7 +29,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "MEX",
@@ -41,7 +41,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "BLZ",
@@ -52,7 +53,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "CRI",
@@ -63,7 +65,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "SLV",
@@ -74,7 +77,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "GTM",
@@ -85,7 +89,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "HND",
@@ -96,7 +101,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "NIC",
@@ -107,7 +113,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "PAN",
@@ -118,7 +125,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "ATG",
@@ -129,7 +137,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "BHS",
@@ -140,7 +149,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "BRB",
@@ -151,7 +161,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "CUB",
@@ -162,7 +173,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "DMA",
@@ -173,7 +185,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "DOM",
@@ -184,7 +197,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "GRD",
@@ -195,7 +209,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "HTI",
@@ -206,7 +221,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "JAM",
@@ -217,7 +233,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "KNA",
@@ -228,7 +245,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "LCA",
@@ -239,7 +257,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "VCT",
@@ -250,7 +269,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "TTO",
@@ -261,7 +281,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "ARG",
@@ -272,7 +293,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "BOL",
@@ -283,7 +305,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "BRA",
@@ -294,7 +317,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "CHL",
@@ -305,122 +329,20 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "COL",
       "pais": "Colombia",
-      "estado": "EXCLUIDO",
+      "estado": "COMPLETO",
       "paginas_descargadas": 28,
       "registros_api": 276012,
-      "registros_mensuales": 0,
-      "motivo_exclusion": "validacion_geografica_o_numerica",
-      "resumen_inconsistencias": {
-        "errores": {
-          "conflicting_geo_month_type": 8
-        },
-        "mezclas_niveles": 0,
-        "muestra": "[]",
-        "conflictos_muestra": [
-          {
-            "mes": "2021-06",
-            "tipo": "civilian_targeting",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 1,
-            "actual_events": 0,
-            "prev_fatalities": 1,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2022-02",
-            "tipo": "civilian_targeting",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 2,
-            "actual_events": 0,
-            "prev_fatalities": 3,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2023-10",
-            "tipo": "demonstration",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 0,
-            "actual_events": 1,
-            "prev_fatalities": null,
-            "actual_fatalities": null,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2020-01",
-            "tipo": "political_violence",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 0,
-            "actual_events": 1,
-            "prev_fatalities": 0,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2021-06",
-            "tipo": "political_violence",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 1,
-            "actual_events": 0,
-            "prev_fatalities": 1,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2022-02",
-            "tipo": "political_violence",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 0,
-            "actual_events": 2,
-            "prev_fatalities": 0,
-            "actual_fatalities": 3,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2022-03",
-            "tipo": "political_violence",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 1,
-            "actual_events": 0,
-            "prev_fatalities": 0,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          },
-          {
-            "mes": "2025-12",
-            "tipo": "political_violence",
-            "geo": "(2, ('CO52', 'CO52260'))",
-            "prev_events": 1,
-            "actual_events": 0,
-            "prev_fatalities": 0,
-            "actual_fatalities": 0,
-            "misma_fuente": true,
-            "mismo_fin_periodo": true,
-            "mismo_nombre_admin": true
-          }
-        ]
-      },
-      "duplicados_identicos_eliminados": 238
+      "registros_mensuales": 246,
+      "motivo_exclusion": "",
+      "resumen_inconsistencias": {},
+      "duplicados_identicos_eliminados": 238,
+      "marcadores_cero_reconciliados": 8
     },
     {
       "iso3": "ECU",
@@ -431,7 +353,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "GUY",
@@ -442,7 +365,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "PRY",
@@ -453,7 +377,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "PER",
@@ -464,7 +389,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "SUR",
@@ -475,7 +401,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "URY",
@@ -486,7 +413,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     },
     {
       "iso3": "VEN",
@@ -497,7 +425,8 @@
       "registros_mensuales": 246,
       "motivo_exclusion": "",
       "resumen_inconsistencias": {},
-      "duplicados_identicos_eliminados": 0
+      "duplicados_identicos_eliminados": 0,
+      "marcadores_cero_reconciliados": 0
     }
   ]
 }
