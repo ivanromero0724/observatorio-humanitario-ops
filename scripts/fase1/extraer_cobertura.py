@@ -388,6 +388,12 @@ def main():
     paho(coverage,logs,schema)
     unhcr(coverage,logs)
     hapi(coverage,logs)
+    fuentes_esenciales = ["WarMonit","INFORM_Risk","INFORM_Severity","OPS","ACNUR"]
+    fallidas = [x for x in fuentes_esenciales
+                if logs.get(x,{}).get("estado") != "descarga_ok"]
+    if fallidas:
+        raise SystemExit("Extracción incompleta. Se preserva el corte publicado. Fuentes: "
+                         + ", ".join(fallidas))
     for filename, obj in [(args.report,{"fecha_utc":DATA_DATE,"estado":logs,
                           "observacion":"Cobertura exploratoria; no equivale a aprobación metodológica"}),
                           (args.schema,schema)]:
