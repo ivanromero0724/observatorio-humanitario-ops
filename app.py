@@ -387,10 +387,14 @@ elif page == "Conflicto y violencia":
                 format_func=lambda s:HAPI_TYPES[s],
             )
             variable=st.radio(
-                "Variable",["eventos","muertes_reportadas"],horizontal=True,
+                "Variable",["eventos"] if label=="demonstration"
+                else ["eventos","muertes_reportadas"],horizontal=True,
                 format_func=lambda s: "Eventos reportados" if s=="eventos"
                 else "Muertes reportadas",
             )
+            if label=="demonstration":
+                st.caption("HAPI no comunica muertes para manifestaciones en esta serie; "
+                           "un valor no informado no se interpreta como cero.")
             series=hapi[(hapi["iso3"]==iso)&
                         (hapi["tipo_evento"]==label)].sort_values("periodo_dt")
             if not series.empty:
