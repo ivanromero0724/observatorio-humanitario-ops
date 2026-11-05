@@ -1045,6 +1045,8 @@
         "Density of nursing personnel (10 000 pop)"
       ]
     },
-    "filas_pais_indicador": 266
+    "filas_pais_indicador": 266,
+    "filas_pais_anio_normalizadas": 3038,
+    "claves_con_valores_contradictorios_excluidas": 0
   }
 }

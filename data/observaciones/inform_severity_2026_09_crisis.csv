@@ -1,0 +1,26 @@
+iso3,pais,edicion,puntuacion,crisis_id,crisis,fuente
+BRA,Brasil,Septiembre 2026,5.2,BRA002,Displacement from Venezuela to Brazil,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+CHL,Chile,Septiembre 2026,5.0,CHL002,Displacement from Venezuela to Chile,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+COL,Colombia,Septiembre 2026,8.4,COL001,Conflict and Climatic Shocks in Colombia,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+COL,Colombia,Septiembre 2026,6.9,COL002,Displacement from Venezuela to Colombia,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+COL,Colombia,Septiembre 2026,8.5,COL004,Multiple Crises in Colombia,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+COL,Colombia,Septiembre 2026,4.5,COL005,2026 Earthquake,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+CRI,Costa Rica,Septiembre 2026,4.6,CRI001,Multiple Crises in Costa Rica,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+CRI,Costa Rica,Septiembre 2026,4.0,CRI002,Displacement from Nicaragua to Costa Rica,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+CRI,Costa Rica,Septiembre 2026,3.1,CRI003,Displacement from Venezuela to Costa Rica,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+CUB,Cuba,Septiembre 2026,6.9,CUB004,Complex Crisis in Cuba,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+DOM,República Dominicana,Septiembre 2026,4.2,DOM002,Displacement from Venezuela to Dominican Republic,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+ECU,Ecuador,Septiembre 2026,7.4,ECU001,Multiple crises in Ecuador,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+ECU,Ecuador,Septiembre 2026,5.5,ECU002,Displacement from Venezuela to Ecuador,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+ECU,Ecuador,Septiembre 2026,7.2,ECU005,"Conflict, violence and Climatic Shocks in Ecuador",https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+GTM,Guatemala,Septiembre 2026,7.4,GTM001,Climatic Shocks and Violence in Guatemala,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+HND,Honduras,Septiembre 2026,6.9,HND001,Climatic Shocks and Conflict and Violence in Honduras,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+HTI,Haití,Septiembre 2026,8.9,HTI001,Complex crisis in Haiti,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+MEX,México,Septiembre 2026,5.8,MEX003,International Displacement to Mexico,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+PAN,Panamá,Septiembre 2026,3.8,PAN002,Displacement from Venezuela to Panama,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+PER,Perú,Septiembre 2026,6.0,PER002,Displacement from Venezuela to Peru,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+SLV,El Salvador,Septiembre 2026,5.8,SLV001,Political and Economic crisis in El Salvador,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+TTO,Trinidad y Tobago,Septiembre 2026,3.4,TTO002,Displacement from Venezuela to Trinidad and Tobago,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+VEN,Venezuela,Septiembre 2026,8.2,VEN001,Political and Economic crisis in Venezuela,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+VEN,Venezuela,Septiembre 2026,6.8,VEN002,2026 Earthquake in Venezuela,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx
+VEN,Venezuela,Septiembre 2026,8.5,VEN003,Multiple Crises in Venezuela,https://drmkc.jrc.ec.europa.eu/inform-index/Portals/0/InfoRM/Severity/2026/202609%20INFORM%20Severity%20-%20September%202026.xlsx

@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-05T18:00:05Z",
+  "fecha_utc": "2026-11-05T18:08:47Z",
   "estado": {
     "WarMonit": {
       "estado": "descarga_ok",
@@ -15,7 +15,7 @@
     },
     "OPS": {
       "estado": "descarga_ok",
-      "detalle": "{'bytes': 7381128, 'registros_pais_indicador': 266, 'csv': 'PAHO-Core-Indicators-2026-20261023.csv'}"
+      "detalle": "{'bytes': 7381128, 'registros_pais_indicador': 266, 'registros_pais_anio': 3038, 'conflictos_excluidos': 0, 'csv': 'PAHO-Core-Indicators-2026-20261023.csv'}"
     },
     "ACNUR": {
       "estado": "descarga_ok",
