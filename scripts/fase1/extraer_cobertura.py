@@ -195,14 +195,14 @@ def inform(kind,url,coverage,logs,schema):
     return try_source(kind,run,logs)
 
 PAHO_PATTERNS = {
-    "GINI": r"gini",
-    "Escolaridad": r"(mean|average) years of schooling",
-    "Camas hospitalarias": r"hospital beds",
-    "Médicos": r"(medical doctors|physicians)",
-    "Enfermería": r"nursing personnel",
-    "DTP3": r"dtp.?3",
-    "SRP1": r"(mmr.?1|measles.*first dose)",
-    "Mortalidad por homicidio": r"homicide",
+    "GINI": r"^GINI Index$",
+    "Escolaridad": r"^Mean years of schooling \(years\)$",
+    "Camas hospitalarias": r"^Hospital beds ratio \(1 000 pop\)$",
+    "Médicos": r"^Density of medical doctors \(10 000 pop\)$",
+    "Enfermería": r"^Density of nursing personnel \(10 000 pop\)$",
+    "DTP3": r"^Immunization coverage of under-1 year old \(%\), DTP3-cv$",
+    "SRP1": r"^Immunization coverage of 1 year old \(%\), MMR1$",
+    "Mortalidad por homicidio": r"^Homicide mortality rate \(age-adjusted per 100 000 pop\)$",
 }
 def paho(coverage,logs,schema):
     def run():
