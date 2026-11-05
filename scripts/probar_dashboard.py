@@ -20,6 +20,13 @@ def check(at,page):
     print("OK:",page)
 
 def main():
+    report=ROOT/"docs/fase1/hapi_extraccion_completa.json"
+    if report.exists():
+        import json
+        j=json.loads(report.read_text(encoding="utf-8"))
+        assert j.get("paises_completos")==35, "HAPI regional exige 35 extracciones verificadas"
+        assert not j.get("paises_excluidos"), "HAPI regional contiene países incompletos"
+        print("OK: HAPI 35/35 países, sin datos parciales")
     at=AppTest.from_file(str(APP),default_timeout=55)
     at.run()
     check(at,PAGES[0])
