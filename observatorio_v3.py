@@ -195,16 +195,30 @@ def situations(D,selected,names,months):
 
     left,right=st.columns([1,1],gap="medium")
     with left:
-        with card("¿Dónde hay contextos evaluados?",
-            "Azul: país con al menos un contexto ACAPS documentado. "
-            "Gris: sin registro en este corte.",
-            "ACAPS / GeoPackage Américas",height=CARD):
-            base=D["countries"][D["countries"]["iso3"].isin(selected)].copy()
-            has=set(sev["iso3"]) if not sev.empty else set()
-            base["Disponibilidad"]=base["iso3"].isin(has).map({
-                True:"Con registros",False:"Sin registros en catálogo"})
-            map_countries(base,"Disponibilidad","Contextos ACAPS",
-                          categorical=True,height=320)
+        with card("Distribución geográfica de las evaluaciones",
+            "Elige entre la mayor severidad ACAPS documentada por país "
+            "y la cobertura de evaluaciones.",
+            "ACAPS / GeoPackage Américas · no es prioridad OPS",height=CARD):
+            mode=st.radio("Representación",
+                ["Mayor severidad ACAPS","Cobertura de evaluaciones"],
+                key="situacion_mapa_modo",horizontal=True,
+                label_visibility="collapsed")
+            if mode=="Mayor severidad ACAPS":
+                mapped=(sev.sort_values("puntuacion",ascending=False)
+                        .drop_duplicates("iso3")
+                        if not sev.empty else
+                        pd.DataFrame(columns=["iso3","pais","puntuacion"]))
+                map_countries(mapped,"puntuacion","INFORM Severity / 10",
+                    height=280,legend_title="Máxima severidad ACAPS / 10")
+            else:
+                base=D["countries"][D["countries"]["iso3"].isin(selected)].copy()
+                has=set(sev["iso3"]) if not sev.empty else set()
+                base["Disponibilidad"]=base["iso3"].isin(has).map({
+                    True:"Con registros",False:"Sin registros en catálogo"})
+                map_countries(base,"Disponibilidad","Evaluaciones ACAPS",
+                    categorical=True,height=280)
+            st.caption("Severidad = puntuación máxima entre crisis evaluadas "
+                       "del país, no el nivel de riesgo total. Sin datos = gris.")
     with right:
         with card("¿Cómo evoluciona la violencia política?",
             f"Eventos de la categoría HAPI/ACLED durante los últimos {months} meses. "
