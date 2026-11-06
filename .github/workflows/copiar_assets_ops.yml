@@ -1,0 +1,41 @@
+name: Reutilizar geografia y logos OPS desde El Nino
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/copiar_assets_ops.yml
+permissions:
+  contents: write
+jobs:
+  copy-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar archivos versionados del tablero El Nino
+        run: |
+          mkdir -p assets data/geografia
+          RAW='https://raw.githubusercontent.com/ivanromero0724/el-nino-ops/main'
+          curl --fail --location --retry 3 --silent --show-error "$RAW/assets/ops_oms.png" --output assets/ops_oms.png
+          curl --fail --location --retry 3 --silent --show-error "$RAW/assets/PAHO_eng.png" --output assets/PAHO_eng.png
+          curl --fail --location --retry 3 --silent --show-error "$RAW/data/geografia/paises_americas.gpkg" --output data/geografia/paises_americas.gpkg
+          test "$(wc -c < assets/ops_oms.png)" -gt 4000
+          test "$(wc -c < data/geografia/paises_americas.gpkg)" -gt 100000
+          python - <<'PY'
+          import sqlite3
+          db=sqlite3.connect('data/geografia/paises_americas.gpkg')
+          n=db.execute('SELECT COUNT(*) FROM gpkg_contents').fetchone()[0]
+          assert n>=1
+          print('GeoPackage válido; capas:',n)
+          PY
+      - name: Publicar assets originales sin modificarlos
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/ops_oms.png assets/PAHO_eng.png data/geografia/paises_americas.gpkg
+          if ! git diff --cached --quiet; then
+            git commit -m 'assets: logo OPS bilingue y geopackage 50m desde el-nino-ops [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
