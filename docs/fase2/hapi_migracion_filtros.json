@@ -1,0 +1,693 @@
+{
+  "fecha_utc": "2026-11-06T17:30:06.192197+00:00",
+  "casos": {
+    "COL_sin_filtros": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "COL_solo_total": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "BGD",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "OOC",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "BOL",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "BOL",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "COL_total_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "BOL",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "BOL",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "COL_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "HTI_sin_filtros": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "OOC",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2025",
+          "grupo": "OOC",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "OOC",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2025",
+          "grupo": "OOC",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "OOC",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "HTI_solo_total": {
+      "http": 200,
+      "n": 3,
+      "muestra": [
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "OOC",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "anio": "2025",
+          "grupo": "OOC",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "HTI_total_ref": {
+      "http": 200,
+      "n": 1,
+      "muestra": [
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "HTI_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "5-11"
+        },
+        {
+          "origen": "CUB",
+          "asilo": "HTI",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "60+"
+        }
+      ]
+    },
+    "VEN_sin_filtros": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "VEN_solo_total": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CHL",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CHL",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "COL",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "VEN_total_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CHL",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "CHL",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "COL",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "VEN_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "VEN",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "BRA_sin_filtros": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    },
+    "BRA_solo_total": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "ASY",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "ASY",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "ALB",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "ASY",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "BRA_total_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "DZA",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "DZA",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        },
+        {
+          "origen": "AGO",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "all",
+          "edad": "all"
+        }
+      ]
+    },
+    "BRA_ref": {
+      "http": 200,
+      "n": 5,
+      "muestra": [
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "0-4"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2025",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "12-17"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "BRA",
+          "anio": "2024",
+          "grupo": "REF",
+          "genero": "f",
+          "edad": "18-59"
+        }
+      ]
+    }
+  }
+}
