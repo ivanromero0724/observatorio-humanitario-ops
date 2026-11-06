@@ -98,6 +98,9 @@ warmonit = load_csv("data/observaciones/warmonit_cii_ultimo.csv")
 acaps_severity = load_csv("data/observaciones/acaps_severity_americas.csv")
 acaps_access = load_csv("data/observaciones/acaps_acceso_americas.csv")
 acaps_meta = load_json("docs/fase2/acaps_actualizacion.json")
+dtm_latest = load_csv("data/observaciones/oim_dtm_ultima_ronda.csv")
+dtm_meta = load_json("docs/fase2/oim_actualizacion.json")
+
 severity_edition = "septiembre 2026 (INFORM Severity, archivo)"
 
 
@@ -172,6 +175,15 @@ if not reliefweb.empty:
     )
 if not warmonit.empty:
     warmonit = warmonit[warmonit["iso3"].isin(valid_iso)].copy()
+if not dtm_latest.empty:
+    dtm_latest = dtm_latest[dtm_latest["iso3"].isin(valid_iso)].copy()
+    dtm_latest["personas_idp_reportadas"]=pd.to_numeric(
+        dtm_latest["personas_idp_reportadas"], errors="coerce"
+    )
+    dtm_latest = dtm_latest.merge(
+        countries[["iso3", "pais", "subregion"]], on="iso3", how="left"
+    )
+
 
 
 def section(title: str, index: str, note: str = "") -> None:
@@ -566,6 +578,48 @@ elif page == "Desplazamiento y movilidad":
             table.to_csv(index=False).encode("utf-8-sig"),
             "cobertura_oim_dtm_americas.csv","text/csv",
         )
+    if not dtm_latest.empty:
+        st.divider()
+        st.markdown("#### Cifras por última ronda de operación · OIM DTM")
+        st.caption("Se muestra la **última fecha y ronda por operación**. "
+            "Cada fila conserva su origen geográfico y población reportada; "
+            "no se suman operaciones ni rondas como si fueran personas únicas.")
+        filtered=dtm_latest[dtm_latest["iso3"].isin(selected)].copy()
+        if filtered.empty:
+            st.info("No se dispone de rondas DTM en los países del filtro.")
+        else:
+            co=st.selectbox("País con datos de rondas",
+                sorted(filtered["iso3"].unique()),
+                format_func=lambda iso:
+                    countries.set_index("iso3").loc[iso,"pais"],
+                key="dtm_pais")
+            current=filtered[filtered["iso3"]==co].copy()
+            operation=st.selectbox("Operación o emergencia",
+                sorted(current["operacion"].dropna().unique()),
+                key="dtm_operacion")
+            current=current[current["operacion"]==operation]
+            a,b,c=st.columns(3)
+            a.metric("Registros última ronda",len(current))
+            b.metric("Ronda reportada",
+                str(current["ronda"].iloc[0]) if len(current) else "—")
+            c.metric("Fecha reportada",
+                str(current["fecha_reporte"].max()) if len(current) else "—")
+            tabla=current[["fecha_reporte","ronda","causa_desplazamiento",
+                "tipo_evaluacion","origen_admin1","personas_idp_reportadas",
+                "hombres","mujeres"]].rename(columns={
+                  "fecha_reporte":"Fecha","ronda":"Ronda",
+                  "causa_desplazamiento":"Causa",
+                  "tipo_evaluacion":"Tipo de evaluación",
+                  "origen_admin1":"Origen declarado",
+                  "personas_idp_reportadas":"Población IDP reportada",
+                  "hombres":"Hombres","mujeres":"Mujeres"})
+            st.dataframe(tabla,use_container_width=True,hide_index=True)
+            st.download_button("Descargar registros de la operación",
+                tabla.to_csv(index=False).encode("utf-8-sig"),
+                f"dtm_{co}_ultima_ronda.csv","text/csv")
+            st.caption("El periodo y los conteos son propios de esta operación. "
+                "El usuario no debe sumar orígenes o sexo cuando existan "
+                "categorías solapadas o faltantes.")
     st.divider()
     st.markdown("#### Otras fuentes de movilidad humana")
     st.info(
