@@ -1,8 +1,8 @@
-"""Observatorio Humanitario OPS/OMS · fase 1 del mandato humanitario.
+"""Observatorio Regional de Amenazas y Vulnerabilidad Humanitaria OPS/OMS.
 
-Temas: violencia/conflicto, migración/desplazamiento, acceso y contexto.
-Las categorías de prioridad serán definidas y validadas por Laura/PHE.
+Organizado según las cinco páginas de la propuesta técnica y la taxonomía
+inicial de Laura; sin asignar niveles de prioridad no validados.
 """
-from observatorio_v5 import main
+from observatorio_v6 import main
 
 main()
