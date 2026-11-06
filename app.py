@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from ui_ops import apply_style, header as ops_header, heading as ops_heading, map_countries, footer as ops_footer
 from paginas_extra import access_page, reports_page
+from graficos import finish as chart_finish, rank_bars, trend, strip_countries, severity_matrix
 
 ROOT = Path(__file__).resolve().parent
 OBS = ROOT / "data/observaciones"
@@ -197,14 +198,8 @@ def describe(source: str, edition: str, caveat: str = "") -> None:
 
 
 def default_layout(fig: go.Figure, height: int = 440) -> go.Figure:
-    fig.update_layout(
-        template="plotly_white", height=height,
-        margin=dict(t=28, b=10, l=12, r=12),
-        font=dict(family="Arial, sans-serif", color=NAVY, size=12),
-        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        coloraxis_colorbar=dict(title=""),
-    )
-    return fig
+    # Identidad gráfica propia del Observatorio, no el estilo de El Niño.
+    return chart_finish(fig, height=height)
 
 
 def choropleth(df: pd.DataFrame, metric: str, title: str,
@@ -304,23 +299,21 @@ if page == "Panorama regional":
     sc = severity[severity["iso3"].isin(selected)]
     a,b,c,d = st.columns(4)
     a.metric("Países en el análisis", f"{len(selected)}/35")
-    if not reliefweb.empty or not acaps_access.empty:
-        st.markdown("#### Fuentes humanitarias complementarias")
-        q1,q2,q3=st.columns(3)
-        q1.metric("Reportes ReliefWeb (90 días)",
-          int(reliefweb[reliefweb["iso3"].isin(selected)]["reporte_id"].nunique())
-          if not reliefweb.empty else "Sin datos")
-        q2.metric("Países con acceso ACAPS",
-          int(acaps_access[acaps_access["iso3"].isin(selected)]["iso3"].nunique())
-          if not acaps_access.empty else "Sin datos")
-        q3.metric("Países con serie HAPI validada",
-          len(valid_hapi.intersection(selected)))
-        st.caption("Reportes, puntuaciones de acceso y registros de conflicto "
-           "representan unidades distintas; no se combinan en un total ni índice.")
-
     b.metric("INFORM Risk", f"{len(rc)}/{len(selected)}")
     c.metric("Países con crisis INFORM Severity", f"{sc['iso3'].nunique()}")
     d.metric("Crisis individuales registradas", f"{len(sc)}")
+    if not reliefweb.empty or not acaps_access.empty:
+        with st.expander("Cobertura de otras fuentes humanitarias", expanded=False):
+            q1,q2,q3=st.columns(3)
+            q1.metric("Reportes ReliefWeb · 90 días",
+                int(reliefweb[reliefweb["iso3"].isin(selected)]["reporte_id"].nunique())
+                if not reliefweb.empty else "Sin datos")
+            q2.metric("Países con acceso ACAPS",
+                int(acaps_access[acaps_access["iso3"].isin(selected)]["iso3"].nunique())
+                if not acaps_access.empty else "Sin datos")
+            q3.metric("Series de conflicto HAPI validadas",
+                len(valid_hapi.intersection(selected)))
+            st.caption("Unidades diferentes: no se suman ni constituyen un índice.")
     st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
     col1,col2=st.columns([1.45,1],gap="large")
     with col1:
@@ -328,15 +321,9 @@ if page == "Panorama regional":
         map_countries(rc,"puntuacion","INFORM Risk",legend_title="INFORM Risk · escala 0–10")
     with col2:
         st.markdown("#### Países con mayor puntuación INFORM Risk")
-        plot = rc.head(12).sort_values("puntuacion")
-        fig = px.bar(
-            plot, x="puntuacion", y="pais", orientation="h",
-            text="puntuacion", color_discrete_sequence=[BLUE],
-            labels={"puntuacion":"Puntuación (0–10)","pais":""},
-        )
-        fig.update_traces(textposition="outside",texttemplate="%{x:.1f}")
-        fig.update_xaxes(range=[0,10],showgrid=True,gridcolor="#E8EDF2")
-        st.plotly_chart(default_layout(fig,520),use_container_width=True,
+        fig = rank_bars(rc, label="pais",value="puntuacion",
+                        limit=12,color=BLUE,units="INFORM Risk / 10",max_x=10.8)
+        st.plotly_chart(fig,use_container_width=True,
                         config={"displayModeBar":False})
     describe("INFORM Risk, Centro Común de Investigación (JRC/Comisión Europea)",
              "Mid 2026","Índice estructural multiamenaza, no únicamente conflicto.")
@@ -355,15 +342,9 @@ if page == "Panorama regional":
                             puntuacion_maxima=("puntuacion","max"))
                        .sort_values("puntuacion_maxima",ascending=False))
             st.markdown("#### Máxima gravedad entre crisis registradas")
-            fig=px.bar(
-                summaries.head(12).sort_values("puntuacion_maxima"),
-                x="puntuacion_maxima",y="pais",orientation="h",
-                color_discrete_sequence=[ORANGE],
-                labels={"puntuacion_maxima":"Máximo por crisis (0–10)","pais":""},
-                hover_data=["crisis"],
-            )
-            fig.update_xaxes(range=[0,10],gridcolor=GRAY)
-            st.plotly_chart(default_layout(fig,440),use_container_width=True,
+            fig=rank_bars(summaries,label="pais",value="puntuacion_maxima",
+                          limit=12,color=ORANGE,units="Gravedad / 10",max_x=10.8)
+            st.plotly_chart(fig,use_container_width=True,
                             config={"displayModeBar":False})
             st.caption("El máximo es solo un resumen visual; NO suma ni constituye "
                        "una puntuación general del país.")
@@ -437,16 +418,14 @@ elif page == "Conflicto y violencia":
                     "eventos"].sum().sort_values("eventos",ascending=False).head(12)
                 c1,c2=st.columns([1.25,1],gap="large")
                 with c1:
-                    fig=px.line(weekly,x="periodo_dt",y="eventos",markers=True,
-                        color_discrete_sequence=[BLUE],
-                        labels={"periodo_dt":"Mes","eventos":"Eventos reportados"})
-                    st.plotly_chart(default_layout(fig,360),use_container_width=True,
+                    fig=trend(weekly,x="periodo_dt",y="eventos",
+                              units="Eventos reportados",area=True)
+                    st.plotly_chart(fig,use_container_width=True,
                                     config={"displayModeBar":False})
                 with c2:
-                    fig=px.bar(top.sort_values("eventos"),x="eventos",y="pais",
-                        orientation="h",color_discrete_sequence=[BLUE],
-                        labels={"eventos":"Eventos en el periodo","pais":""})
-                    st.plotly_chart(default_layout(fig,360),use_container_width=True,
+                    fig=rank_bars(top,label="pais",value="eventos",limit=12,
+                         color=BLUE,units="Eventos",formats=".0f")
+                    st.plotly_chart(fig,use_container_width=True,
                                     config={"displayModeBar":False})
                 st.caption("Se muestran los últimos 24 meses disponibles por "
                     "categoría. La suma regional corresponde a los países con "
@@ -473,14 +452,10 @@ elif page == "Conflicto y violencia":
             series=hapi[(hapi["iso3"]==iso)&
                         (hapi["tipo_evento"]==label)].sort_values("periodo_dt")
             if not series.empty:
-                fig=px.bar(
-                    series,x="periodo_dt",y=variable,
-                    color_discrete_sequence=[BLUE],
-                    labels={variable:"Total del mes",
-                            "periodo_dt":"Mes"},
-                )
-                st.plotly_chart(default_layout(fig,410),
-                                use_container_width=True)
+                fig=trend(series,x="periodo_dt",y=variable,
+                          units="Eventos" if variable=="eventos" else "Muertes reportadas")
+                st.plotly_chart(fig,use_container_width=True,
+                                config={"displayModeBar":False})
                 st.caption("Cifras HAPI/ACLED agregadas por mes y tipo. "
                            "Se verificó la paginación de este país, pero "
                            "la cobertura del proveedor puede variar temporal "
@@ -675,15 +650,12 @@ elif page == "Salud y vulnerabilidad":
         st.info("No hay observaciones para estos filtros.")
     else:
         plot=latest.sort_values("valor",ascending=False)
-        fig=px.bar(
-            plot,x="pais",y="valor",color="periodo",
-            hover_data={"iso3":True,"periodo":True},
-            color_continuous_scale=[[0,"#C5E1F4"],[1,BLUE]],
-            labels={"pais":"País","valor":METRIC_LABELS.get(indicator,indicator),
-                    "periodo":"Año"},
-        )
-        fig.update_layout(xaxis_tickangle=-50)
-        st.plotly_chart(default_layout(fig,480),use_container_width=True)
+        fig=strip_countries(plot,name="pais",val="valor",
+            year="periodo",max_items=25,units=METRIC_LABELS.get(indicator,indicator))
+        st.plotly_chart(fig,use_container_width=True,
+                        config={"displayModeBar":False})
+        st.caption("Gráfico horizontal de hasta 25 países; tabla completa debajo. "
+                   "El año correspondiente aparece al pasar el cursor sobre cada punto.")
         if not restrict:
             st.warning(
                 "Se seleccionó el último valor observado en cada país. "
@@ -699,12 +671,13 @@ elif page == "Salud y vulnerabilidad":
         )
         series=ops[(ops["iso3"]==n)&(ops["indicador"]==indicator)].dropna(
             subset=["valor","periodo"]).sort_values("periodo")
-        f2=px.line(
-            series,x="periodo",y="valor",markers=True,
-            labels={"periodo":"Año","valor":METRIC_LABELS.get(indicator,indicator)},
-        )
-        f2.update_traces(line_color=BLUE)
-        st.plotly_chart(default_layout(f2,310),use_container_width=True)
+        series=series.copy()
+        series["periodo_dt"]=pd.to_datetime(
+             series["periodo"].astype(int).astype(str)+"-01-01",errors="coerce")
+        f2=trend(series,x="periodo_dt",y="valor",
+              units=METRIC_LABELS.get(indicator,indicator),area=False)
+        st.plotly_chart(f2,use_container_width=True,
+                        config={"displayModeBar":False})
         tab=plot[["pais","periodo","valor","etiqueta_fuente"]].rename(
             columns={"pais":"País","periodo":"Año",
                      "valor":"Valor","etiqueta_fuente":"Definición en la fuente"})
@@ -759,13 +732,9 @@ elif page == "Perfiles de país":
             st.markdown("#### Violencia política (HAPI)")
             event=h[h["tipo_evento"]=="political_violence"].sort_values("periodo_dt")
             if not event.empty:
-                fig=px.line(
-                    event,x="periodo_dt",y="eventos",markers=False,
-                    labels={"periodo_dt":"Mes","eventos":"Eventos reportados"},
-                )
-                fig.update_traces(line_color=BLUE)
-                st.plotly_chart(default_layout(fig,280),
-                                use_container_width=True)
+                fig=trend(event,x="periodo_dt",y="eventos",units="Eventos")
+                st.plotly_chart(fig,use_container_width=True,
+                                config={"displayModeBar":False})
     with cl2:
         st.markdown("#### Últimos indicadores de salud disponibles")
         available=ops[ops["iso3"]==iso]
