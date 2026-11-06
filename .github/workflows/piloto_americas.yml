@@ -1,6 +1,8 @@
 name: Piloto regional - 35 paises HAPI y OIM
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '10 13 6 * *'
   push:
     branches: [main]
     paths:
