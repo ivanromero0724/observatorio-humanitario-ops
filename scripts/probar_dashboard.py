@@ -6,11 +6,11 @@ from streamlit.testing.v1 import AppTest
 ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
-    "Mapa y seguimiento regional",
-    "Violencia, conflicto y acceso",
-    "Migración y desplazamiento",
+    "Panorama regional",
+    "Amenazas y eventos",
     "Vulnerabilidad y respuesta",
-    "Perfil humanitario por país",
+    "Impacto humanitario y salud",
+    "Perfiles por país",
 ]
 
 def check(at,page):
@@ -58,6 +58,19 @@ def main():
     assert "def crisis_core(" in code
     assert "desplazamiento forzado" in code.lower()
     assert "no constituyen" in code or "no constituye" in code.lower()
+    laura=(ROOT/"paginas_laura.py").read_text(encoding="utf-8")
+    for subtype in ["Acciones armadas","Ataques a objetivos y población civil",
+                    "Extracción de minería ilegal","Crimen organizado",
+                    "Mercados de drogas ilícitas y cultivos",
+                    "Delincuencia organizada transnacional"]:
+        assert subtype in laura, f"Falta subtipo de Laura: {subtype}"
+    for dimension in ["Económico","Educación","Ambiental","Social",
+                      "Capacidad del sistema de salud","Morbimortalidad",
+                      "Cobertura de vacunación","Demografía"]:
+        assert dimension in laura
+    assert "OMS SSA" in laura and "Telecomunicaciones" in laura
+    nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
+    assert all(page in nav for page in PAGES)
     at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
