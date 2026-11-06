@@ -41,6 +41,7 @@ def main():
         ROOT/"data/observaciones/hapi_inform_componentes.csv",
         ROOT/"data/observaciones/hapi_pobreza_multidimensional.csv",
         ROOT/"data/observaciones/hapi_seguridad_alimentaria_ipc.csv",
+        ROOT/"data/observaciones/hapi_presencia_sector.csv",
     ]:
         assert required.exists(), f"Falta archivo obligatorio: {required}"
     meta=ROOT/"docs/fase2/hapi_contexto_actualizacion.json"
