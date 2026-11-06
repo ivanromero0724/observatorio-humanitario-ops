@@ -16,11 +16,11 @@ from playwright.sync_api import sync_playwright
 OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
-    ("Sala situacional","sala_situacional"),
-    ("Vigilancia de señales","senales"),
-    ("Preparación en salud","preparacion_salud"),
-    ("Análisis por país","analisis_pais"),
-    ("Fuentes y calidad","fuentes"),
+    ("Mapa y seguimiento regional","mapa_regional"),
+    ("Violencia, conflicto y acceso","violencia_acceso"),
+    ("Migración y desplazamiento","movilidad_forzada"),
+    ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
+    ("Perfil humanitario por país","perfil_pais"),
 ]
 
 def geometries(page):
@@ -59,12 +59,12 @@ def main():
         page=browser.new_page(viewport={"width":1440,"height":900},
                               device_scale_factor=1)
         page.goto(url,wait_until="domcontentloaded",timeout=90000)
-        page.locator(".obs-section-h").wait_for(timeout=90000)
+        page.locator(".obs-page").wait_for(timeout=90000)
         for index,(label,name) in enumerate(PAGES):
             if index:
                 page.locator('[data-testid="stSidebar"]').get_by_text(
                     label,exact=True).click(timeout=25000)
-                page.locator(".obs-section-h").wait_for(timeout=60000)
+                page.locator(".obs-page").wait_for(timeout=60000)
             page.wait_for_timeout(3000)
             errs=page.locator('[data-testid="stException"]').count()
             if errs:
