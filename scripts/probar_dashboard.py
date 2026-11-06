@@ -61,6 +61,18 @@ def main():
     for page in PAGES[1:]:
         at.sidebar.radio[0].set_value(page).run()
         check(at,page)
+    # Regresión: las cinco páginas deben soportar países con cobertura limitada.
+    at.sidebar.selectbox[0].set_value("Caribe").run()
+    at.sidebar.selectbox[1].set_value("ATG").run()
+    for page in PAGES:
+        at.sidebar.radio[0].set_value(page).run()
+        check(at,page+" · país de cobertura limitada (ATG)")
+    # Y un país con múltiples crisis y datos humanitarios.
+    at.sidebar.selectbox[0].set_value("Suramérica").run()
+    at.sidebar.selectbox[1].set_value("COL").run()
+    for page in PAGES:
+        at.sidebar.radio[0].set_value(page).run()
+        check(at,page+" · Colombia")
 
 if __name__=="__main__":
     main()
