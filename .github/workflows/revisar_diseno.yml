@@ -27,6 +27,11 @@ jobs:
         run: |
           python -m streamlit run app.py --server.headless true --server.port 8501 > /tmp/app.log 2>&1 &
           echo $! > /tmp/app.pid
+          for i in $(seq 1 45); do
+            if curl --silent --fail http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
+            sleep 2
+          done
+          curl --fail http://127.0.0.1:8501/_stcore/health || { cat /tmp/app.log; exit 1; }
           python scripts/probar_layout_browser.py
       - name: Guardar capturas y resultado de geometría
         if: always()
