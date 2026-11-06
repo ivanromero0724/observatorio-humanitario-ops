@@ -146,6 +146,16 @@ def crisis_core(D,chosen):
     return frame[frame["drivers"].fillna("").str.contains(
         pattern,case=False,regex=True)].copy()
 
+def oim_scope(df):
+    """Mantener conflicto/inseguridad y causa no informada; excluir desastres.
+
+    Las filas sin causa se identifican en tablas, nunca se asume desplazamiento
+    forzado. Los 37 registros de desastres naturales se conservan en el CSV.
+    """
+    if df.empty:return df
+    return df[df["causa_desplazamiento"].fillna("").astype(str)
+        .str.lower().ne("natural disaster")].copy()
+
 def summary_countries(D,chosen):
     """One row per country; independent dimensions with explicit missing values."""
     allc=filtered(D["countries"],chosen)[["iso3","pais","subregion"]].copy()
@@ -169,7 +179,7 @@ def summary_countries(D,chosen):
     else:allc["delta_3m"]=float("nan")
     un=filtered(D["acnur"],chosen,"asilo_iso3")
     allc["refugio_datos"]=allc["iso3"].isin(set(un["asilo_iso3"])) if not un.empty else False
-    dtm=filtered(D["dtm"],chosen)
+    dtm=oim_scope(filtered(D["dtm"],chosen))
     allc["dtm_datos"]=allc["iso3"].isin(set(dtm["iso3"])) if not dtm.empty else False
     needs=filtered(D["needs"],chosen)
     allc["pin_datos"]=allc["iso3"].isin(set(
@@ -229,8 +239,10 @@ def pa_map(frame,mode,legend_title,height=428):
     geo["valor_texto"]=x.map(
         lambda v:(fmt(v,1)+"/10" if mode=="severity" else fmt(v)+" eventos")
         if pd.notna(v) else "Sin información comparable")
-    m=folium.Map(location=[-8,-81],zoom_start=3,tiles=None,zoom_control=True,
-                 min_zoom=2,max_zoom=7,prefer_canvas=True,height=height)
+    m=folium.Map(location=[7,-89],zoom_start=2,tiles=None,zoom_control=True,
+                 min_zoom=1,max_zoom=7,prefer_canvas=True,height=height)
+    # La extensión completa de las Américas debe verse sin pan inicial.
+    m.fit_bounds([[-59,-169],[83,-24]],padding=(14,14))
     m.get_root().html.add_child(folium.Element(
         "<style>.leaflet-container{background:#EAF4F8!important}"
         ".leaflet-tooltip{border:1px solid #D7E2EA;border-radius:8px;"
@@ -317,10 +329,25 @@ def map_page(D,selected,names):
                 "Cambio reciente de violencia (3 meses)",
                 "Mayor severidad de crisis ACAPS",
                 "País (A–Z)"],key="compare_sort")
-            table(display_comparison(frame,sorting),height=451)
+            compact=display_comparison(frame,sorting)
+            compact=compact[["País","Violencia · 12m","Δ eventos · 3m",
+                             "Severidad ACAPS /10"]].rename(columns={
+                "Violencia · 12m":"Eventos 12m",
+                "Δ eventos · 3m":"Δ 3m",
+                "Severidad ACAPS /10":"Sev. ACAPS"})
+            table(compact,height=451)
             st.caption("Severidad = valor máximo entre crisis evaluadas; "
                        "no equivale a un índice humanitario nacional.")
 
+    with st.expander("Ver la matriz completa por país y descargar CSV",expanded=False):
+        complete=display_comparison(frame,sorting)
+        table(complete,height=330)
+        st.download_button("Descargar comparación por país (CSV)",
+            complete.to_csv(index=False).encode("utf-8-sig"),
+            file_name="ops_seguimiento_humanitario_paises.csv",
+            mime="text/csv",key="regional_csv")
+        st.caption("Campos de cobertura de datos ACNUR/OIM indican registros "
+                   "disponibles, no presencia o ausencia del fenómeno.")
     a,b=st.columns([1,1],gap="medium")
     with a:
         with card("Evolución regional de violencia política",
@@ -446,17 +473,19 @@ def migration_page(D,selected,names):
         "Separar refugiados, solicitantes de asilo, desplazamiento interno "
         "y necesidades de asistencia por fuente, categoría y fecha.")
     acnur=filtered(D["acnur"],selected,"asilo_iso3")
-    dtm=filtered(D["dtm"],selected)
+    dtm=oim_scope(filtered(D["dtm"],selected))
     needs=valid_needs(filtered(D["needs"],selected))
     a,b,c=st.columns(3,gap="medium")
     a.metric("Países con registros ACNUR",
              acnur["asilo_iso3"].nunique() if not acnur.empty else 0)
-    b.metric("Países con operaciones OIM DTM",
+    b.metric("OIM DTM · países en fase 1",
              dtm["iso3"].nunique() if not dtm.empty else 0)
     c.metric("Países con PiN intersectorial",
              needs["iso3"].nunique() if not needs.empty else 0)
     st.caption("Estos son conteos de cobertura, no cifras de población. "
-               "La ausencia de registros no equivale a ausencia de desplazamiento.")
+               "OIM excluye operaciones clasificadas como desastre natural "
+               "del módulo inicial; las conserva en la base histórica. "
+               "La causa no reportada nunca se interpreta como conflicto.")
     left,right=st.columns(2,gap="medium")
     with left:
         with card("Refugio y asilo · país de acogida y origen",
@@ -465,9 +494,10 @@ def migration_page(D,selected,names):
             "ACNUR / HAPI · total por sexo y edad",height=620):
             if acnur.empty:info_missing("ACNUR")
             else:
-                host=st.selectbox("País de acogida",
-                    sorted(acnur["asilo_iso3"].unique(),
-                           key=lambda c:names.get(c,c)),
+                hosts=sorted(acnur["asilo_iso3"].unique(),
+                           key=lambda c:names.get(c,c))
+                host=st.selectbox("País de acogida",hosts,
+                    index=hosts.index("COL") if "COL" in hosts else 0,
                     format_func=lambda c:names.get(c,c),
                     key="migration_host")
                 df=acnur[acnur["asilo_iso3"]==host].copy()
@@ -493,8 +523,9 @@ def migration_page(D,selected,names):
             "OIM DTM Baseline · operación/ronda",height=620):
             if dtm.empty:info_missing("operaciones DTM")
             else:
-                host=st.selectbox("País con datos DTM",
-                    sorted(dtm["iso3"].unique(),key=lambda c:names.get(c,c)),
+                hosts=sorted(dtm["iso3"].unique(),key=lambda c:names.get(c,c))
+                host=st.selectbox("País con datos DTM",hosts,
+                    index=hosts.index("HTI") if "HTI" in hosts else 0,
                     format_func=lambda c:names.get(c,c),
                     key="migration_dtm_host")
                 operations=dtm[dtm["iso3"]==host]
@@ -510,8 +541,11 @@ def migration_page(D,selected,names):
                    labels={"origen_admin1":"Área de origen",
                            "personas_idp_reportadas":"Personas reportadas",
                            "hombres":"Hombres","mujeres":"Mujeres"})
-                st.caption("No sumar operaciones ni rondas diferentes. "
-                           "Comprobar definición territorial y fecha.")
+                st.caption("Causa del registro: "+
+                           ", ".join(sorted(view["causa_desplazamiento"]
+                               .dropna().astype(str).unique()))+
+                           ". No sumar operaciones ni rondas diferentes; "
+                           "una causa no reportada no demuestra desplazamiento forzado.")
     with card("Personas en necesidad de asistencia humanitaria",
        "Estimaciones PiN intersectoriales publicadas por OCHA cuando hay "
        "un único total nacional para el año. No sumar sectores ni periodos.",
@@ -661,7 +695,9 @@ def profile_page(D,selected,names,months):
         "Situación humanitaria por país",
         "Una ficha que permite revisar eventos, crisis, movilidad, "
         "vulnerabilidad y fuentes antes de discutir posibles necesidades de apoyo.")
-    iso=st.selectbox("País",sorted(selected,key=lambda c:names.get(c,c)),
+    choices=sorted(selected,key=lambda c:names.get(c,c))
+    iso=st.selectbox("País",choices,
+        index=choices.index("COL") if "COL" in choices else 0,
         format_func=lambda c:names.get(c,c),key="profile_iso")
     chosen={iso}
     matrix=summary_countries(D,chosen)
@@ -722,7 +758,7 @@ def profile_page(D,selected,names,months):
                     labels={"origen_iso3":"Origen",
                             "grupo_poblacion":"Grupo","personas":"Personas"})
             else:st.caption("Sin registros ACNUR para el país.")
-            dtm=filtered(D["dtm"],chosen)
+            dtm=oim_scope(filtered(D["dtm"],chosen))
             if not dtm.empty:
                 st.caption(f"OIM DTM: {dtm['operacion'].nunique()} "
                     "operaciones con rondas de referencia variable.")
