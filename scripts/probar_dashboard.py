@@ -51,7 +51,7 @@ def main():
     # Todas las parejas de paneles se dibujan con un borde nativo y
     # altura fija compartida. Se rechazan regresiones que los dejen desparejos.
     code=(ROOT/"observatorio_v5.py").read_text(encoding="utf-8")
-    assert 'height=height if height is not None else "content"' in code
+    assert 'height=CARD_H' in code and 'height=645' in code
     assert code.count("height=CARD_H")>=6, "Faltan parejas de paneles de altura uniforme"
     assert "def map_page(" in code and "def migration_page(" in code
     assert "def violence_page(" in code and "def profile_page(" in code
