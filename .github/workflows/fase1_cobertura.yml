@@ -1,6 +1,8 @@
 name: Fase 1 - Verificar cobertura de fuentes
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '20 13 6 * *'
   push:
     branches: [main]
     paths:
