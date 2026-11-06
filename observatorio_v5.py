@@ -133,13 +133,26 @@ def events_by_country(D,chosen,category="political_violence",months=12):
     out["eventos"]=out["iso3"].map(total)
     return out,cut
 
+def crisis_core(D,chosen):
+    """Fase 1: ACAPS con componentes de conflicto, movilidad o entorno político.
+
+    Crisis exclusivamente por terremoto/ciclón/inundación se excluyen de la
+    portada inicial, pero se conservan en los snapshots para fase posterior.
+    Crisis mixtas se mantienen por su driver humanitario relevante.
+    """
+    frame=crisis_table(D,chosen)
+    if frame.empty:return frame
+    pattern=r"conflict|violence|displacement|political|economic|insecurity"
+    return frame[frame["drivers"].fillna("").str.contains(
+        pattern,case=False,regex=True)].copy()
+
 def summary_countries(D,chosen):
     """One row per country; independent dimensions with explicit missing values."""
     allc=filtered(D["countries"],chosen)[["iso3","pais","subregion"]].copy()
     if allc.empty:return allc
     violent,cut=events_by_country(D,chosen,"political_violence",12)
     allc=allc.merge(violent,on="iso3",how="left")
-    sv=crisis_table(D,chosen)
+    sv=crisis_core(D,chosen)
     if not sv.empty:
         by=sv.groupby("iso3").agg(
             crisis_count=("crisis_id","nunique"),
@@ -250,7 +263,7 @@ def pa_map(frame,mode,legend_title,height=428):
     components.html(m.get_root().render(),height=height+12,scrolling=False)
 
 def map_frame(D,frame,choice):
-    if choice==MAP_METRICS.keys().__iter__().__next__():
+    if choice=="Violencia política · últimos 12 meses":
         return frame[["iso3","pais","eventos"]].rename(columns={"eventos":"valor"}),"events"
     if choice=="Ataques contra civiles · últimos 12 meses":
         v,_=events_by_country(D,set(frame["iso3"]),"civilian_targeting",12)
@@ -447,8 +460,8 @@ def migration_page(D,selected,names):
     left,right=st.columns(2,gap="medium")
     with left:
         with card("Refugio y asilo · país de acogida y origen",
-            "Población registrada por ACNUR vía HAPI; '
-            'stocks anuales, no flujos nuevos.",
+            "Población registrada por ACNUR vía HAPI; "
+            "stocks anuales, no flujos nuevos.",
             "ACNUR / HAPI · total por sexo y edad",height=620):
             if acnur.empty:info_missing("ACNUR")
             else:
@@ -653,7 +666,7 @@ def profile_page(D,selected,names,months):
     chosen={iso}
     matrix=summary_countries(D,chosen)
     row=matrix.iloc[0]
-    c=crisis_table(D,chosen)
+    c=crisis_core(D,chosen)
     a,b,d=st.columns(3)
     a.metric("Eventos de violencia · 12m",
         fmt(row["eventos"]) if pd.notna(row["eventos"]) else "Sin serie")
