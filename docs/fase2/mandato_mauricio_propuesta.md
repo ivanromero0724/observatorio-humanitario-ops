@@ -60,7 +60,7 @@ La ficha de procedencia, limitaciones y cobertura se encuentra en un desplegable
 - Las comparaciones de eventos solo se presentan cuando un país tiene los 12 meses del periodo común; el Δ 3m/3m solo si hay 6 meses.
 - Para mapas de eventos, los matices de azul muestran volumen en una escala descriptiva logarítmica. No son límites de riesgo ni de prioridad.
 - ACAPS se filtra por `drivers` para el alcance inicial: conflicto, violencia, desplazamiento o crisis sociopolíticas. Las crisis exclusivamente por terremoto quedan disponibles en datos y no aparecen en el monitoreo inicial. Se conservan las **crisis mixtas** con factores de conflicto y climáticos porque siguen siendo humanitarias dentro del alcance inicial.
-- Refugio/ACNUR distingue país de acogida, origen, año y categoría. OIM muestra rondas por operación; los registros PiN no se suman entre sectores.
+- Refugio/ACNUR distingue país de acogida, origen, año y categoría. En la vista OIM de la **fase 1 se excluyen 37 registros clasificados como `Natural disaster`** y se conservan en el CSV original; se muestran los 27 registros con causa `Conflict`, `Insecurity` o **causa no reportada**. El último grupo no se etiqueta como desplazamiento forzado sin validación. Los registros PiN no se suman entre sectores.
 - Los datos de API se extraen mediante GitHub Actions y se almacenan con su fecha; Streamlit no utiliza ni muestra tokens.
 - La cobertura actual del catálogo es de 35 países soberanos. Los **territorios adicionales** previstos en la propuesta requieren homologación y fuentes verificadas.
 
