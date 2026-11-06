@@ -7,6 +7,10 @@ on:
       - scripts/probar_layout_browser.py
       - .github/workflows/revisar_diseno.yml
       - observatorio_v3.py
+      - observatorio_v4.py
+      - app.py
+      - ui_ops.py
+      - graficos.py
 permissions:
   contents: read
 jobs:
