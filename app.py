@@ -779,6 +779,41 @@ elif page == "Perfiles de país":
                                   "periodo":"Año","valor":"Valor"})
         st.dataframe(last,use_container_width=True,hide_index=True,height=340)
         st.caption("No todos los indicadores tienen el mismo año de reporte.")
+    if not acaps_access.empty:
+        ca=acaps_access[acaps_access["iso3"]==iso].copy()
+        if not ca.empty:
+            st.markdown("#### Restricciones al acceso humanitario (ACAPS)")
+            st.dataframe(ca[["crisis","acceso","pilar_1","pilar_2","pilar_3","brecha_info"]].rename(
+                columns={"crisis":"Crisis","acceso":"Índice acceso (0–5)",
+                         "pilar_1":"Acceso población",
+                         "pilar_2":"Acceso organizaciones",
+                         "pilar_3":"Obstáculos físicos / seguridad",
+                         "brecha_info":"Brecha de información"}),
+                use_container_width=True,hide_index=True,height=225)
+            st.caption("Indicadores de crisis separadas; no se suman ni constituyen prioridad OPS.")
+    if not dtm_latest.empty:
+        op=dtm_latest[dtm_latest["iso3"]==iso].copy()
+        if not op.empty:
+            st.markdown("#### Operaciones OIM DTM disponibles (última ronda)")
+            st.dataframe(op[["operacion","fecha_reporte","ronda",
+                "origen_admin1","personas_idp_reportadas"]].rename(columns={
+                "operacion":"Operación","fecha_reporte":"Fecha",
+                "ronda":"Ronda","origen_admin1":"Origen",
+                "personas_idp_reportadas":"Población IDP reportada"}),
+                use_container_width=True,hide_index=True,height=215)
+            st.caption("Los registros no se agregan entre operaciones ni orígenes.")
+    if not reliefweb.empty:
+        docs=reliefweb[reliefweb["iso3"]==iso].copy()
+        if not docs.empty:
+            st.markdown("#### Informes recientes asociados al país")
+            docs=docs.drop_duplicates("reporte_id").sort_values("fecha_dt",ascending=False).head(8)
+            docs["Fecha"]=docs["fecha_publicacion_rw"].astype(str).str[:10]
+            st.dataframe(docs[["Fecha","titulo","fuentes","url"]].rename(
+                columns={"titulo":"Informe","fuentes":"Organización","url":"Enlace"}),
+                use_container_width=True,hide_index=True,height=260,
+                column_config={"Enlace":st.column_config.LinkColumn(
+                    "Abrir informe",display_text="Abrir"),
+                    "Informe":st.column_config.TextColumn("Informe",width="large")})
     st.markdown("#### Estado de fuentes disponibles")
     if not coverage.empty:
         info=coverage[coverage["iso3"]==iso].copy()
