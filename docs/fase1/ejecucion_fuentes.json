@@ -1,9 +1,9 @@
 {
-  "fecha_utc": "2026-11-05T18:17:37Z",
+  "fecha_utc": "2026-11-06T17:00:45Z",
   "estado": {
     "WarMonit": {
       "estado": "descarga_ok",
-      "detalle": "{'total_mundial': 20, 'americas': 2, 'fecha': '2026-11-05', 'licencia': 'CC-BY-4.0'}"
+      "detalle": "{'total_mundial': 20, 'americas': 2, 'fecha': '2026-11-06', 'licencia': 'CC-BY-4.0'}"
     },
     "INFORM_Risk": {
       "estado": "descarga_ok",
@@ -22,8 +22,8 @@
       "detalle": "{'consultas': 10, 'respuestas_json': 10}"
     },
     "HAPI": {
-      "estado": "requiere_identificador_institucional",
-      "detalle": "No generar identificadores con correos inventados"
+      "estado": "descarga_ok",
+      "detalle": "5 consultas piloto efectuadas"
     }
   },
   "observacion": "Cobertura exploratoria; no equivale a aprobación metodológica"

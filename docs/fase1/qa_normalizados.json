@@ -1,5 +1,5 @@
 {
-  "evaluacion_utc": "2026-11-05T18:17:54.352197+00:00",
+  "evaluacion_utc": "2026-11-06T17:01:08.729385+00:00",
   "aprobacion_metodologica_ops": false,
   "estado": "pasa",
   "validaciones": {
@@ -26,7 +26,7 @@
     },
     "warmonit": {
       "bytes": 239,
-      "sha256": "d1080bf175e2049f3782703c026beb54984bc7cbaccbabb822bdad4c331ebf3f"
+      "sha256": "e784af55315ce2d967fac13677bf4d3fb4d48b1d28f2948a64c53c15d716e38f"
     }
   },
   "errores": []
