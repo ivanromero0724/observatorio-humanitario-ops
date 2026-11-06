@@ -99,7 +99,7 @@ def trend(df:pd.DataFrame,*,x:str,y:str,units="",color=BLUE,area=True):
     return fig
 
 def strip_countries(df:pd.DataFrame,*,name="pais",val="valor",
-                    year="periodo",max_items=25,units=""):
+                    year="periodo",max_items=25,units="",decimals=1):
     """Dot plot muestra año en el hover, no codifica edad de datos con gradiente."""
     frame=df[[name,val,year]].copy()
     frame[val]=pd.to_numeric(frame[val],errors="coerce")
@@ -108,9 +108,10 @@ def strip_countries(df:pd.DataFrame,*,name="pais",val="valor",
     fig=go.Figure(go.Scatter(
         x=frame[val],y=frame[name],mode="markers+text",
         marker=dict(size=10,color=BLUE,line=dict(color="white",width=1)),
-        text=[f"{x:,.1f}" for x in frame[val]],textposition="middle right",
+        text=[f"{x:,.{decimals}f}" for x in frame[val]],textposition="middle right",
         customdata=frame[[year]].to_numpy(),
-        hovertemplate="<b>%{y}</b><br>Valor: %{x:,.2f}<br>Año: %{customdata[0]}<extra></extra>",
+        hovertemplate=("<b>%{y}</b><br>Valor: %{x:,."+str(decimals)+
+                       "f}<br>Año: %{customdata[0]}<extra></extra>"),
     ))
     h=max(300,min(760,70+len(frame)*26))
     finish(fig,height=h,orient="horizontal",units=units)
