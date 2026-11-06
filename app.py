@@ -16,6 +16,7 @@ import streamlit as st
 from ui_ops import apply_style, header as ops_header, heading as ops_heading, map_countries, footer as ops_footer
 from paginas_extra import access_page, reports_page
 from graficos import finish as chart_finish, rank_bars, trend, strip_countries, severity_matrix
+from paginas_hapi import render as render_hapi
 
 ROOT = Path(__file__).resolve().parent
 OBS = ROOT / "data/observaciones"
@@ -92,6 +93,13 @@ ops = load_csv("data/observaciones/ops_8_indicadores_pais_anio.csv")
 coverage = load_csv("docs/fase1/cobertura_hapi_oim_americas.csv")
 hapi_meta = load_json("docs/fase1/hapi_extraccion_completa.json")
 hapi = load_csv("data/observaciones/hapi_conflicto_pais_mes.csv")
+hapi_needs = load_csv("data/observaciones/hapi_necesidades_nacional.csv")
+hapi_funding = load_csv("data/observaciones/hapi_financiacion_apelaciones.csv")
+hapi_inform = load_csv("data/observaciones/hapi_inform_componentes.csv")
+hapi_poverty = load_csv("data/observaciones/hapi_pobreza_multidimensional.csv")
+hapi_ipc = load_csv("data/observaciones/hapi_seguridad_alimentaria_ipc.csv")
+hapi_context_meta = load_json("docs/fase2/hapi_contexto_actualizacion.json")
+
 reliefweb = load_csv("data/observaciones/reliefweb_reportes_americas.csv")
 rw_meta = load_json("docs/fase2/reliefweb_actualizacion.json")
 security_meta = load_json("docs/fase2/accesos_awsd_reliefweb.json")
@@ -186,6 +194,11 @@ if not dtm_latest.empty:
     )
 
 
+for _hapi_data in [hapi_needs,hapi_funding,hapi_inform,hapi_poverty,hapi_ipc]:
+    if not _hapi_data.empty:
+        _hapi_data.drop(_hapi_data[
+            ~_hapi_data["iso3"].isin(valid_iso)].index,inplace=True)
+
 
 def section(title: str, index: str, note: str = "") -> None:
     ops_heading(title,index,note)
@@ -262,9 +275,10 @@ with st.sidebar:
     page = st.radio(
         "Explorar",
         ["Panorama regional", "Conflicto y violencia",
-         "Seguridad y acceso", "Desplazamiento y movilidad",
-         "Informes y situaciones", "Salud y vulnerabilidad",
-         "Perfiles de país", "Fuentes y metodología"],
+         "Seguridad y acceso", "Necesidades y respuesta",
+         "Desplazamiento y movilidad", "Informes y situaciones",
+         "Salud y vulnerabilidad", "Perfiles de país",
+         "Fuentes y metodología"],
         label_visibility="collapsed",
     )
     st.divider()
@@ -487,6 +501,10 @@ elif page == "Conflicto y violencia":
 elif page == "Seguridad y acceso":
     access_page(acaps_access,acaps_severity,security_meta,
                 countries,selected,acaps_meta)
+
+elif page == "Necesidades y respuesta":
+    render_hapi(hapi_needs,hapi_funding,hapi_inform,
+                hapi_poverty,hapi_ipc,countries,selected,hapi_context_meta)
 
 elif page == "Desplazamiento y movilidad":
     section("Desplazamiento y movilidad humana", "04",
