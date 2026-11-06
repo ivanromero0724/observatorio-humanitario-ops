@@ -9,6 +9,8 @@ on:
       - observatorio_v3.py
       - observatorio_v4.py
       - observatorio_v5.py
+      - observatorio_v6.py
+      - paginas_laura.py
       - app.py
       - ui_ops.py
       - graficos.py
