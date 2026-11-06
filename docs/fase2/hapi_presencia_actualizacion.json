@@ -1,0 +1,220 @@
+{
+  "fecha_extraccion_utc": "2026-11-06T17:27:39.064645+00:00",
+  "paises_consultados": 35,
+  "paises_con_datos": 3,
+  "filas_resumen": 25,
+  "detalle": [
+    {
+      "iso3": "CAN",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "USA",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "MEX",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "BLZ",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "CRI",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "SLV",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "GTM",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "HND",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "NIC",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "PAN",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "ATG",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "BHS",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "BRB",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "CUB",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "DMA",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "DOM",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "GRD",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "HTI",
+      "filas": 2469,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "JAM",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "KNA",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "LCA",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "VCT",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "TTO",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "ARG",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "BOL",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "BRA",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "CHL",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "COL",
+      "filas": 686,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "ECU",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "GUY",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "PRY",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "PER",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "SUR",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "URY",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "VEN",
+      "filas": 1698,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    }
+  ],
+  "advertencia": "Organizaciones distintas dentro de un sector y periodo; la misma organización puede operar en múltiples sectores y territorios. No sumar entre sectores, cortes ni países para estimar población atendida.",
+  "estado": "COMPLETO"
+}
