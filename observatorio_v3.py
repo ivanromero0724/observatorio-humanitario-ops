@@ -74,7 +74,7 @@ def title(kicker,heading,question):
 @contextmanager
 def card(heading,sub="",source="",height=None):
     """Native Streamlit border; side-by-side panels MUST use identical height."""
-    with st.container(border=True,height=height):
+    with st.container(border=True,height=height if height is not None else "content"):
         st.markdown(f'<div class="obs-card-title">{html.escape(heading)}</div>',
                     unsafe_allow_html=True)
         st.markdown(f'<div class="obs-card-sub">{html.escape(sub)}</div>',
