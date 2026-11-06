@@ -1,9 +1,8 @@
-"""Entrada única del Observatorio Humanitario OPS.
+"""Entrada Streamlit del Observatorio Humanitario OPS/OMS.
 
-La versión operativa prioriza situaciones documentadas, amenazas, personas
-y respuesta, con paneles de idéntica altura y bordes uniformes.
-Los datos se actualizan y validan fuera de Streamlit (GitHub Actions).
+Sala situacional ejecutiva con señales y preparación en salud.
+Las API y credenciales se gestionan exclusivamente mediante GitHub Actions.
 """
-from observatorio_v3 import main
+from observatorio_v4 import main
 
 main()
