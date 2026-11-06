@@ -95,6 +95,13 @@ def empty(label):
 def data_table(df,height=290,cols=None,ren=None,link=None):
     out=df[cols].rename(columns=ren or {}) if cols else df
     config={}
+    for col in out.columns:
+        if col in ("Situación evaluada","Situación","Informe",
+                   "Descriptores de la situación","Apelación"):
+            config[col]=st.column_config.TextColumn(col,width="large")
+        elif col in ("Severidad / 10","Restricción acceso / 5",
+                     "Índice / 5"):
+            config[col]=st.column_config.NumberColumn(col,format="%.1f")
     if link:config[link]=st.column_config.LinkColumn(link,display_text="Abrir")
     st.dataframe(out,use_container_width=True,hide_index=True,height=height,
       column_config=config)
@@ -171,7 +178,7 @@ def situations(D,selected,names,months):
               sev["crisis_id"].nunique() if not sev.empty else 0)
     c2.metric("Países con contextos evaluados",
               sev["iso3"].nunique() if not sev.empty else 0)
-    c3.metric("Informes vinculados · 90 días",
+    c3.metric("Informes por país · 90 días",
               all_reports["reporte_id"].nunique() if not all_reports.empty else 0)
     st.caption("Contextos, países e informes tienen unidades distintas; no "
                "se suman ni definen por sí solos niveles de prioridad OPS.")
@@ -234,7 +241,7 @@ def situations(D,selected,names,months):
             st.caption("Las categorías ACLED pueden solaparse; "
                        "esta curva presenta únicamente violencia política.")
 
-    with st.expander("Leer los informes recientes vinculados a las situaciones",expanded=True):
+    with st.expander("Consultar informes recientes de los países seleccionados",expanded=True):
         if all_reports.empty:empty("documentos ReliefWeb")
         else:
             docs=all_reports.head(8).copy()
