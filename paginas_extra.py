@@ -9,6 +9,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 from ui_ops import OPS, BLUE, ORANGE, map_countries
+from graficos import finish as chart_finish,rank_bars,trend
 
 PILLARS = {
     "pilar_1": "Acceso de las personas a la asistencia",
@@ -18,13 +19,7 @@ PILLARS = {
 COLOR = "#0072CE"
 
 def _plot(fig,height=390):
-    fig.update_layout(template="plotly_white",
-        height=height,paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        margin=dict(l=12,r=12,t=20,b=30),
-        font=dict(family="Arial",color="#17324D",size=12))
-    fig.update_xaxes(gridcolor="#E8EDF3")
-    fig.update_yaxes(gridcolor="#E8EDF3")
+    fig=chart_finish(fig,height=height)
     st.plotly_chart(fig,use_container_width=True,config={"displayModeBar":False})
 
 def _source_note(source,cut,detail=""):
@@ -64,12 +59,8 @@ def access_page(access:pd.DataFrame,severity:pd.DataFrame,
                 st.markdown("#### Contextos con mayores restricciones reportadas")
                 top=df.dropna(subset=["acceso"]).sort_values("acceso",ascending=False).head(13).copy()
                 top["etiqueta"]=top["crisis"].fillna("Crisis")+" · "+top["pais"].fillna(top["iso3"])
-                fig=px.bar(top.sort_values("acceso"),
-                    x="acceso",y="etiqueta",orientation="h",
-                    text="acceso",color_discrete_sequence=[BLUE],
-                    labels={"etiqueta":"","acceso":"Índice de acceso"})
-                fig.update_traces(texttemplate="%{x:.1f}",textposition="outside")
-                fig.update_xaxes(range=[0,5.2])
+                fig=rank_bars(top,label="etiqueta",value="acceso",limit=13,
+                     color=ORANGE,units="Restricción de acceso / 5",max_x=5.3)
                 _plot(fig,height=520)
             st.caption("El índice de acceso ACAPS se interpreta por contexto. Un país "
                 "puede aparecer en varias crisis; no sumamos sus puntuaciones.")
@@ -95,10 +86,9 @@ def access_page(access:pd.DataFrame,severity:pd.DataFrame,
             ind["Puntuación"]=pd.to_numeric(ind["Puntuación"],errors="coerce")
             plotted=ind.dropna(subset=["Puntuación"])
             if not plotted.empty:
-                fig=px.bar(plotted,x="Indicador",y="Puntuación",
-                           color_discrete_sequence=[ORANGE],
-                           labels={"Puntuación":"Componente (escala del proveedor)"})
-                _plot(fig,310)
+                fig=rank_bars(plotted,label="Indicador",value="Puntuación",
+                              limit=9,color=BLUE,units="Escala del proveedor")
+                _plot(fig,340)
             st.caption("I1–I9 mantienen las claves técnicas de ACAPS. Las definiciones "
                        "y escalas deben leerse con el codebook original; no son "
                        "índices OPS y no se agregan en un puntaje propio.")
@@ -173,9 +163,8 @@ def reports_page(reports:pd.DataFrame,meta:dict,
                  .groupby(pd.Grouper(key="fecha_dt",freq="W-MON"))["reporte_id"]
                  .nunique().reset_index(name="reportes"))
         if not by_week.empty:
-            fig=px.bar(by_week,x="fecha_dt",y="reportes",
-                       color_discrete_sequence=[BLUE],
-                       labels={"fecha_dt":"Semana","reportes":"Reportes únicos"})
+            fig=trend(by_week,x="fecha_dt",y="reportes",
+                      units="Reportes únicos",area=True)
             _plot(fig,360)
     with r:
         st.markdown("#### Fuentes más frecuentes")
@@ -185,9 +174,8 @@ def reports_page(reports:pd.DataFrame,meta:dict,
         top=(orgs.groupby("organizacion")["reporte_id"].nunique()
              .nlargest(10).sort_values().reset_index(name="reportes"))
         if not top.empty:
-            fig=px.bar(top,x="reportes",y="organizacion",orientation="h",
-                       color_discrete_sequence=[BLUE],
-                       labels={"reportes":"Reportes","organizacion":""})
+            fig=rank_bars(top,label="organizacion",value="reportes",
+                         limit=10,color=BLUE,units="Reportes",formats=".0f")
             _plot(fig,360)
     st.markdown("#### Documentos y enlaces originales")
     shown=unique.sort_values("fecha_dt",ascending=False).copy()
