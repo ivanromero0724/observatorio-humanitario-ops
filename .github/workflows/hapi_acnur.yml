@@ -1,0 +1,50 @@
+name: HAPI ACNUR – movilidad transfronteriza
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '55 12 9 * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase2/extraer_hapi_acnur.py
+      - .github/workflows/hapi_acnur.yml
+permissions:
+  contents: write
+concurrency:
+  group: hapi-acnur-acogida
+  cancel-in-progress: true
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'requests>=2.31,<3'
+      - name: Extraer datos de acogida 35 países, sin duplicar sexo y edad
+        env:
+          HDX_APP_IDENTIFIER: ${{ secrets.HDX_APP_IDENTIFIER }}
+        run: python scripts/fase2/extraer_hapi_acnur.py
+      - name: Verificar filas y cobertura declarada
+        run: |
+          python - <<'PY'
+          import csv,json
+          m=json.load(open('docs/fase2/hapi_acnur_actualizacion.json'))
+          a=list(csv.DictReader(open('data/observaciones/hapi_acnur_acogida.csv')))
+          assert m['estado']=='COMPLETO' and m['paises_acogida_consultados']==35
+          assert len(a)==m['filas']==sum(x['filas'] for x in m['detalle'])
+          assert len({(x['asilo_iso3'],x['origen_iso3'],x['anio'],x['grupo_poblacion']) for x in a})==len(a)
+          print('OK HAPI ACNUR',len(a))
+          PY
+      - name: Versionar solo series nacionales anonimizadas
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/observaciones/hapi_acnur_acogida.csv docs/fase2/hapi_acnur_actualizacion.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refugiados UNHCR HAPI con filtros completos [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
