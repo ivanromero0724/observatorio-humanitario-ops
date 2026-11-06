@@ -277,8 +277,8 @@ def health_paths(D,iso):
     conflict_months=conflicts[conflicts["fecha"].isin(months[-3:])] if months else conflicts.iloc[:0]
     total=int(conflict_months["eventos"].sum()) if not conflict_months.empty else None
     access=filtered(D["access"],{iso})
-    hi=float(access["acceso"].max()) if not access.empty and
-         access["acceso"].notna().any() else None
+    hi=(float(access["acceso"].max()) if
+        (not access.empty and access["acceso"].notna().any()) else None)
     un=filtered(D["acnur"],{iso},"asilo_iso3")
     dtm=filtered(D["dtm"],{iso})
     has_mob=not un.empty or not dtm.empty
