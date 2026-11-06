@@ -37,7 +37,7 @@ def _empty(source,valid):
 def render(needs:pd.DataFrame,funding:pd.DataFrame,risk:pd.DataFrame,
            poverty:pd.DataFrame,ipc:pd.DataFrame,presence:pd.DataFrame,
            countries:pd.DataFrame,selected:set,meta:dict):
-    st.markdown('<div class="ops-kicker">05 / NECESIDADES Y RESPUESTA</div>'
+    st.markdown('<div class="ops-kicker">04 / NECESIDADES Y RESPUESTA</div>'
                 '<div class="ops-section">Necesidades, vulnerabilidad y respuesta humanitaria</div>',
                 unsafe_allow_html=True)
     st.caption("Cinco familias de HDX HAPI con alcance y cortes diferenciados. "
