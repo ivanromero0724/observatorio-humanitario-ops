@@ -6,6 +6,7 @@ on:
     paths:
       - app.py
       - observatorio_v2.py
+      - observatorio_v3.py
       - graficos.py
       - paginas_hapi.py
       - paginas_extra.py
@@ -29,6 +30,6 @@ jobs:
       - name: Instalar dependencias
         run: python -m pip install -r requirements.txt
       - name: Compilar archivos Python
-        run: python -m compileall -q app.py observatorio_v2.py graficos.py paginas_hapi.py paginas_extra.py ui_ops.py scripts/probar_dashboard.py scripts/fase1/descargar_hapi_completo.py scripts/fase2
+        run: python -m compileall -q app.py observatorio_v2.py observatorio_v3.py graficos.py paginas_hapi.py paginas_extra.py ui_ops.py scripts/probar_dashboard.py scripts/fase1/descargar_hapi_completo.py scripts/fase2
       - name: Probar cinco páginas temáticas de Streamlit
         run: python scripts/probar_dashboard.py
