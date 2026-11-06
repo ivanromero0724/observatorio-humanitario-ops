@@ -1,0 +1,33 @@
+{
+  "fecha_utc": "2026-11-06T16:42:39.957024+00:00",
+  "uso": "Auditoría de conexión, sin publicación de microdatos",
+  "resultados": [
+    {
+      "fuente": "ReliefWeb",
+      "secreto_configurado": true,
+      "estado": "CONECTADO",
+      "status": "HTTP 200",
+      "cantidad_muestra": 2,
+      "total_reportes_globales": 1149080,
+      "campos_disponibles": [
+        "country",
+        "date",
+        "primary_country",
+        "source",
+        "status",
+        "title",
+        "url"
+      ]
+    },
+    {
+      "fuente": "AWSD",
+      "secreto_configurado": true,
+      "estado": "POR_VALIDAR",
+      "metodo_autenticacion": null,
+      "status": "200; 200; 200; 200; 429; 429; 429",
+      "tipo_respuesta": null,
+      "columnas_ejemplo": [],
+      "observacion": "Key presente, pero no se identificó una respuesta JSON autorizada. Revisar enlace directo en correo de AWSD."
+    }
+  ]
+}
