@@ -51,7 +51,7 @@ def main():
     # Todas las parejas de paneles se dibujan con un borde nativo y
     # altura fija compartida. Se rechazan regresiones que los dejen desparejos.
     code=(ROOT/"observatorio_v3.py").read_text(encoding="utf-8")
-    assert "st.container(border=True,height=height)" in code
+    assert 'height=height if height is not None else "content"' in code
     assert code.count("height=CARD") >= 8, "Hay paneles sin altura simétrica"
     assert "def situations(" in code and "def impacts(" in code
     assert "Situaciones humanitarias documentadas" in code
