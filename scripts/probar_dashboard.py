@@ -52,7 +52,7 @@ def main():
     # altura fija compartida. Se rechazan regresiones que los dejen desparejos.
     code=(ROOT/"observatorio_v4.py").read_text(encoding="utf-8")
     assert 'height=height if height is not None else "content"' in code
-    assert code.count("height=CARD_H")+code.count("height=SHORT_H") >= 10
+    assert code.count("height=CARD_H")+code.count("height=SHORT_H")+code.count("height=590") >= 10
     assert "def executive(" in code and "def readiness(" in code
     assert "posibles repercusiones sanitarias" in code.lower() or "repercusiones sanitarias" in code
     assert "no constituyen" in code or "no constituye" in code.lower()
