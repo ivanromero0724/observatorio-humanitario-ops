@@ -8,6 +8,7 @@ on:
       - .github/workflows/revisar_diseno.yml
       - observatorio_v3.py
       - observatorio_v4.py
+      - observatorio_v5.py
       - app.py
       - ui_ops.py
       - graficos.py
