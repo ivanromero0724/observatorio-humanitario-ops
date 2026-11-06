@@ -1,0 +1,94 @@
+{
+  "fecha_utc": "2026-11-06T17:04:03.841625+00:00",
+  "paises_catalogo_dtm": 12,
+  "paises_con_datos": 12,
+  "registros_ultima_ronda": 64,
+  "metodo": "Última fecha y ronda por operación; conservar filas de origen admin1, sin sumar operaciones ni rondas.",
+  "precaucion": "Los campos de población pueden solaparse entre operaciones y lugares de origen. No representan un total nacional estandarizado.",
+  "estado_paises": [
+    {
+      "iso3": "SLV",
+      "estado": "OK",
+      "total": 2,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "GTM",
+      "estado": "OK",
+      "total": 4,
+      "ultimas": 2,
+      "operaciones": 2
+    },
+    {
+      "iso3": "HND",
+      "estado": "OK",
+      "total": 1,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "ATG",
+      "estado": "OK",
+      "total": 1,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "BHS",
+      "estado": "OK",
+      "total": 1,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "DMA",
+      "estado": "OK",
+      "total": 4,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "GRD",
+      "estado": "OK",
+      "total": 1,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "HTI",
+      "estado": "OK",
+      "total": 139,
+      "ultimas": 10,
+      "operaciones": 5
+    },
+    {
+      "iso3": "VCT",
+      "estado": "OK",
+      "total": 1,
+      "ultimas": 1,
+      "operaciones": 1
+    },
+    {
+      "iso3": "BOL",
+      "estado": "OK",
+      "total": 3,
+      "ultimas": 3,
+      "operaciones": 1
+    },
+    {
+      "iso3": "ECU",
+      "estado": "OK",
+      "total": 45,
+      "ultimas": 39,
+      "operaciones": 2
+    },
+    {
+      "iso3": "PER",
+      "estado": "OK",
+      "total": 4,
+      "ultimas": 3,
+      "operaciones": 1
+    }
+  ]
+}

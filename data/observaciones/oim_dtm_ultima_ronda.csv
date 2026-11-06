@@ -1,0 +1,65 @@
+iso3,operacion,fecha_reporte,anio_reporte,mes_reporte,ronda,tipo_evaluacion,causa_desplazamiento,origen_admin1,origen_admin1_codigo,personas_idp_reportadas,hombres,mujeres,fecha_extraccion_utc
+SLV,Storms Amanda and Cristobal Response in El Salvador,2020-06-30,2020,6,2,SA,Natural disaster,Not available,Not available,2077,1004,1073,2026-11-06T17:04:03.841625+00:00
+GTM,Erupcion del Volcan de Fuego,2018-07-24,2018,7,3,SA,Natural disaster,Not available,Not available,3372,1657.0,1715.0,2026-11-06T17:04:03.841625+00:00
+GTM,Hurricane ETA and IOTA response,2020-11-30,2020,11,1,SA,Natural disaster,Not available,Not available,13157,1986.0,2034.0,2026-11-06T17:04:03.841625+00:00
+HND,Hurricane ETA and IOTA response,2020-11-30,2020,11,1,SA,Natural disaster,Not available,Not available,25465,,,2026-11-06T17:04:03.841625+00:00
+ATG,Hurricane Season in the Caribbean (2017),2017-09-30,2017,9,1,SA,Natural disaster,Not available,Not available,263,,,2026-11-06T17:04:03.841625+00:00
+BHS,Bahamas (the) - Hurricane Dorian Response,2019-10-31,2019,10,3,SA,Natural disaster,Not available,Not available,5704,,,2026-11-06T17:04:03.841625+00:00
+DMA,Hurricane Season in the Caribbean (2017),2018-01-31,2018,1,4,SA,Natural disaster,Not available,Not available,352,,,2026-11-06T17:04:03.841625+00:00
+GRD,Hurricane Beryl,2024-07-31,2024,7,1,BA,Natural disaster,Not available,Not available,338,50,62,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Conflict,Centre,HT06,197251,88051.0,109200.0,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Natural disaster,Ouest,HT01,2150,996.0,1154.0,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Insecurity,Ouest,HT01,8399,3929.0,4470.0,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Conflict,Artibonite,HT05,194562,85876.0,108686.0,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Conflict,Ouest,HT01,1086619,491700.0,594919.0,2026-11-06T17:04:03.841625+00:00
+HTI,Countrywide monitoring,2026-07-31,2026,7,14,BA,Conflict,Sud-Est,HT02,5475,2615.0,2860.0,2026-11-06T17:04:03.841625+00:00
+HTI,Earthquake (August-2021),2021-08-27,2021,8,2,SA,Natural disaster,Not available,Not available,24425,,,2026-11-06T17:04:03.841625+00:00
+HTI,Haiti Earthquake,2019-01-30,2019,1,33,SA,Natural disaster,Not available,Not available,34508,,,2026-11-06T17:04:03.841625+00:00
+HTI,Hurricane Matthew,2017-09-30,2017,9,11,SA,Natural disaster,Not available,Not available,1593,,,2026-11-06T17:04:03.841625+00:00
+HTI,Hurricane Season in the Caribbean (2017),2017-09-01,2017,9,1,BA,Natural disaster,Not available,Not available,10388,,,2026-11-06T17:04:03.841625+00:00
+VCT,Hurricane Beryl,2024-07-31,2024,7,1,BA,Natural disaster,Not available,Not available,199,111,88,2026-11-06T17:04:03.841625+00:00
+BOL,Floods(2018),2018-03-16,2018,3,1,SA,Natural disaster,Cochabamba,BOL03,298,16,16,2026-11-06T17:04:03.841625+00:00
+BOL,Floods(2018),2018-03-16,2018,3,1,SA,Natural disaster,La Paz,BOL02,24,15,9,2026-11-06T17:04:03.841625+00:00
+BOL,Floods(2018),2018-03-16,2018,3,1,SA,Natural disaster,Potosí,BOL05,231,106,125,2026-11-06T17:04:03.841625+00:00
+ECU,Ecuador Earthquake,2017-02-01,2017,2,7,SA,Natural disaster,Not available,Not available,773,372.0,401.0,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Azuay,EC01,2165,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Orellana,EC22,740,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Bolivar,EC02,4194,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Pichincha,EC17,22601,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,El Oro,EC07,1688,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Guayas,EC09,29988,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Tungurahua,EC18,8480,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Not available,Not available,3387,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Los Rios,EC12,960,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Los Rios,EC12,7154,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Orellana,EC22,3645,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Carchi,EC04,3387,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Sucumbios,EC21,3950,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Imbabura,EC10,7754,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Tungurahua,EC18,2092,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,No reason for displacement reported,El Oro,EC07,1910,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Zamora Chinchipe,EC19,1120,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Esmeraldas,EC08,3678,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Pichincha,EC17,18464,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Loja,EC11,1966,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Loja,EC11,12009,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Guayas,EC09,87112,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Pastaza,EC16,1535,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Manabi,EC13,50079,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,No reason for displacement reported,Imbabura,EC10,1865,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,No reason for displacement reported,Pichincha,EC17,5913,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,No reason for displacement reported,Azuay,EC01,2278,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Esmeraldas,EC08,10973,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Manabi,EC13,22518,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Cotopaxi,EC05,2357,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Sucumbios,EC21,1754,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Chimborazo,EC06,1458,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,No reason for displacement reported,Guayas,EC09,40552,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,El Oro,EC07,13550,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Azuay,EC01,4361,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Not available,Not available,2736,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Natural disaster,Chimborazo,EC06,8974,,,2026-11-06T17:04:03.841625+00:00
+ECU,Migration Flows from Venezuela to the Americas,2025-09-30,2025,9,3,SRV,Conflict,Santo Domingo de los Tsachilas,EC23,8263,,,2026-11-06T17:04:03.841625+00:00
+PER,El Nino Costero,2017-05-30,2017,5,2,SA,Natural disaster,Not available,Not available,231,118.0,113.0,2026-11-06T17:04:03.841625+00:00
+PER,El Nino Costero,2017-05-30,2017,5,2,SA,Natural disaster,Lambayeque,PER14,223,99.0,124.0,2026-11-06T17:04:03.841625+00:00
+PER,El Nino Costero,2017-05-30,2017,5,2,SA,Natural disaster,Piura,PER20,12903,6654.0,6249.0,2026-11-06T17:04:03.841625+00:00
