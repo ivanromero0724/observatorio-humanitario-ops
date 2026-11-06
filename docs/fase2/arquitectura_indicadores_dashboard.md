@@ -22,7 +22,7 @@
 | **INFORM Risk** | `data/observaciones/inform_risk_mid_2026.csv`, 35 países | `iso3`, `puntuacion`, `categoria` y dimensiones existentes en archivo. Riesgo estructural multiamenaza (incluye amenazas naturales), no solo conflicto. | Revisar **mensualmente** en `fase1_cobertura.yml`, día 6; solo cambia cuando cambia edición original | Mapa regional, perfil |
 | **OPS Indicadores Básicos** | `data/observaciones/ops_8_indicadores_pais_anio.csv`, 3.038 país–indicador–año | Año, valor, unidad, definición, país. Indicadores: Gini, escolaridad, mortalidad por homicidios, camas, médicos, enfermería, DTP3, SRP1. Conservar años individuales. | Comprobar **mensualmente**, pero la frecuencia de cada indicador depende de OPS | Salud y vulnerabilidad, perfil |
 | **INFORM Severity archivo** | `data/observaciones/inform_severity_2026_09_crisis.csv`, septiembre 2026 | Fallback histórico reproducible; al existir ACAPS Nov2026 no es la fuente principal del dashboard | Revisión por edición | Respaldo de transparencia |
-| **OIM DTM Baseline** | `docs/fase1/cobertura_hapi_oim_americas.csv`, 12 países con datos | Por ahora: `iso3`, estado de cobertura, filas de catálogo, fechas de registro. **No se publican sumas de población** hasta seleccionar operaciones y rondas comparables. | **Mensual**: `piloto_americas.yml`, día 6, 13:10 UTC | Desplazamiento: disponibilidad |
+| **OIM DTM Baseline** | `data/observaciones/oim_dtm_ultima_ronda.csv`, 64 registros de últimas rondas en 12 países + matriz de cobertura regional | `operacion`, `fecha_reporte`, `ronda`, `tipo_evaluacion`, `causa_desplazamiento`, `origen_admin1`, `personas_idp_reportadas`, `hombres`, `mujeres`. **Se visualizan por operación y origen, sin sumar poblaciones ni rondas**. | **Mensual**: `oim_ultimas_rondas.yml` (día 6, 12:45 UTC) y `piloto_americas.yml` (día 6, 13:10 UTC) | Desplazamiento: cifras de última ronda y cobertura |
 | **OIM DTM HNA** | Mismo inventario, cero países americanos en su catálogo consultado | Acceso operativo pero sin datos comparables para los 35 en el catálogo disponible. No se interpreta ausencia como cero personas en necesidad. | Mensual | Estado metodológico |
 | **WarMonit** | `data/observaciones/warmonit_cii_ultimo.csv`, dos países americanos | Indicador propio de inestabilidad contextual. No está en los gráficos por baja cobertura regional. | Revisar por archivo fuente | Respaldo y análisis complementario |
 | **AWSD** | `docs/fase2/accesos_awsd_reliefweb.json` | **Clave detectada, respuesta JSON pendiente de validar.** Futuras variables: incidentes, fechas, países, tipos de incidente y víctimas (sujeto al codebook y licencia). No hay estadísticas AWSD en el dashboard. | Pendiente de validar autenticación; después corte publicado | Seguridad, todavía sin valores |
@@ -65,6 +65,7 @@
 - [Diseño reutilizado de El Niño](https://github.com/ivanromero0724/el-nino-ops)
 - [Control HAPI 35/35](../fase1/hapi_extraccion_completa.json)
 - [Control ACAPS](acaps_actualizacion.json)
+- [Control OIM (últimas rondas)](oim_actualizacion.json)
 - [Control ReliefWeb](reliefweb_actualizacion.json)
 - [Diagnóstico AWSD](accesos_awsd_reliefweb.json)
 - [Documentación HAPI Affected People](https://hdx-hapi.readthedocs.io/en/latest/data_usage_guides/affected_people/)
