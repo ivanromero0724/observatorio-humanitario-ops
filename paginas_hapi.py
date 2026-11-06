@@ -35,8 +35,8 @@ def _empty(source,valid):
     st.caption(f"Cobertura verificada en el catálogo: {valid} países.")
 
 def render(needs:pd.DataFrame,funding:pd.DataFrame,risk:pd.DataFrame,
-           poverty:pd.DataFrame,ipc:pd.DataFrame,countries:pd.DataFrame,
-           selected:set,meta:dict):
+           poverty:pd.DataFrame,ipc:pd.DataFrame,presence:pd.DataFrame,
+           countries:pd.DataFrame,selected:set,meta:dict):
     st.markdown('<div class="ops-kicker">05 / NECESIDADES Y RESPUESTA</div>'
                 '<div class="ops-section">Necesidades, vulnerabilidad y respuesta humanitaria</div>',
                 unsafe_allow_html=True)
@@ -57,9 +57,10 @@ def render(needs:pd.DataFrame,funding:pd.DataFrame,risk:pd.DataFrame,
     st.caption("Extracción HAPI: "+str(ts)[:10]+". "
         "Se diferencian los países sin registros de los que cuentan con estimaciones.")
     st.divider()
-    t1,t2,t3,t4,t5=st.tabs([
+    t1,t2,t3,t4,t5,t6=st.tabs([
         "Personas en necesidad","Financiación",
-        "Pobreza multidimensional","Seguridad alimentaria","Riesgo y capacidades"
+        "Pobreza multidimensional","Seguridad alimentaria",
+        "Riesgo y capacidades","Presencia de socios (3W)"
     ])
     with t1:
         st.markdown("#### Población con necesidades humanitarias")
@@ -283,6 +284,52 @@ def render(needs:pd.DataFrame,funding:pd.DataFrame,risk:pd.DataFrame,
                             limit=15,units="Puntuación / 10",max_x=10.8)
                 st.plotly_chart(fig,use_container_width=True,
                                 config={"displayModeBar":False})
+    with t6:
+        st.markdown("#### ¿Quién está presente y en qué sector? · OCHA 3W")
+        st.caption("El registro 3W representa presencia operacional de socios "
+            "por sector y área. NO mide personas atendidas, efectividad ni "
+            "cobertura nacional real de servicios. Los nombres de organizaciones "
+            "pueden variar entre publicaciones.")
+        if presence.empty:
+            _empty("presencia operacional",0)
+        else:
+            df=presence[presence["iso3"].isin(selected)].copy()
+            if df.empty:
+                _empty("presencia operacional",0)
+            else:
+                iso=_country(df,countries,"hapi_3w_country")
+                x=df[df["iso3"]==iso].copy()
+                x["organizaciones_distintas"]=pd.to_numeric(
+                    x["organizaciones_distintas"],errors="coerce")
+                x["unidades_territoriales"]=pd.to_numeric(
+                    x["unidades_territoriales"],errors="coerce")
+                dates=sorted(x["fecha_hasta"].dropna().unique(),reverse=True)
+                if dates:
+                    date=st.selectbox("Fecha de referencia del recurso",
+                            dates,key="hapi_3w_date")
+                    x=x[x["fecha_hasta"]==date]
+                a,b,c=st.columns(3)
+                a.metric("Sectores reportados",x["sector_code"].nunique())
+                b.metric("Filas sector–corte",len(x))
+                c.metric("Áreas reportadas (máx. por sector)",
+                    int(x["unidades_territoriales"].max()) if len(x) else "—")
+                if len(x):
+                    fig=rank_bars(x,label="sector",
+                         value="organizaciones_distintas",limit=16,
+                         units="Socios distintos en el sector",formats=".0f")
+                    st.plotly_chart(fig,use_container_width=True,
+                                    config={"displayModeBar":False})
+                    tab=x[["sector","organizaciones_distintas",
+                        "unidades_territoriales","fecha_hasta"]].rename(columns={
+                            "sector":"Sector",
+                            "organizaciones_distintas":"Socios (distintos en sector)",
+                            "unidades_territoriales":"Áreas con reporte",
+                            "fecha_hasta":"Fecha de referencia"})
+                    st.dataframe(tab,use_container_width=True,hide_index=True)
+                    _export(tab,"hapi_presencia_3w.csv")
+                st.caption("No sumar socios entre sectores: una misma organización "
+                    "puede trabajar en más de uno. Los países no cubiertos por "
+                    "3W no se clasifican como países sin operación humanitaria.")
     st.divider()
     st.caption("Fuente: HDX Humanitarian API v2 · 35 países consultados para "
                "cada tema, con paginación completa por fuente y fecha. "
