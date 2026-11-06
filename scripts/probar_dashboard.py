@@ -7,14 +7,10 @@ ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
     "Panorama regional",
-    "Conflicto y violencia",
-    "Seguridad y acceso",
-    "Necesidades y respuesta",
-    "Desplazamiento y movilidad",
-    "Informes y situaciones",
-    "Salud y vulnerabilidad",
-    "Perfiles de país",
-    "Fuentes y metodología",
+    "Amenazas y eventos",
+    "Vulnerabilidad y respuesta",
+    "Impacto humanitario y salud",
+    "Perfiles por país",
 ]
 
 def check(at,page):
@@ -52,6 +48,12 @@ def main():
         assert j.get("paises_catalogo")==35
         assert len(j.get("temas",{}))==5
         print("OK: cinco datasets HAPI con cobertura 35/35 consultas")
+    # Cada gráfico está dentro de un panel nativo de Streamlit con borde.
+    # Evita el estilo fragmentado de la versión de nueve páginas.
+    code=(ROOT/"observatorio_v2.py").read_text(encoding="utf-8")
+    assert "st.container(border=True)" in code
+    assert "def panel(" in code
+    assert "def overview(" in code and "def impacts(" in code
     at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
