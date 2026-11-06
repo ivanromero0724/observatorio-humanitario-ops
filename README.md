@@ -6,12 +6,12 @@ Proyecto de información humanitaria en la Región de las Américas. **Ya existe
 
 La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye seis páginas: panorama regional, conflicto y violencia, desplazamiento y movilidad, salud y vulnerabilidad, perfiles por país, y fuentes/metodología.
 
-- **Mapa regional:** INFORM Risk Mid 2026 (35 países) y detalle de 25 crisis INFORM Severity.
+- **Mapa regional:** INFORM Risk Mid 2026 (35 países), 25 crisis INFORM Severity del corte más reciente ACAPS (Nov2026), restricciones de acceso ACAPS y metadatos ReliefWeb.
 - **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
-- **Desplazamiento:** cobertura OIM DTM para 35 países sin imputar ceros ni sumar rondas incompatibles.
+- **Desplazamiento:** disponibilidad OIM DTM para 35 países y 64 registros de últimas rondas/operaciones en 12 países; sin imputar ceros ni sumar operaciones incompatibles.
 - **Conflicto:** 8.574 agregados país–mes–categoría de HAPI, a partir de las 35 extracciones completas y con QA; no sumar categorías ACLED.
 - **Países:** ficha con crisis, riesgo, indicadores OPS, y disponibilidad de fuentes.
-- **Fuentes:** fechas y limitaciones para permitir revisión metodológica.
+- **Fuentes:** fechas y limitaciones para permitir revisión metodológica; tabla de variables y trazabilidad en [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md).
 
 ### Ejecutar localmente
 
