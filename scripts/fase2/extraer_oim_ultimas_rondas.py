@@ -44,6 +44,7 @@ def main():
             if df.empty:
                 states.append({"iso3":iso,"estado":"SIN_FILAS","total":0,"ultimas":0})
                 continue
+            total_rows=len(df)
             df["_fecha"]=pd.to_datetime(df["reportingDate"],errors="coerce")
             if df["_fecha"].isna().any():raise ValueError("Fecha inválida")
             df["_ronda_num"]=pd.to_numeric(df["roundNumber"],errors="coerce")
@@ -78,7 +79,7 @@ def main():
                     "fecha_extraccion_utc":today,
                 })
             states.append({"iso3":iso,"estado":"OK",
-                           "total":int(len(client.get_idp_admin0_data(Admin0Pcode=iso))),
+                           "total":int(total_rows),
                            "ultimas":int(len(df)),
                            "operaciones":int(df["operation"].nunique())})
             print(iso,"OK",states[-1]["ultimas"],flush=True)
