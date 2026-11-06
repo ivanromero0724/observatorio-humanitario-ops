@@ -1,8 +1,8 @@
-"""Entrada Streamlit del Observatorio Humanitario OPS/OMS.
+"""Observatorio Humanitario OPS/OMS · fase 1 del mandato humanitario.
 
-Sala situacional ejecutiva con señales y preparación en salud.
-Las API y credenciales se gestionan exclusivamente mediante GitHub Actions.
+Temas: violencia/conflicto, migración/desplazamiento, acceso y contexto.
+Las categorías de prioridad serán definidas y validadas por Laura/PHE.
 """
-from observatorio_v4 import main
+from observatorio_v5 import main
 
 main()
