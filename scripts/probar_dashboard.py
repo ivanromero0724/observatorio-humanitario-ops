@@ -8,7 +8,9 @@ APP=ROOT/"app.py"
 PAGES=[
     "Panorama regional",
     "Conflicto y violencia",
+    "Seguridad y acceso",
     "Desplazamiento y movilidad",
+    "Informes y situaciones",
     "Salud y vulnerabilidad",
     "Perfiles de país",
     "Fuentes y metodología",
@@ -27,7 +29,15 @@ def main():
         assert j.get("paises_completos")==35, "HAPI regional exige 35 extracciones verificadas"
         assert not j.get("paises_excluidos"), "HAPI regional contiene países incompletos"
         print("OK: HAPI 35/35 países, sin datos parciales")
-    at=AppTest.from_file(str(APP),default_timeout=55)
+    for required in [
+        ROOT/"assets/ops_oms.png",
+        ROOT/"data/geografia/paises_americas.gpkg",
+        ROOT/"data/observaciones/reliefweb_reportes_americas.csv",
+        ROOT/"data/observaciones/acaps_acceso_americas.csv",
+        ROOT/"data/observaciones/acaps_severity_americas.csv",
+    ]:
+        assert required.exists(), f"Falta archivo obligatorio: {required}"
+    at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
     for page in PAGES[1:]:
