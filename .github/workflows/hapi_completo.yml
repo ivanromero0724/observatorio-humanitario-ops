@@ -1,6 +1,8 @@
 name: HAPI completo - series mensuales por pais
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '25 11 * * 1'
   push:
     branches: [main]
     paths:
