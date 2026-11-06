@@ -94,7 +94,7 @@ IMPACT_ROWS=[
 ]
 
 VULN={
-    "Económico":["GINI"],
+    "Económico":["GINI","Pobreza multidimensional"],
     "Educación":["Escolaridad"],
     "Ambiental":["Calidad del aire"],
     "Social":["GINI","Pobreza multidimensional"],
@@ -226,7 +226,7 @@ def _migration_visual(D,selected,type_code):
                           "Mapa nacional de población de acogida; no flujos.",
                           f"ACNUR/HAPI · {year}",height=PANEL):
                     pa_map(mapped,"events",
-                        f"{options[group]} · {year}",height=343)
+                        f"{options[group]} · {year}",height=343,unit="personas")
                     st.caption("País de acogida. Se evita mezclar personas "
                                "refugiadas y solicitantes de asilo.")
             with r:
