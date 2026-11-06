@@ -44,5 +44,6 @@ jobs:
           git add docs/fase1/resultados_cobertura.csv docs/fase1/ejecucion_fuentes.json docs/fase1/esquemas_fuentes.json docs/fase1/qa_normalizados.json data/observaciones/*.csv
           if ! git diff --cached --quiet; then
             git commit -m "data(fase1): resultados de pruebas públicas [skip ci]"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
