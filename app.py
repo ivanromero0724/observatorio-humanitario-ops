@@ -13,16 +13,17 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from ui_ops import apply_style, header as ops_header, heading as ops_heading, map_countries, footer as ops_footer
 
 ROOT = Path(__file__).resolve().parent
 OBS = ROOT / "data/observaciones"
 CAT = ROOT / "data/catalogos"
 DOC = ROOT / "docs/fase1"
 
-NAVY = "#003B6B"
-BLUE = "#0072BC"
+NAVY = "#004B87"
+BLUE = "#0072CE"
 LIGHT = "#E9F4FC"
-CYAN = "#27A9E1"
+CYAN = "#198CC7"
 ORANGE = "#F39200"
 MUTED = "#566779"
 GRAY = "#E8EDF2"
@@ -49,6 +50,9 @@ SOURCES = {
     "HAPI": "https://hdx-hapi.readthedocs.io/en/latest/data_usage_guides/coordination_and_context/",
     "OIM": "https://dtm.iom.int/es/node/38776",
     "ACNUR": "https://refugeedata.unhcr.org/en/documentation/technical-reference/api/",
+    "ReliefWeb": "https://reliefweb.int/updates",
+    "AWSD": "https://www.aidworkersecurity.org/",
+    "ACAPS": "https://www.acaps.org/en/thematics/all-topics/humanitarian-access-overview",
 }
 
 st.set_page_config(
@@ -57,30 +61,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-st.markdown(
-    """
-    <style>
-      .block-container { max-width: 1400px; padding-top: 1.15rem; padding-bottom: 3rem; }
-      h1, h2, h3 { color: #003B6B; letter-spacing: -.025em; }
-      h1 { font-size: 1.9rem !important; font-weight: 750 !important; }
-      h2 { font-size: 1.45rem !important; }
-      div[data-testid="stMetric"] { border: 1px solid #E0E8F0; border-top: 3px solid #0072BC;
-          border-radius: 11px; padding: 17px 15px 11px; background: white; }
-      div[data-testid="stMetricLabel"] { color: #566779; font-size: .86rem; }
-      div[data-testid="stMetricValue"] { color: #003B6B; font-size: 1.6rem; }
-      div[data-testid="stAlert"] { border-radius: 9px; }
-      [data-testid="stSidebar"] { background-color: #F5F9FC; border-right: 1px solid #DDE7F0; }
-      .small-kicker {color: #F39200; font-weight: 700; font-size: .78rem;
-          letter-spacing: .11em; margin-top: .35rem;}
-      .small-note {color: #647386; font-size: .82rem;}
-      .section-line {border-top: 1px solid #E1E9EF; margin: 1rem 0;}
-      .header-note { border-left: 4px solid #F39200; background:#F6FAFD; color:#24465E;
-          padding: 11px 15px; border-radius: 5px; margin-bottom: 1.15rem; font-size:.89rem; }
-      footer {visibility:hidden}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+apply_style()
 
 
 @st.cache_data(show_spinner=False)
@@ -109,6 +90,10 @@ ops = load_csv("data/observaciones/ops_8_indicadores_pais_anio.csv")
 coverage = load_csv("docs/fase1/cobertura_hapi_oim_americas.csv")
 hapi_meta = load_json("docs/fase1/hapi_extraccion_completa.json")
 hapi = load_csv("data/observaciones/hapi_conflicto_pais_mes.csv")
+reliefweb = load_csv("data/observaciones/reliefweb_reportes_americas.csv")
+rw_meta = load_json("docs/fase2/reliefweb_actualizacion.json")
+security_meta = load_json("docs/fase2/accesos_awsd_reliefweb.json")
+warmonit = load_csv("data/observaciones/warmonit_cii_ultimo.csv")
 
 if countries.empty or risk.empty or severity.empty or ops.empty:
     st.error(
@@ -149,14 +134,20 @@ if not hapi.empty:
     )
     hapi = hapi.merge(countries[["iso3", "pais", "subregion"]], on="iso3", how="left")
 
+if not reliefweb.empty:
+    reliefweb = reliefweb[reliefweb["iso3"].isin(valid_iso)].copy()
+    reliefweb = reliefweb.merge(
+        countries[["iso3", "pais", "subregion"]], on="iso3", how="left"
+    )
+    reliefweb["fecha_dt"] = pd.to_datetime(
+        reliefweb["fecha_publicacion_rw"], errors="coerce", utc=True
+    )
+if not warmonit.empty:
+    warmonit = warmonit[warmonit["iso3"].isin(valid_iso)].copy()
+
 
 def section(title: str, index: str, note: str = "") -> None:
-    st.markdown(f'<div class="small-kicker">{index} / OBSERVATORIO REGIONAL</div>',
-                unsafe_allow_html=True)
-    st.subheader(title)
-    if note:
-        st.caption(note)
-
+    ops_heading(title,index,note)
 
 def describe(source: str, edition: str, caveat: str = "") -> None:
     st.caption(
@@ -236,7 +227,8 @@ with st.sidebar:
     page = st.radio(
         "Explorar",
         ["Panorama regional", "Conflicto y violencia",
-         "Desplazamiento y movilidad", "Salud y vulnerabilidad",
+         "Seguridad y acceso", "Desplazamiento y movilidad",
+         "Informes y situaciones", "Salud y vulnerabilidad",
          "Perfiles de país", "Fuentes y metodología"],
         label_visibility="collapsed",
     )
@@ -255,18 +247,8 @@ with st.sidebar:
     st.caption("Versión exploratoria de trabajo · 2026")
     st.caption("No constituye una clasificación oficial de prioridades de OPS.")
 
-st.markdown(
-    '<div class="small-kicker">OPS / OMS · PREPARACIÓN Y RESPUESTA A EMERGENCIAS</div>',
-    unsafe_allow_html=True,
-)
-st.title("Observatorio Regional de Amenazas y Vulnerabilidad Humanitaria")
-st.markdown(
-    '<div class="header-note"><strong>Versión de exploración metodológica.</strong> '
-    "Los indicadores mantienen fuentes, periodos y coberturas independientes. "
-    "La disponibilidad de datos no representa automáticamente el nivel de amenaza. "
-    "No se presentan índices compuestos ni niveles oficiales de prioridad OPS.</div>",
-    unsafe_allow_html=True,
-)
+ops_header()
+st.caption("Prototipo de análisis con fuentes institucionales. Los indicadores mantienen cortes y denominadores separados; no es una clasificación oficial de prioridades OPS.")
 
 if page == "Panorama regional":
     section("Situación regional", "01",
@@ -283,10 +265,7 @@ if page == "Panorama regional":
     col1,col2=st.columns([1.45,1],gap="large")
     with col1:
         st.markdown("#### Riesgo estructural por país")
-        st.plotly_chart(
-            choropleth(rc,"puntuacion","INFORM Risk"),
-            use_container_width=True,config={"displayModeBar":False},
-        )
+        map_countries(rc,"puntuacion","INFORM Risk",legend_title="INFORM Risk · escala 0–10")
     with col2:
         st.markdown("#### Países con mayor puntuación INFORM Risk")
         plot = rc.head(12).sort_values("puntuacion")
@@ -464,10 +443,7 @@ elif page == "Desplazamiento y movilidad":
         col1,col2=st.columns([1.45,1],gap="large")
         with col1:
             st.markdown("#### Disponibilidad de datos OIM DTM")
-            st.plotly_chart(choropleth(dm,"Disponibilidad","Cobertura",
-                                      continuous=False),
-                            use_container_width=True,
-                            config={"displayModeBar":False})
+            map_countries(dm,"Disponibilidad","Cobertura",categorical=True)
         with col2:
             st.markdown("#### Cobertura por subregión")
             counts=(dm.groupby(["subregion","Disponibilidad"],as_index=False)
