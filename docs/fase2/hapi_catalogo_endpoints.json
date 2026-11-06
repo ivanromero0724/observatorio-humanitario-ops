@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-06T17:15:02.863913+00:00",
+  "fecha_utc": "2026-11-06T17:26:02.153926+00:00",
   "muestra_paises": [
     "COL",
     "HTI",
@@ -1045,6 +1045,98 @@
           "codigo": 404
         }
       }
+    }
+  },
+  "filtros_refugiados": {
+    "asylum_location_code:COL": {
+      "status": 200,
+      "filas_muestra": 3,
+      "parejas": [
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "REF",
+          "fecha": "2024-01-01"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "REF",
+          "fecha": "2025-01-01"
+        },
+        {
+          "origen": "AFG",
+          "asilo": "COL",
+          "genero": "f",
+          "edad": "12-17",
+          "grupo": "REF",
+          "fecha": "2024-01-01"
+        }
+      ]
+    },
+    "asylum_location_code:HTI": {
+      "status": 200,
+      "filas_muestra": 3,
+      "parejas": [
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "OOC",
+          "fecha": "2024-01-01"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "OOC",
+          "fecha": "2025-01-01"
+        },
+        {
+          "origen": "COD",
+          "asilo": "HTI",
+          "genero": "f",
+          "edad": "12-17",
+          "grupo": "OOC",
+          "fecha": "2024-01-01"
+        }
+      ]
+    },
+    "origin_location_code:VEN": {
+      "status": 200,
+      "filas_muestra": 3,
+      "parejas": [
+        {
+          "origen": "VEN",
+          "asilo": "ALB",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "REF",
+          "fecha": "2024-01-01"
+        },
+        {
+          "origen": "VEN",
+          "asilo": "ALB",
+          "genero": "f",
+          "edad": "0-4",
+          "grupo": "REF",
+          "fecha": "2025-01-01"
+        },
+        {
+          "origen": "VEN",
+          "asilo": "ALB",
+          "genero": "f",
+          "edad": "12-17",
+          "grupo": "REF",
+          "fecha": "2024-01-01"
+        }
+      ]
     }
   }
 }
