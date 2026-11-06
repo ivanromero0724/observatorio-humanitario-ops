@@ -98,6 +98,8 @@ hapi_funding = load_csv("data/observaciones/hapi_financiacion_apelaciones.csv")
 hapi_inform = load_csv("data/observaciones/hapi_inform_componentes.csv")
 hapi_poverty = load_csv("data/observaciones/hapi_pobreza_multidimensional.csv")
 hapi_ipc = load_csv("data/observaciones/hapi_seguridad_alimentaria_ipc.csv")
+hapi_presence = load_csv("data/observaciones/hapi_presencia_sector.csv")
+hapi_presence_meta = load_json("docs/fase2/hapi_presencia_actualizacion.json")
 hapi_context_meta = load_json("docs/fase2/hapi_contexto_actualizacion.json")
 
 reliefweb = load_csv("data/observaciones/reliefweb_reportes_americas.csv")
@@ -194,7 +196,7 @@ if not dtm_latest.empty:
     )
 
 
-for _hapi_data in [hapi_needs,hapi_funding,hapi_inform,hapi_poverty,hapi_ipc]:
+for _hapi_data in [hapi_needs,hapi_funding,hapi_inform,hapi_poverty,hapi_ipc,hapi_presence]:
     if not _hapi_data.empty:
         _hapi_data.drop(_hapi_data[
             ~_hapi_data["iso3"].isin(valid_iso)].index,inplace=True)
@@ -504,7 +506,8 @@ elif page == "Seguridad y acceso":
 
 elif page == "Necesidades y respuesta":
     render_hapi(hapi_needs,hapi_funding,hapi_inform,
-                hapi_poverty,hapi_ipc,countries,selected,hapi_context_meta)
+                hapi_poverty,hapi_ipc,hapi_presence,
+                countries,selected,hapi_context_meta)
 
 elif page == "Desplazamiento y movilidad":
     section("Desplazamiento y movilidad humana", "04",
