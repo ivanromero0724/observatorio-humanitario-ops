@@ -265,8 +265,11 @@ def overview(D,selected,names,period):
     b.metric("Contextos ACAPS",severity["crisis_id"].nunique() if not severity.empty else "—")
     c.metric("Países con PiN reportada",needs["iso3"].nunique() if not needs.empty else "—")
     d.metric("Informes recientes",reports["reporte_id"].nunique() if not reports.empty else "—")
-    st.caption("Son unidades distintas: países, crisis evaluadas, cobertura de "
-        "estimaciones y documentos. No se suman ni constituyen una prioridad OPS.")
+    st.caption("Lectura sugerida: partir del riesgo estructural INFORM, "
+        "revisar las crisis ACAPS y después abrir las señales y los reportes "
+        "que aportan evidencia. Ninguna fuente define por sí sola la prioridad OPS.")
+    st.caption("Países, crisis, estimaciones e informes son unidades diferentes: "
+        "no se suman entre sí ni constituyen una puntuación institucional.")
     col1,col2=st.columns([1.35,1.0],gap="medium")
     with col1:
         with panel("Riesgo estructural INFORM · Mid 2026",
@@ -288,34 +291,35 @@ def overview(D,selected,names,period):
                              "puntuacion":"Severidad / 10"})
                 st.dataframe(table,hide_index=True,use_container_width=True,height=430,
                     column_config={"Crisis":st.column_config.TextColumn(width="large")})
-    st.markdown("#### Señales y evidencia complementaria")
-    col1,col2=st.columns(2,gap="medium")
-    with col1:
-        h=filtered(D["conflict"],selected)
-        h=h[h["tipo_evento"]=="political_violence"] if not h.empty else h
-        if not h.empty:
-            h=h[h["fecha"]>=h["fecha"].max()-pd.DateOffset(months=period)]
-            ts=h.groupby("fecha",as_index=False)["eventos"].sum()
-        else:ts=pd.DataFrame()
-        with panel("Violencia política · evolución mensual",
-            "Eventos registrados en los países seleccionados; fuente ACLED agregada.",
-            "OCHA HDX HAPI / ACLED · cortes mensuales"):
-            if ts.empty:warn_no("conflicto HAPI")
-            else:plot(trend(ts,x="fecha",y="eventos",units="Eventos reportados"))
-    with col2:
-        with panel("Informes de situación recientes",
-            "Documentos originales para interpretación y seguimiento, no conteos de crisis.",
-            "OCHA ReliefWeb · últimos 90 días"):
-            if reports.empty:warn_no("ReliefWeb")
-            else:
-                rows=reports.drop_duplicates("reporte_id").sort_values("fecha",ascending=False).head(8).copy()
-                rows["Fecha"]=rows["fecha_publicacion_rw"].astype(str).str[:10]
-                st.dataframe(rows[["Fecha","titulo","url"]].rename(columns={
-                    "titulo":"Informe","url":"Documento"}),
-                    hide_index=True,use_container_width=True,height=345,
-                    column_config={"Documento":st.column_config.LinkColumn(
-                        display_text="Abrir"),
-                        "Informe":st.column_config.TextColumn(width="large")})
+    with st.expander("Explorar evolución y reportes que respaldan la lectura regional",expanded=False):
+        st.markdown("#### Señales y evidencia complementaria")
+        col1,col2=st.columns(2,gap="medium")
+        with col1:
+            h=filtered(D["conflict"],selected)
+            h=h[h["tipo_evento"]=="political_violence"] if not h.empty else h
+            if not h.empty:
+                h=h[h["fecha"]>=h["fecha"].max()-pd.DateOffset(months=period)]
+                ts=h.groupby("fecha",as_index=False)["eventos"].sum()
+            else:ts=pd.DataFrame()
+            with panel("Violencia política · evolución mensual",
+                "Eventos registrados en los países seleccionados; fuente ACLED agregada.",
+                "OCHA HDX HAPI / ACLED · cortes mensuales"):
+                if ts.empty:warn_no("conflicto HAPI")
+                else:plot(trend(ts,x="fecha",y="eventos",units="Eventos reportados"))
+        with col2:
+            with panel("Informes de situación recientes",
+                "Documentos originales para interpretación y seguimiento, no conteos de crisis.",
+                "OCHA ReliefWeb · últimos 90 días"):
+                if reports.empty:warn_no("ReliefWeb")
+                else:
+                    rows=reports.drop_duplicates("reporte_id").sort_values("fecha",ascending=False).head(8).copy()
+                    rows["Fecha"]=rows["fecha_publicacion_rw"].astype(str).str[:10]
+                    st.dataframe(rows[["Fecha","titulo","url"]].rename(columns={
+                        "titulo":"Informe","url":"Documento"}),
+                        hide_index=True,use_container_width=True,height=345,
+                        column_config={"Documento":st.column_config.LinkColumn(
+                            display_text="Abrir"),
+                            "Informe":st.column_config.TextColumn(width="large")})
     st.caption("No se presenta un ranking de países prioritarios: las categorías "
         "crítico, alto, elevado y moderado requieren criterios aprobados por Laura/PHE.")
 
@@ -768,11 +772,22 @@ def main():
         letter-spacing:-.025em;margin:0 0 4px}
     .obs-panel-title{font:750 1.06rem Arial,sans-serif;color:#004B87;
         line-height:1.35;margin:3px 0 8px}
-    div[data-testid="stVerticalBlockBorderWrapper"]{
-        border:1px solid #D9E6EE!important;border-radius:12px!important;
-        box-shadow:0 2px 7px rgba(0,57,99,.045);}
-    [data-testid="stPlotlyChart"]{padding-top:0!important}
+    /* El contenedor real de Streamlit admite dos selectores segun version.
+       Usar borde, radio y separacion IDENTICOS en cada mapa y grafico. */
+    [data-testid="stVerticalBlockBorderWrapper"],
+    [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"],
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"]{
+        border:1px solid #D8E2E9!important;
+        border-radius:12px!important;
+        background:#FFFFFF!important;
+        box-shadow:0 2px 7px rgba(0,57,99,.045)!important;}
+    [data-testid="stPlotlyChart"]{padding-top:0!important;overflow:hidden}
+    [data-testid="stPlotlyChart"] > div{width:100%!important}
     [data-testid="stMetric"]{background:white}
+    [data-testid="stSidebar"] [data-testid="stRadio"] label{font-size:.87rem}
+    [data-testid="stVerticalBlockBorderWrapper"] [data-testid="stCaptionContainer"] p{
+        color:#667A89!important;font-size:.79rem!important}
+    .obs-section-title{margin-top:.35rem!important}
     </style>
     """,unsafe_allow_html=True)
     D=load_all()
