@@ -872,6 +872,51 @@ elif page == "Perfiles de país":
 elif page == "Fuentes y metodología":
     section("Fuentes, integridad y metodología", "07",
             "Transparencia de trazabilidad, fecha y controles de integridad.")
+    st.markdown("#### ¿Qué información existe para cada país?")
+    st.caption("Matriz de disponibilidad de **registros en el corte consultado**. "
+               "Gris significa que la fuente no devolvió registros; no significa "
+               "ausencia de necesidades, desplazamientos o emergencias.")
+    catalog=sub_countries.sort_values(["subregion","pais"]).copy()
+    palette=[
+        ("Conflicto HAPI",set(hapi["iso3"]) if not hapi.empty else set()),
+        ("INFORM Risk",set(risk["iso3"]) if not risk.empty else set()),
+        ("ACAPS Severity",set(acaps_severity["iso3"]) if not acaps_severity.empty else set()),
+        ("Acceso ACAPS",set(acaps_access["iso3"]) if not acaps_access.empty else set()),
+        ("Necesidades HAPI",set(hapi_needs["iso3"]) if not hapi_needs.empty else set()),
+        ("Financiación HAPI",set(hapi_funding["iso3"]) if not hapi_funding.empty else set()),
+        ("Pobreza HAPI",set(hapi_poverty["iso3"]) if not hapi_poverty.empty else set()),
+        ("IPC HAPI",set(hapi_ipc["iso3"]) if not hapi_ipc.empty else set()),
+        ("Presencia 3W HAPI",set(hapi_presence["iso3"]) if not hapi_presence.empty else set()),
+        ("ACNUR/HAPI",set(hapi_acnur["asilo_iso3"]) if not hapi_acnur.empty else set()),
+        ("OIM DTM",set(dtm_latest["iso3"]) if not dtm_latest.empty else set()),
+        ("Salud OPS",set(ops["iso3"]) if not ops.empty else set()),
+        ("ReliefWeb",set(reliefweb["iso3"]) if not reliefweb.empty else set()),
+    ]
+    if len(catalog):
+        matrix=[[1 if country["iso3"] in available else 0
+                 for label,available in palette]
+                for _,country in catalog.iterrows()]
+        fig=go.Figure(go.Heatmap(
+            z=matrix,y=catalog["pais"].tolist(),
+            x=[row[0] for row in palette],
+            colorscale=[[0,"#E1E8EE"],[0.499,"#E1E8EE"],
+                        [0.5,"#0072CE"],[1,"#0072CE"]],
+            showscale=False,xgap=3,ygap=3,zmin=0,zmax=1,
+            hovertemplate="<b>%{y}</b><br>%{x}<br>Registros disponibles: %{z}<extra></extra>"
+        ))
+        fig.update_layout(
+            height=max(420,len(catalog)*25+100),showlegend=False,
+            margin=dict(l=15,r=15,t=10,b=100),
+            font=dict(family="Arial",size=11,color="#17324D"),
+            paper_bgcolor="white",plot_bgcolor="white",
+            xaxis=dict(side="top",tickangle=-43,ticks="",showgrid=False),
+            yaxis=dict(autorange="reversed",ticks="",showgrid=False),
+        )
+        st.plotly_chart(fig,use_container_width=True,config={"displayModeBar":False})
+        st.caption("Azul = la tabla contiene al menos un registro del país. "
+            "Gris = no hay registros para el corte/filtro de ese proveedor. "
+            "Las coberturas no tienen la misma fecha.")
+    st.markdown("#### Catálogo de fuentes y limitaciones")
     source_rows=[
         ("INFORM Risk","Mid 2026","35 países",
          "Riesgo estructural multiamenaza; no exclusivamente violencia.",
@@ -901,9 +946,34 @@ elif page == "Fuentes y metodología":
         ("AWSD", "Clave recibida", "Por validar",
          "No publicar indicadores hasta autenticar el endpoint JSON.",
          SOURCES["AWSD"]),
-        ("ACNUR","Por integrar","Piloto de conectividad anterior",
-         "Exige armonizar país de origen y país de asilo.",
-         SOURCES["ACNUR"]),
+        ("ACNUR vía HAPI", "2024 en adelante",
+         f"{hapi_acnur_meta.get('paises_con_registros','—')}/35 países con registros",
+         "Totales sin desagregación por sexo ni edad; origen, acogida, grupo y año separados.",
+         SOURCES["HAPI"]),
+        ("HAPI necesidades", "2024 en adelante",
+         f"{hapi_context_meta.get('temas',{}).get('necesidades',{}).get('paises_con_datos','—')}/35 países",
+         "PiN por sector/estatus; no sumar sectores ni categorías.",
+         SOURCES["HAPI"]),
+        ("HAPI financiación", "2023 en adelante",
+         f"{hapi_context_meta.get('temas',{}).get('financiacion',{}).get('paises_con_datos','—')}/35 países",
+         "Solo financiación de apelaciones; no sumar planes regionales con nacionales.",
+         SOURCES["HAPI"]),
+        ("HAPI riesgo INFORM", "Edición fuente HAPI",
+         f"{hapi_context_meta.get('temas',{}).get('riesgo',{}).get('paises_con_datos','—')}/35 países",
+         "Componentes de INFORM de corte propio, distinto a Mid 2026.",
+         SOURCES["HAPI"]),
+        ("HAPI pobreza MPI", "Años distintos por país",
+         f"{hapi_context_meta.get('temas',{}).get('pobreza',{}).get('paises_con_datos','—')}/35 países",
+         "MPI de OPHI; años y muestras nacionales diferentes.",
+         SOURCES["HAPI"]),
+        ("HAPI inseguridad alimentaria", "IPC 2023 en adelante",
+         f"{hapi_context_meta.get('temas',{}).get('inseguridad_alimentaria',{}).get('paises_con_datos','—')}/35 países",
+         "Fase/periodo/tipo de estimación separados; no sumar proyecciones.",
+         SOURCES["HAPI"]),
+        ("HAPI presencia 3W", "Último corte por fuente",
+         f"{hapi_presence_meta.get('paises_con_datos','—')}/35 países",
+         "Conteo de socios distintos por sector y periodo; no son beneficiarios.",
+         SOURCES["HAPI"]),
     ]
     source_table=pd.DataFrame(
         source_rows,columns=["Fuente","Corte","Disponibilidad",
@@ -921,7 +991,7 @@ elif page == "Fuentes y metodología":
         "HAPI: consulta paginada completa por país, controles de tipos, fechas y geografía.",
         "Sin sumar categorías superpuestas de conflicto; sin mezclar crisis diferentes.",
         "OPS: no comparar distintos años sin advertir la heterogeneidad temporal.",
-        "Ni ACLED detallado ni ReliefWeb se usan hasta contar con autorización.",
+        "ReliefWeb usa solo metadatos y documentos vinculados con appname aprobado; ACLED detallado sigue sujeto a licencia.",
     ]:
         st.markdown("✓ "+t)
     st.markdown("#### Integridad regional HAPI")
