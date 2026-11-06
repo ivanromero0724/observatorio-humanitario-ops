@@ -359,7 +359,7 @@ def impacto_page(D,selected,names):
                     pin=pin.copy()
                     pin["pais"]=pin["iso3"].map(names)
                     plot(strip_countries(pin,name="pais",val="population",
-                        year="Año",max_items=14,units="Personas"),height=340)
+                        year="Año",max_items=14,units="Personas",decimals=0),height=340)
                     st.caption("PiN no significa personas impactadas "
                                "directamente por un incidente.")
         with r:
