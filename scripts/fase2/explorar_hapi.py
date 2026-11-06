@@ -60,6 +60,31 @@ def main():
             checks[iso]=query(name,path,iso,key)
         output["fuentes"][name]={"endpoint_v2":path,"paises_muestra":checks}
         print(name, {c:(v["estado"],v.get("total_api")) for c,v in checks.items()},flush=True)
+    # Confirmar dirección de filtros asilo/origen (no location_code general)
+    special={}
+    for field,value in [("asylum_location_code","COL"),
+                        ("asylum_location_code","HTI"),
+                        ("origin_location_code","VEN")]:
+        params={"app_identifier":key,"output_format":"json","limit":3,
+                "offset":0,field:value,"start_date":"2024-01-01"}
+        try:
+            resp=S.get("https://hapi.humdata.org/api/v2/affected-people/"
+                       "refugees-persons-of-concern",params=params,timeout=40)
+            obj=resp.json() if resp.status_code==200 else {}
+            rows=obj.get("data",[])
+            special[field+":"+value]={
+                "status":resp.status_code,"filas_muestra":len(rows),
+                "parejas":[{"origen":str(v.get("origin_location_code","")),
+                            "asilo":str(v.get("asylum_location_code","")),
+                            "genero":str(v.get("gender","")),
+                            "edad":str(v.get("age_range","")),
+                            "grupo":str(v.get("population_group","")),
+                            "fecha":str(v.get("reference_period_start",""))[:10]}
+                           for v in rows if isinstance(v,dict)]
+            }
+        except (requests.RequestException,ValueError,TypeError):
+            special[field+":"+value]={"status":"ERROR"}
+    output["filtros_refugiados"]=special
     OUT.parent.mkdir(exist_ok=True,parents=True)
     OUT.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 if __name__=="__main__":main()
