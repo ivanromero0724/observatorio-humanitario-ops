@@ -99,6 +99,8 @@ hapi_inform = load_csv("data/observaciones/hapi_inform_componentes.csv")
 hapi_poverty = load_csv("data/observaciones/hapi_pobreza_multidimensional.csv")
 hapi_ipc = load_csv("data/observaciones/hapi_seguridad_alimentaria_ipc.csv")
 hapi_presence = load_csv("data/observaciones/hapi_presencia_sector.csv")
+hapi_acnur = load_csv("data/observaciones/hapi_acnur_acogida.csv")
+hapi_acnur_meta = load_json("docs/fase2/hapi_acnur_actualizacion.json")
 hapi_presence_meta = load_json("docs/fase2/hapi_presencia_actualizacion.json")
 hapi_context_meta = load_json("docs/fase2/hapi_contexto_actualizacion.json")
 
@@ -186,6 +188,9 @@ if not reliefweb.empty:
     )
 if not warmonit.empty:
     warmonit = warmonit[warmonit["iso3"].isin(valid_iso)].copy()
+if not hapi_acnur.empty:
+    hapi_acnur = hapi_acnur[hapi_acnur["asilo_iso3"].isin(valid_iso)].copy()
+    hapi_acnur["personas"] = pd.to_numeric(hapi_acnur["personas"],errors="coerce")
 if not dtm_latest.empty:
     dtm_latest = dtm_latest[dtm_latest["iso3"].isin(valid_iso)].copy()
     dtm_latest["personas_idp_reportadas"]=pd.to_numeric(
@@ -617,15 +622,61 @@ elif page == "Desplazamiento y movilidad":
                 "El usuario no debe sumar orígenes o sexo cuando existan "
                 "categorías solapadas o faltantes.")
     st.divider()
-    st.markdown("#### Otras fuentes de movilidad humana")
-    st.info(
-        "ACNUR permite consultar refugiados, solicitantes de asilo y "
-        "otras poblaciones desplazadas. La integración numérica "
-        "para los 35 países aún requiere una extracción completa, "
-        "homologación de país de origen frente a país de asilo "
-        "y revisión de la licencia de uso. No presentamos cifras "
-        "de una prueba piloto parcial."
-    )
+    st.markdown("#### Refugiados y solicitantes de asilo (ACNUR vía HAPI)")
+    if hapi_acnur.empty:
+        st.info("Todavía no existe una extracción nacional HAPI/ACNUR "
+            "verificada para los 35 países de acogida.")
+    else:
+        st.caption("Poblaciones registradas por país de acogida, país de origen, "
+            "año y grupo. Se consultan los totales sin desagregar sexo y edad, "
+            "para evitar duplicación. No confundir stock con flujos migratorios.")
+        u=hapi_acnur[hapi_acnur["asilo_iso3"].isin(selected)].copy()
+        if u.empty:
+            st.info("No hay registros de personas de interés en el filtro geográfico.")
+        else:
+            hosts=sorted(u["asilo_iso3"].unique())
+            host=st.selectbox("País de acogida",hosts,
+              format_func=lambda v:countries.set_index("iso3").loc[v,"pais"],
+              key="hapi_unhcr_host")
+            u=u[u["asilo_iso3"]==host]
+            years=sorted(u["anio"].astype(str).unique(),reverse=True)
+            year=st.selectbox("Año de referencia",years,key="hapi_unhcr_year")
+            u=u[u["anio"].astype(str)==year]
+            groups=sorted(u["grupo_poblacion"].unique())
+            labels={"REF":"Personas refugiadas (REF)",
+                    "ASY":"Solicitantes de asilo (ASY)",
+                    "OIP":"Otras personas de interés (OIP)",
+                    "STA":"Personas apátridas (STA)"}
+            group=st.selectbox("Grupo de población",groups,
+              index=groups.index("REF") if "REF" in groups else 0,
+              format_func=lambda code:labels.get(code,code),
+              key="hapi_unhcr_group")
+            u=u[u["grupo_poblacion"]==group].copy()
+            a,b=st.columns(2)
+            a.metric("Orígenes con registros",u["origen_iso3"].nunique())
+            b.metric("Corte de la fuente",year)
+            u["origen"]=u["origen_iso3"].map(
+                countries.set_index("iso3")["pais"].to_dict()
+            ).fillna(u["origen_iso3"])
+            if not u.empty:
+                fig=rank_bars(u,label="origen",value="personas",
+                              limit=16,color=BLUE,
+                              units="Personas",formats=".0f")
+                st.plotly_chart(fig,use_container_width=True,
+                    config={"displayModeBar":False})
+                table=u[["origen","origen_iso3","grupo_poblacion",
+                     "personas","periodo_inicio","periodo_fin"]].rename(columns={
+                     "origen":"País de origen","origen_iso3":"ISO3 origen",
+                     "grupo_poblacion":"Grupo","personas":"Personas registradas",
+                     "periodo_inicio":"Desde","periodo_fin":"Hasta"})
+                st.dataframe(table,hide_index=True,use_container_width=True,height=280)
+                st.download_button("Descargar registros ACNUR filtrados",
+                    table.to_csv(index=False).encode("utf-8-sig"),
+                    "hapi_acnur_ultimo.csv","text/csv")
+            st.caption("Los códigos REF y ASY se presentan por separado. "
+                "No se suman categorías de población, ni se interpreta "
+                "la ausencia de registros como ausencia de desplazamiento.")
+    st.markdown("#### Fuentes y limitaciones de movilidad")
     st.markdown(f"[API oficial ACNUR]({SOURCES['ACNUR']}) · "
                 f"[OIM DTM]({SOURCES['OIM']})")
     if not coverage.empty:
