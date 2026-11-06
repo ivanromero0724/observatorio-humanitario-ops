@@ -4,15 +4,15 @@ Proyecto de información humanitaria en la Región de las Américas. **Ya existe
 
 ## Dashboard Streamlit — prototipo regional
 
-La aplicación se encuentra en [`app.py`](app.py), implementada en [`observatorio_v2.py`](observatorio_v2.py). Su **navegación tiene cinco páginas**, fiel a la [propuesta técnica del 5 de noviembre](docs/fase2/guia_operativa_diseno.md): **Panorama regional**, **Amenazas y eventos**, **Vulnerabilidad y respuesta**, **Impacto humanitario y salud** y **Perfiles por país**. Las fuentes se exploran como evidencia dentro de esas páginas; no se crea una página independiente por cada API. Todas las figuras principales usan paneles nativos de Streamlit con bordes gris OPS, títulos azules, fechas y notas de procedencia.
+La aplicación usa [`app.py`](app.py) y [`observatorio_v3.py`](observatorio_v3.py). Las **cinco páginas operativas** son: **Situaciones documentadas**, **Amenazas y acceso**, **Personas e impacto**, **Vulnerabilidad y respuesta**, **Ficha por país**. El inicio ya no es un mapa general de riesgo: es un **registro filtrable de contextos ACAPS**, con acceso a señales HAPI, documentos ReliefWeb y su representación territorial. El resto de las fuentes se consulta por pregunta de análisis y no por proveedor. Véase [criterios UX y fuentes](docs/fase2/criterios_ux_operativo.md).
 
-- **Mapa regional:** INFORM Risk Mid 2026 (35 países), 25 crisis INFORM Severity del corte más reciente ACAPS (Nov2026), restricciones de acceso ACAPS y metadatos ReliefWeb.
+- **Situaciones documentadas:** 25 crisis ACAPS del corte noviembre 2026, filtrables por conflicto/desplazamiento; mapa de disponibilidad de contextos, evolución HAPI y 90 días de reportes ReliefWeb. INFORM Risk Mid 2026 se conserva en los datos y en la ficha de país, pero no domina el inicio.
 - **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
 - **Desplazamiento:** OIM DTM (64 registros de últimas rondas/operaciones en 12 países) y ACNUR vía HAPI (3.765 registros sin desglose sexo/edad, 31 países de acogida). Nunca sumar stock con flujos ni operaciones incompatibles.
 - **Conflicto:** 8.574 agregados país–mes–categoría de HAPI, a partir de las 35 extracciones completas y con QA; no sumar categorías ACLED.
 - **Necesidades y respuesta:** seis nuevas familias HAPI verificadas: necesidades (6 países), financiación (26), componentes INFORM (35), pobreza MPI (21), seguridad alimentaria IPC (5) y presencia de socios 3W (3). Cada fuente se consulta para 35 países, pero su cobertura es desigual.
 - **Países:** perfil de riesgo, crisis, acceso, conflicto, indicadores OPS, OIM DTM y reportes ReliefWeb.
-- **Fuentes y calidad:** desplegable en la barra lateral con fechas de actualización, límites y enlaces a la [guía operativa](docs/fase2/guia_operativa_diseno.md), [catálogo HAPI](docs/fase2/hapi_familias.md) y [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md). La matriz amplia se reserva para documentación técnica, no ocupa la vista principal.
+- **Fuentes y calidad:** desplegable al pie de cada página con cobertura y fechas, límites y enlaces a la [guía operativa](docs/fase2/guia_operativa_diseno.md), [catálogo HAPI](docs/fase2/hapi_familias.md) y [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md). La matriz amplia se reserva para documentación técnica, no ocupa la vista principal.
 
 ### Ejecutar localmente
 
@@ -30,7 +30,7 @@ streamlit run app.py
 3. Presionar **Deploy**. No es necesario cargar los secretos HAPI/DTM en Streamlit: la app consume las **tablas derivadas y verificadas** publicadas por GitHub Actions, no consulta directamente las API protegidas.
 4. Revisar la URL asignada y los permisos de visibilidad antes de compartir la aplicación con OPS. El repositorio es público y este despliegue es exploratorio.
 
-El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las **cinco páginas**.
+El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) prueba las **cinco páginas**. El job [revisión visual](.github/workflows/revisar_diseno.yml) abre Chromium a 1440 px, comprueba alturas de paneles lado a lado y publica capturas para inspección.
 
 ## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
 
