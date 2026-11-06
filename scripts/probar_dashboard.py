@@ -6,11 +6,11 @@ from streamlit.testing.v1 import AppTest
 ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
-    "Panorama regional",
-    "Amenazas y eventos",
+    "Situaciones documentadas",
+    "Amenazas y acceso",
+    "Personas e impacto",
     "Vulnerabilidad y respuesta",
-    "Impacto humanitario y salud",
-    "Perfiles por país",
+    "Ficha por país",
 ]
 
 def check(at,page):
@@ -48,12 +48,13 @@ def main():
         assert j.get("paises_catalogo")==35
         assert len(j.get("temas",{}))==5
         print("OK: cinco datasets HAPI con cobertura 35/35 consultas")
-    # Cada gráfico está dentro de un panel nativo de Streamlit con borde.
-    # Evita el estilo fragmentado de la versión de nueve páginas.
-    code=(ROOT/"observatorio_v2.py").read_text(encoding="utf-8")
-    assert "st.container(border=True)" in code
-    assert "def panel(" in code
-    assert "def overview(" in code and "def impacts(" in code
+    # Todas las parejas de paneles se dibujan con un borde nativo y
+    # altura fija compartida. Se rechazan regresiones que los dejen desparejos.
+    code=(ROOT/"observatorio_v3.py").read_text(encoding="utf-8")
+    assert "st.container(border=True,height=height)" in code
+    assert code.count("height=CARD") >= 8, "Hay paneles sin altura simétrica"
+    assert "def situations(" in code and "def impacts(" in code
+    assert "Situaciones humanitarias documentadas" in code
     at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
