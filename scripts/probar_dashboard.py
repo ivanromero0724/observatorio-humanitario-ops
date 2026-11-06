@@ -68,7 +68,7 @@ def main():
         at.sidebar.radio[0].set_value(page).run()
         check(at,page+" · país de cobertura limitada (ATG)")
     # Y un país con múltiples crisis y datos humanitarios.
-    at.sidebar.selectbox[0].set_value("Suramérica").run()
+    at.sidebar.selectbox[0].set_value("Sudamérica").run()
     at.sidebar.selectbox[1].set_value("COL").run()
     for page in PAGES:
         at.sidebar.radio[0].set_value(page).run()
