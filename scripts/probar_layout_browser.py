@@ -16,11 +16,11 @@ from playwright.sync_api import sync_playwright
 OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
-    ("Situaciones documentadas","situaciones"),
-    ("Amenazas y acceso","amenazas"),
-    ("Personas e impacto","personas"),
-    ("Vulnerabilidad y respuesta","vulnerabilidad"),
-    ("Ficha por país","ficha"),
+    ("Sala situacional","sala_situacional"),
+    ("Vigilancia de señales","senales"),
+    ("Preparación en salud","preparacion_salud"),
+    ("Análisis por país","analisis_pais"),
+    ("Fuentes y calidad","fuentes"),
 ]
 
 def geometries(page):
@@ -59,22 +59,18 @@ def main():
         page=browser.new_page(viewport={"width":1440,"height":900},
                               device_scale_factor=1)
         page.goto(url,wait_until="domcontentloaded",timeout=90000)
-        page.locator(".obs-title").wait_for(timeout=90000)
+        page.locator(".obs-section-h").wait_for(timeout=90000)
         for index,(label,name) in enumerate(PAGES):
             if index:
                 page.locator('[data-testid="stSidebar"]').get_by_text(
                     label,exact=True).click(timeout=25000)
-                page.locator(".obs-title").wait_for(timeout=60000)
+                page.locator(".obs-section-h").wait_for(timeout=60000)
             page.wait_for_timeout(3000)
             errs=page.locator('[data-testid="stException"]').count()
             if errs:
                 raise RuntimeError(f"{label}: excepción visible en la app")
-            if name=="personas":
-                page.get_by_role("tab",name="Refugio y desplazamiento").click()
-                page.wait_for_timeout(1700)
-            elif name=="vulnerabilidad":
-                page.get_by_role("tab",name="Respuesta humanitaria").click()
-                page.wait_for_timeout(1700)
+            # v4 tiene paneles iguales visibles en cada página; no requiere
+            # entrar a pestañas para medirlos.
             geom=geometries(page)
             print("GEOMETRIA",name,geom[:12],flush=True)
             if not geom:
