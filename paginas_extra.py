@@ -117,7 +117,7 @@ def access_page(access:pd.DataFrame,severity:pd.DataFrame,
 
 def reports_page(reports:pd.DataFrame,meta:dict,
                  countries:pd.DataFrame,selected:set[str]):
-    st.markdown('<div class="ops-kicker">05 / INFORMACIÓN OPERACIONAL</div>'
+    st.markdown('<div class="ops-kicker">06 / INFORMACIÓN OPERACIONAL</div>'
                 '<div class="ops-section">Reportes y situaciones humanitarias</div>',
                 unsafe_allow_html=True)
     st.caption("Documentos catalogados en ReliefWeb y enlazados a su fuente "
