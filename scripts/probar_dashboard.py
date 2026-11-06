@@ -9,6 +9,7 @@ PAGES=[
     "Panorama regional",
     "Conflicto y violencia",
     "Seguridad y acceso",
+    "Necesidades y respuesta",
     "Desplazamiento y movilidad",
     "Informes y situaciones",
     "Salud y vulnerabilidad",
@@ -35,8 +36,21 @@ def main():
         ROOT/"data/observaciones/reliefweb_reportes_americas.csv",
         ROOT/"data/observaciones/acaps_acceso_americas.csv",
         ROOT/"data/observaciones/acaps_severity_americas.csv",
+        ROOT/"data/observaciones/hapi_necesidades_nacional.csv",
+        ROOT/"data/observaciones/hapi_financiacion_apelaciones.csv",
+        ROOT/"data/observaciones/hapi_inform_componentes.csv",
+        ROOT/"data/observaciones/hapi_pobreza_multidimensional.csv",
+        ROOT/"data/observaciones/hapi_seguridad_alimentaria_ipc.csv",
     ]:
         assert required.exists(), f"Falta archivo obligatorio: {required}"
+    meta=ROOT/"docs/fase2/hapi_contexto_actualizacion.json"
+    if meta.exists():
+        import json
+        j=json.loads(meta.read_text(encoding="utf-8"))
+        assert j.get("descargas_completas") is True
+        assert j.get("paises_catalogo")==35
+        assert len(j.get("temas",{}))==5
+        print("OK: cinco datasets HAPI con cobertura 35/35 consultas")
     at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
