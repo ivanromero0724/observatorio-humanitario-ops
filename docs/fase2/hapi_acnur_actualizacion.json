@@ -1,0 +1,231 @@
+{
+  "fecha_extraccion_utc": "2026-11-06T17:32:55.279727+00:00",
+  "paises_acogida_consultados": 35,
+  "paises_con_registros": 31,
+  "filas": 3765,
+  "desde": "2024-01-01",
+  "estado": "COMPLETO",
+  "filtros": {
+    "gender": "all",
+    "age_range": "all"
+  },
+  "advertencias": [
+    "Categorías REF/ASY/OIP/etc. no son sinónimos.",
+    "Una persona en acogida no debe contarse como un desplazamiento interno.",
+    "Las cifras describen poblaciones (stocks), no movimientos del año.",
+    "No sumar categorías distintas como si fueran grupos mutuamente excluyentes.",
+    "Conservar país de origen, país de acogida, categoría y año."
+  ],
+  "detalle": [
+    {
+      "iso3": "CAN",
+      "filas": 686,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "USA",
+      "filas": 705,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "MEX",
+      "filas": 339,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "BLZ",
+      "filas": 23,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "CRI",
+      "filas": 198,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "SLV",
+      "filas": 46,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "GTM",
+      "filas": 77,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "HND",
+      "filas": 36,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "NIC",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "PAN",
+      "filas": 75,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "ATG",
+      "filas": 1,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "BHS",
+      "filas": 8,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "BRB",
+      "filas": 4,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "CUB",
+      "filas": 24,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "DMA",
+      "filas": 2,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "DOM",
+      "filas": 34,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "GRD",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "HTI",
+      "filas": 3,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "JAM",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "KNA",
+      "filas": 2,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "LCA",
+      "filas": 2,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "VCT",
+      "filas": 0,
+      "paginas": 1,
+      "estado": "SIN_REGISTROS"
+    },
+    {
+      "iso3": "TTO",
+      "filas": 56,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "ARG",
+      "filas": 212,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "BOL",
+      "filas": 44,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "BRA",
+      "filas": 390,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "CHL",
+      "filas": 92,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "COL",
+      "filas": 72,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "ECU",
+      "filas": 121,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "GUY",
+      "filas": 15,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "PRY",
+      "filas": 59,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "PER",
+      "filas": 257,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "SUR",
+      "filas": 20,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "URY",
+      "filas": 122,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    },
+    {
+      "iso3": "VEN",
+      "filas": 40,
+      "paginas": 1,
+      "estado": "CON_DATOS"
+    }
+  ]
+}
