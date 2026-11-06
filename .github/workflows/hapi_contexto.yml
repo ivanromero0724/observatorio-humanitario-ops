@@ -1,0 +1,51 @@
+name: HAPI – necesidades, financiación, pobreza, riesgo e IPC
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 12 8 * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase2/extraer_hapi_contexto.py
+      - .github/workflows/hapi_contexto.yml
+permissions:
+  contents: write
+concurrency:
+  group: hapi-contexto-35
+  cancel-in-progress: true
+jobs:
+  extraction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.31,<3'
+      - name: Descargar 5 familias HAPI con paginación nacional íntegra
+        env:
+          HDX_APP_IDENTIFIER: ${{ secrets.HDX_APP_IDENTIFIER }}
+        run: python scripts/fase2/extraer_hapi_contexto.py
+      - name: Validar integridad antes de publicar
+        run: |
+          python - <<'PY'
+          import json,csv,pathlib
+          m=json.loads(pathlib.Path('docs/fase2/hapi_contexto_actualizacion.json').read_text())
+          assert m['descargas_completas'] and m['paises_catalogo']==35
+          assert len(m['temas'])==5
+          for tema,summary in m['temas'].items():
+              assert summary['paises_consultados']==35
+              assert sum(x['filas'] for x in summary['detalle'])==summary['filas']
+          print('OK: cinco temas con 35 consultas exhaustivas')
+          PY
+      - name: Publicar solo snapshots completos y validados
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/observaciones/hapi_necesidades_nacional.csv data/observaciones/hapi_financiacion_apelaciones.csv data/observaciones/hapi_inform_componentes.csv data/observaciones/hapi_pobreza_multidimensional.csv data/observaciones/hapi_seguridad_alimentaria_ipc.csv docs/fase2/hapi_contexto_actualizacion.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: cinco temas HAPI completos y validados [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
