@@ -1,0 +1,26 @@
+iso3,crisis_id,crisis,drivers,paises_crisis,crisis_multinacional,corte_api,fecha_extraccion_utc,acceso,brecha_info,pilar_1,pilar_2,pilar_3,indicador_1,indicador_2,indicador_3,indicador_4,indicador_5,indicador_6,indicador_7,indicador_8,indicador_9
+BRA,BRA002,Displacement from Venezuela to Brazil,International Displacement,BRA,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.1111,0,0,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,3.0
+CHL,CHL002,Displacement from Venezuela to Chile,Displacement,CHL,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.0,1,1,2,0.0,1.0,0.0,0.0,1.0,0.0,0.0,2,0.0
+COL,COL001,Conflict and Climatic Shocks in Colombia,Conflict/ Violence | Drought/drier conditions | Floods,COL,False,Nov2026,2026-11-06T16:51:52.868847+00:00,4.0,0.0,4,2,5,2.0,2.0,0.0,3.0,1.0,0.0,3.0,2,3.0
+COL,COL002,Displacement from Venezuela to Colombia,Displacement,COL,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.0333,3,2,5,2.0,1.0,0.0,3.0,1.0,0.0,3.0,2,3.0
+COL,COL004,Multiple Crises in Colombia,Conflict/ Violence | Drought/drier conditions | International Displacement | Floods | Earthquake,COL,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.0,2,2,5,2.0,0.0,0.0,3.0,1.0,0.0,3.0,3,3.0
+COL,COL005,2026 Earthquake in Colombia,Earthquake,COL,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.0,2,2,5,2.0,0.0,0.0,2.0,0.0,0.0,3.0,2,3.0
+CRI,CRI001,Multiple Crises in Costa Rica,International Displacement,CRI,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.1944,1,0,1,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0,1.0
+CRI,CRI002,Displacement from Nicaragua to Costa Rica,International Displacement,CRI,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.1944,1,0,1,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0,1.0
+CRI,CRI003,Displacement from Venezuela to Costa Rica,International Displacement,CRI,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.1944,1,0,1,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0,1.0
+CUB,CUB004,Complex Crisis in Cuba,Cyclone | Political/economic crisis,CUB,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.2667,0,2,3,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0,3.0
+DOM,DOM002,Displacement from Venezuela to Dominican Republic,Displacement,DOM,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.0,1,0,2,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0,2.0
+ECU,ECU001,Multiple crises in Ecuador,International Displacement | Conflict/ Violence | Floods,ECU,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0333,2,1,4,0.0,2.0,0.0,1.0,0.0,0.0,0.0,2,3.0
+ECU,ECU002,Displacement from Venezuela to Ecuador,Displacement,ECU,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0333,2,1,4,0.0,2.0,0.0,1.0,0.0,0.0,0.0,2,3.0
+ECU,ECU005,"Conflict, violence and Climatic Shocks in Ecuador",Conflict/ Violence | Floods | Drought/drier conditions,ECU,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0333,2,1,4,0.0,2.0,0.0,1.0,0.0,0.0,0.0,2,3.0
+GTM,GTM001,Climatic Shocks and Violence in Guatemala,Conflict/ Violence | Drought/drier conditions,GTM,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0,1,2,3,0.0,1.0,2.0,1.0,0.0,0.0,1.0,0,3.0
+HND,HND001,Climatic Shocks and Conflict and Violence in Honduras,Drought/drier conditions | Conflict/ Violence,HND,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0111,1,1,3,0.0,1.0,0.0,1.0,0.0,0.0,1.0,0,3.0
+HTI,HTI001,Complex crisis in Haiti,Conflict/ Violence | Political/economic crisis | Floods | Drought/drier conditions | Cyclone,HTI,False,Nov2026,2026-11-06T16:51:52.868847+00:00,4.0,0.0,5,3,4,2.0,3.0,1.0,3.0,3.0,0.0,3.0,0,3.0
+MEX,MEX003,International Displacement to Mexico,Displacement,MEX,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.0333,4,2,3,2.0,2.0,0.0,2.0,0.0,0.0,1.0,1,2.0
+PAN,PAN002,Displacement from Venezuela to Panama,Displacement,PAN,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.1111,0,2,3,0.0,0.0,1.0,2.0,0.0,0.0,1.0,0,3.0
+PER,PER002,Displacement from Venezuela to Peru,Displacement,PER,False,Nov2026,2026-11-06T16:51:52.868847+00:00,2.0,0.0,1,1,3,0.0,1.0,0.0,0.0,1.0,0.0,0.0,1,2.0
+SLV,SLV001,Political and Economic crisis in El Salvador,Political/economic crisis,SLV,False,Nov2026,2026-11-06T16:51:52.868847+00:00,0.0,0.1889,0,0,0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0
+TTO,TTO002,Displacement from Venezuela to Trinidad and Tobago,Displacement,TTO,False,Nov2026,2026-11-06T16:51:52.868847+00:00,1.0,0.1111,2,0,0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0
+VEN,VEN001,Political and Economic crisis in Venezuela,Political/economic crisis | Conflict/ Violence,VEN,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.1722,4,2,4,2.0,2.0,1.0,2.0,1.0,0.0,1.0,1,3.0
+VEN,VEN002,2026 Earthquake in Venezuela,Earthquake,VEN,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.2111,3,2,3,1.0,2.0,1.0,1.0,0.0,0.0,0.0,1,3.0
+VEN,VEN003,Multiple Crises in Venezuela,Earthquake | Political/economic crisis | Conflict/ Violence,VEN,False,Nov2026,2026-11-06T16:51:52.868847+00:00,3.0,0.1722,4,2,4,2.0,2.0,1.0,2.0,1.0,0.0,1.0,1,3.0

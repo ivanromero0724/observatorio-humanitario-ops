@@ -1,0 +1,87 @@
+{
+  "fecha_utc": "2026-11-06T16:51:52.868847+00:00",
+  "paises_catalogo": 35,
+  "completitud": "100% de la paginación global en ambos endpoints",
+  "limitacion": "Crisis multinacionales pueden aparecer en varios países; no sumar crisis ni ponderaciones entre geografías",
+  "eventos_acceso_discontinuados": "ACAPS informó que Humanitarian Access Events dejó de recopilarse el 31-jul-2026; solo histórico",
+  "datasets": {
+    "severity": {
+      "corte_api": "Nov2026",
+      "registros_globales": 122,
+      "filas_pais_crisis_americas": 25,
+      "paises_americas": 16,
+      "categorias_variables": {
+        "puntuacion": "INFORM Severity Index",
+        "categoria": "INFORM Severity category",
+        "confiabilidad": "Reliability",
+        "impacto_crisis": "Impact of the crisis",
+        "impacto_geografico": "Geographical Impact",
+        "impacto_humano": "Human Impact",
+        "condiciones_afectados": "Conditions of affected people",
+        "personas_necesidad": "People in need",
+        "concentracion_condiciones": "Concentration of conditions",
+        "complejidad": "Complexity",
+        "sociedad_seguridad": "Society and safety",
+        "entorno_operativo": "Operating environment"
+      },
+      "paises_con_registros": [
+        "BRA",
+        "CHL",
+        "COL",
+        "CRI",
+        "CUB",
+        "DOM",
+        "ECU",
+        "GTM",
+        "HND",
+        "HTI",
+        "MEX",
+        "PAN",
+        "PER",
+        "SLV",
+        "TTO",
+        "VEN"
+      ]
+    },
+    "access": {
+      "corte_api": "Nov2026",
+      "registros_globales": 122,
+      "filas_pais_crisis_americas": 25,
+      "paises_americas": 16,
+      "categorias_variables": {
+        "acceso": "ACCESS",
+        "brecha_info": "Infogap",
+        "pilar_1": "P1",
+        "pilar_2": "P2",
+        "pilar_3": "P3",
+        "indicador_1": "I1",
+        "indicador_2": "I2",
+        "indicador_3": "I3",
+        "indicador_4": "I4",
+        "indicador_5": "I5",
+        "indicador_6": "I6",
+        "indicador_7": "I7",
+        "indicador_8": "I8",
+        "indicador_9": "I9"
+      },
+      "paises_con_registros": [
+        "BRA",
+        "CHL",
+        "COL",
+        "CRI",
+        "CUB",
+        "DOM",
+        "ECU",
+        "GTM",
+        "HND",
+        "HTI",
+        "MEX",
+        "PAN",
+        "PER",
+        "SLV",
+        "TTO",
+        "VEN"
+      ]
+    }
+  }
+}
