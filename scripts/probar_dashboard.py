@@ -6,11 +6,11 @@ from streamlit.testing.v1 import AppTest
 ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
-    "Situaciones documentadas",
-    "Amenazas y acceso",
-    "Personas e impacto",
-    "Vulnerabilidad y respuesta",
-    "Ficha por país",
+    "Sala situacional",
+    "Vigilancia de señales",
+    "Preparación en salud",
+    "Análisis por país",
+    "Fuentes y calidad",
 ]
 
 def check(at,page):
@@ -50,11 +50,12 @@ def main():
         print("OK: cinco datasets HAPI con cobertura 35/35 consultas")
     # Todas las parejas de paneles se dibujan con un borde nativo y
     # altura fija compartida. Se rechazan regresiones que los dejen desparejos.
-    code=(ROOT/"observatorio_v3.py").read_text(encoding="utf-8")
+    code=(ROOT/"observatorio_v4.py").read_text(encoding="utf-8")
     assert 'height=height if height is not None else "content"' in code
-    assert code.count("height=CARD") >= 8, "Hay paneles sin altura simétrica"
-    assert "def situations(" in code and "def impacts(" in code
-    assert "Situaciones humanitarias documentadas" in code
+    assert code.count("height=CARD_H")+code.count("height=SHORT_H") >= 10
+    assert "def executive(" in code and "def readiness(" in code
+    assert "posibles repercusiones sanitarias" in code.lower() or "repercusiones sanitarias" in code
+    assert "no constituyen" in code or "no constituye" in code.lower()
     at=AppTest.from_file(str(APP),default_timeout=90)
     at.run()
     check(at,PAGES[0])
