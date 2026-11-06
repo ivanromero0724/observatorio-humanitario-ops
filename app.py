@@ -14,6 +14,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 from ui_ops import apply_style, header as ops_header, heading as ops_heading, map_countries, footer as ops_footer
+from paginas_extra import access_page, reports_page
 
 ROOT = Path(__file__).resolve().parent
 OBS = ROOT / "data/observaciones"
@@ -94,6 +95,11 @@ reliefweb = load_csv("data/observaciones/reliefweb_reportes_americas.csv")
 rw_meta = load_json("docs/fase2/reliefweb_actualizacion.json")
 security_meta = load_json("docs/fase2/accesos_awsd_reliefweb.json")
 warmonit = load_csv("data/observaciones/warmonit_cii_ultimo.csv")
+acaps_severity = load_csv("data/observaciones/acaps_severity_americas.csv")
+acaps_access = load_csv("data/observaciones/acaps_acceso_americas.csv")
+acaps_meta = load_json("docs/fase2/acaps_actualizacion.json")
+severity_edition = "septiembre 2026 (INFORM Severity, archivo)"
+
 
 if countries.empty or risk.empty or severity.empty or ops.empty:
     st.error(
@@ -114,6 +120,28 @@ ops["periodo"] = pd.to_numeric(ops["periodo"], errors="coerce")
 risk = risk.merge(countries[["iso3", "subregion"]], on="iso3", how="left")
 severity = severity.merge(countries[["iso3", "subregion"]], on="iso3", how="left")
 ops = ops.merge(countries[["iso3", "pais", "subregion"]], on="iso3", how="left")
+# Sustituir el corte de septiembre por la edición más reciente descargada
+# desde ACAPS, conservando el archivo antiguo como respaldo reproducible.
+if not acaps_severity.empty:
+    acaps_severity = acaps_severity[
+        acaps_severity["iso3"].isin(valid_iso)
+    ].copy()
+    acaps_severity["puntuacion"] = pd.to_numeric(
+        acaps_severity["puntuacion"], errors="coerce"
+    )
+    acaps_severity = acaps_severity.merge(
+        countries[["iso3", "pais", "subregion"]], on="iso3", how="left"
+    )
+    severity = acaps_severity.copy()
+    severity_edition = str(acaps_severity["corte_api"].iloc[0]) + " (ACAPS API)"
+if not acaps_access.empty:
+    acaps_access = acaps_access[
+        acaps_access["iso3"].isin(valid_iso)
+    ].copy()
+    acaps_access = acaps_access.merge(
+        countries[["iso3", "pais", "subregion"]], on="iso3", how="left"
+    )
+
 if not coverage.empty:
     coverage = coverage[coverage["iso3"].isin(valid_iso)].copy()
 
@@ -320,7 +348,7 @@ if page == "Panorama regional":
                 tab.to_csv(index=False).encode("utf-8-sig"),
                 "inform_severity_crisis.csv","text/csv",
             )
-    describe("INFORM Severity","septiembre de 2026",
+    describe("INFORM Severity / ACAPS",severity_edition,
              "Corte de crisis específicas, no cobertura exhaustiva de cualquier emergencia.")
 
 elif page == "Conflicto y violencia":
@@ -413,6 +441,10 @@ elif page == "Conflicto y violencia":
             "**por categoría independiente**."
         )
 
+elif page == "Seguridad y acceso":
+    access_page(acaps_access,acaps_severity,security_meta,
+                countries,selected,acaps_meta)
+
 elif page == "Desplazamiento y movilidad":
     section("Desplazamiento y movilidad humana", "04",
             "Mapa de disponibilidad de OIM DTM Baseline. La información agregada "
@@ -499,6 +531,9 @@ elif page == "Desplazamiento y movilidad":
             "en el catálogo consultado. Sin registros no significa "
             "sin necesidades humanitarias."
         )
+
+elif page == "Informes y situaciones":
+    reports_page(reliefweb,rw_meta,countries,selected)
 
 elif page == "Salud y vulnerabilidad":
     section("Salud y vulnerabilidad", "05",
@@ -655,7 +690,7 @@ elif page == "Fuentes y metodología":
         ("INFORM Risk","Mid 2026","35 países",
          "Riesgo estructural multiamenaza; no exclusivamente violencia.",
          SOURCES["INFORM Risk"]),
-        ("INFORM Severity","Septiembre 2026","25 crisis / 16 países",
+        ("INFORM Severity",""+severity_edition,"25 crisis / 16 países",
          "Evaluación por crisis; varias crisis pueden corresponder al mismo país.",
          SOURCES["INFORM Severity"]),
         ("OPS Indicadores Básicos","Descarga octubre 2026","3.038 observaciones",
@@ -669,6 +704,17 @@ elif page == "Fuentes y metodología":
         ("OIM DTM HNA","Catálogo consultado noviembre 2026","0 países americanos",
          "Ausencia de catálogo no significa ausencia de necesidades.",
          SOURCES["OIM"]),
+        ("ReliefWeb", "90 días – consulta semanal",
+         f"{rw_meta.get('reportes_unicos','—')} reportes únicos",
+         "Documentos y metadatos; un reporte puede cubrir varios países.",
+         SOURCES["ReliefWeb"]),
+        ("ACAPS acceso", str(acaps_meta.get('datasets',{}).get('access',{}).get('corte_api','—')),
+         f"{acaps_meta.get('datasets',{}).get('access',{}).get('paises_americas','—')} países",
+         "Indicadores por contexto y crisis; categorías no agregables.",
+         SOURCES["ACAPS"]),
+        ("AWSD", "Clave recibida", "Por validar",
+         "No publicar indicadores hasta autenticar el endpoint JSON.",
+         SOURCES["AWSD"]),
         ("ACNUR","Por integrar","Piloto de conectividad anterior",
          "Exige armonizar país de origen y país de asilo.",
          SOURCES["ACNUR"]),
@@ -707,3 +753,6 @@ elif page == "Fuentes y metodología":
         "(https://github.com/ivanromero0724/observatorio-humanitario-ops) "
         "para reproducibilidad y control de versiones."
     )
+
+
+ops_footer()
