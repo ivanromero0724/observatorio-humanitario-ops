@@ -1,0 +1,1050 @@
+{
+  "fecha_utc": "2026-11-06T17:15:02.863913+00:00",
+  "muestra_paises": [
+    "COL",
+    "HTI",
+    "VEN",
+    "MEX",
+    "BRA"
+  ],
+  "nota": "limit=1 solo exploración; SIN cobertura completa ni datos publicables",
+  "fuentes": {
+    "necesidades": {
+      "endpoint_v2": "affected-people/humanitarian-needs",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "category",
+            "location_code",
+            "location_name",
+            "population",
+            "population_status",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "category",
+            "location_code",
+            "location_name",
+            "population",
+            "population_status",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "category",
+            "location_code",
+            "location_name",
+            "population",
+            "population_status",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        }
+      }
+    },
+    "desplazados": {
+      "endpoint_v2": "affected-people/idps",
+      "paises_muestra": {
+        "COL": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "assessment_type",
+            "location_code",
+            "location_name",
+            "operation",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "reporting_round",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        }
+      }
+    },
+    "refugio": {
+      "endpoint_v2": "affected-people/refugees-persons-of-concern",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "retornados": {
+      "endpoint_v2": "affected-people/returnees",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "age_range",
+            "asylum_location_code",
+            "asylum_location_name",
+            "gender",
+            "max_age",
+            "min_age",
+            "origin_location_code",
+            "origin_location_name",
+            "population",
+            "population_group",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "organizaciones": {
+      "endpoint_v2": "coordination-context/operational-presence",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "location_code",
+            "location_name",
+            "org_acronym",
+            "org_name",
+            "org_type_code",
+            "org_type_description",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "location_code",
+            "location_name",
+            "org_acronym",
+            "org_name",
+            "org_type_code",
+            "org_type_description",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "location_code",
+            "location_name",
+            "org_acronym",
+            "org_name",
+            "org_type_code",
+            "org_type_description",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "sector_code",
+            "sector_name"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        }
+      }
+    },
+    "financiacion": {
+      "endpoint_v2": "coordination-context/funding",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "appeal_code",
+            "appeal_name",
+            "appeal_type",
+            "funding_pct",
+            "funding_usd",
+            "location_code",
+            "location_name",
+            "reference_period_end",
+            "reference_period_start",
+            "requirements_usd",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "appeal_code",
+            "appeal_name",
+            "appeal_type",
+            "funding_pct",
+            "funding_usd",
+            "location_code",
+            "location_name",
+            "reference_period_end",
+            "reference_period_start",
+            "requirements_usd",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "appeal_code",
+            "appeal_name",
+            "appeal_type",
+            "funding_pct",
+            "funding_usd",
+            "location_code",
+            "location_name",
+            "reference_period_end",
+            "reference_period_start",
+            "requirements_usd",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "appeal_code",
+            "appeal_name",
+            "appeal_type",
+            "funding_pct",
+            "funding_usd",
+            "location_code",
+            "location_name",
+            "reference_period_end",
+            "reference_period_start",
+            "requirements_usd",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "appeal_code",
+            "appeal_name",
+            "appeal_type",
+            "funding_pct",
+            "funding_usd",
+            "location_code",
+            "location_name",
+            "reference_period_end",
+            "reference_period_start",
+            "requirements_usd",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "riesgo": {
+      "endpoint_v2": "coordination-context/national-risk",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "coping_capacity_risk",
+            "global_rank",
+            "hazard_exposure_risk",
+            "location_code",
+            "location_name",
+            "meta_avg_recentness_years",
+            "meta_missing_indicators_pct",
+            "overall_risk",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "risk_class",
+            "vulnerability_risk"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "coping_capacity_risk",
+            "global_rank",
+            "hazard_exposure_risk",
+            "location_code",
+            "location_name",
+            "meta_avg_recentness_years",
+            "meta_missing_indicators_pct",
+            "overall_risk",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "risk_class",
+            "vulnerability_risk"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "coping_capacity_risk",
+            "global_rank",
+            "hazard_exposure_risk",
+            "location_code",
+            "location_name",
+            "meta_avg_recentness_years",
+            "meta_missing_indicators_pct",
+            "overall_risk",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "risk_class",
+            "vulnerability_risk"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "coping_capacity_risk",
+            "global_rank",
+            "hazard_exposure_risk",
+            "location_code",
+            "location_name",
+            "meta_avg_recentness_years",
+            "meta_missing_indicators_pct",
+            "overall_risk",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "risk_class",
+            "vulnerability_risk"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "coping_capacity_risk",
+            "global_rank",
+            "hazard_exposure_risk",
+            "location_code",
+            "location_name",
+            "meta_avg_recentness_years",
+            "meta_missing_indicators_pct",
+            "overall_risk",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "risk_class",
+            "vulnerability_risk"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "inseguridad_alimentaria": {
+      "endpoint_v2": "food-security-nutrition-poverty/food-security",
+      "paises_muestra": {
+        "COL": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "ipc_phase",
+            "ipc_type",
+            "location_code",
+            "location_name",
+            "population_fraction_in_phase",
+            "population_in_phase",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        }
+      }
+    },
+    "precios_alimentos": {
+      "endpoint_v2": "food-security-nutrition-poverty/food-prices-market-monitor",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "commodity_category",
+            "commodity_code",
+            "commodity_name",
+            "currency_code",
+            "lat",
+            "location_code",
+            "location_name",
+            "lon",
+            "market_code",
+            "market_name",
+            "price",
+            "price_flag",
+            "price_type",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "unit"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "commodity_category",
+            "commodity_code",
+            "commodity_name",
+            "currency_code",
+            "lat",
+            "location_code",
+            "location_name",
+            "lon",
+            "market_code",
+            "market_name",
+            "price",
+            "price_flag",
+            "price_type",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "unit"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "commodity_category",
+            "commodity_code",
+            "commodity_name",
+            "currency_code",
+            "lat",
+            "location_code",
+            "location_name",
+            "lon",
+            "market_code",
+            "market_name",
+            "price",
+            "price_flag",
+            "price_type",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "unit"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "commodity_category",
+            "commodity_code",
+            "commodity_name",
+            "currency_code",
+            "lat",
+            "location_code",
+            "location_name",
+            "lon",
+            "market_code",
+            "market_name",
+            "price",
+            "price_flag",
+            "price_type",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "unit"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        }
+      }
+    },
+    "pobreza": {
+      "endpoint_v2": "food-security-nutrition-poverty/poverty-rate",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin_level",
+            "headcount_ratio",
+            "in_severe_poverty",
+            "intensity_of_deprivation",
+            "location_code",
+            "location_name",
+            "mpi",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "vulnerable_to_poverty"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin_level",
+            "headcount_ratio",
+            "in_severe_poverty",
+            "intensity_of_deprivation",
+            "location_code",
+            "location_name",
+            "mpi",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "vulnerable_to_poverty"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "SIN_REGISTROS",
+          "codigo": 200,
+          "columnas": [],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin_level",
+            "headcount_ratio",
+            "in_severe_poverty",
+            "intensity_of_deprivation",
+            "location_code",
+            "location_name",
+            "mpi",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "vulnerable_to_poverty"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin_level",
+            "headcount_ratio",
+            "in_severe_poverty",
+            "intensity_of_deprivation",
+            "location_code",
+            "location_name",
+            "mpi",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id",
+            "vulnerable_to_poverty"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "poblacion": {
+      "endpoint_v2": "geography-infrastructure/baseline-population",
+      "paises_muestra": {
+        "COL": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "age_range",
+            "gender",
+            "location_code",
+            "location_name",
+            "max_age",
+            "min_age",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "HTI": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "age_range",
+            "gender",
+            "location_code",
+            "location_name",
+            "max_age",
+            "min_age",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "VEN": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "age_range",
+            "gender",
+            "location_code",
+            "location_name",
+            "max_age",
+            "min_age",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "MEX": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "age_range",
+            "gender",
+            "location_code",
+            "location_name",
+            "max_age",
+            "min_age",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        },
+        "BRA": {
+          "estado": "CON_DATOS",
+          "codigo": 200,
+          "columnas": [
+            "admin1_code",
+            "admin1_name",
+            "admin2_code",
+            "admin2_name",
+            "admin_level",
+            "age_range",
+            "gender",
+            "location_code",
+            "location_name",
+            "max_age",
+            "min_age",
+            "population",
+            "reference_period_end",
+            "reference_period_start",
+            "resource_hdx_id"
+          ],
+          "total_api": null
+        }
+      }
+    },
+    "lluvia": {
+      "endpoint_v2": "climate/hazards-rainfall",
+      "paises_muestra": {
+        "COL": {
+          "estado": "HTTP_ERROR",
+          "codigo": 404
+        },
+        "HTI": {
+          "estado": "HTTP_ERROR",
+          "codigo": 404
+        },
+        "VEN": {
+          "estado": "HTTP_ERROR",
+          "codigo": 404
+        },
+        "MEX": {
+          "estado": "HTTP_ERROR",
+          "codigo": 404
+        },
+        "BRA": {
+          "estado": "HTTP_ERROR",
+          "codigo": 404
+        }
+      }
+    }
+  }
+}
