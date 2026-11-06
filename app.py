@@ -273,6 +273,12 @@ with st.sidebar:
     st.caption(f"Ámbito geográfico: {len(selected)} de 35 países soberanos.")
     st.divider()
     st.caption("Versión exploratoria de trabajo · 2026")
+    if rw_meta.get("fecha_utc"):
+        st.caption("ReliefWeb actualizado: "+str(rw_meta["fecha_utc"])[:10])
+    if acaps_meta.get("fecha_utc"):
+        st.caption("ACAPS actualizado: "+str(acaps_meta["fecha_utc"])[:10])
+    if hapi_meta.get("fecha_utc"):
+        st.caption("HAPI actualizado: "+str(hapi_meta["fecha_utc"])[:10])
     st.caption("No constituye una clasificación oficial de prioridades de OPS.")
 
 ops_header()
@@ -286,6 +292,20 @@ if page == "Panorama regional":
     sc = severity[severity["iso3"].isin(selected)]
     a,b,c,d = st.columns(4)
     a.metric("Países en el análisis", f"{len(selected)}/35")
+    if not reliefweb.empty or not acaps_access.empty:
+        st.markdown("#### Fuentes humanitarias complementarias")
+        q1,q2,q3=st.columns(3)
+        q1.metric("Reportes ReliefWeb (90 días)",
+          int(reliefweb[reliefweb["iso3"].isin(selected)]["reporte_id"].nunique())
+          if not reliefweb.empty else "Sin datos")
+        q2.metric("Países con acceso ACAPS",
+          int(acaps_access[acaps_access["iso3"].isin(selected)]["iso3"].nunique())
+          if not acaps_access.empty else "Sin datos")
+        q3.metric("Países con serie HAPI validada",
+          len(valid_hapi.intersection(selected)))
+        st.caption("Reportes, puntuaciones de acceso y registros de conflicto "
+           "representan unidades distintas; no se combinan en un total ni índice.")
+
     b.metric("INFORM Risk", f"{len(rc)}/{len(selected)}")
     c.metric("Países con crisis INFORM Severity", f"{sc['iso3'].nunique()}")
     d.metric("Crisis individuales registradas", f"{len(sc)}")
@@ -384,6 +404,42 @@ elif page == "Conflicto y violencia":
                 "Hay países excluidos por controles de integridad. "
                 "No se muestran totales de toda la región con países faltantes."
             )
+        st.markdown("#### Evolución regional por categoría")
+        regional=hapi[hapi["iso3"].isin(selected)].copy()
+        if not regional.empty:
+            group=st.selectbox(
+                "Categoría regional HAPI",
+                list(HAPI_TYPES),
+                format_func=lambda x:HAPI_TYPES[x],
+                key="hapi_region_category")
+            region_type=regional[regional["tipo_evento"]==group].copy()
+            region_type=region_type.dropna(subset=["periodo_dt"])
+            if not region_type.empty:
+                meses=sorted(region_type["periodo_dt"].unique())
+                start=meses[max(0,len(meses)-24)]
+                region_type=region_type[region_type["periodo_dt"]>=start]
+                weekly=(region_type.groupby("periodo_dt",as_index=False)
+                    .agg(eventos=("eventos","sum"),
+                         paises_con_registros=("iso3","nunique")))
+                top=region_type.groupby(["iso3","pais"],as_index=False)[
+                    "eventos"].sum().sort_values("eventos",ascending=False).head(12)
+                c1,c2=st.columns([1.25,1],gap="large")
+                with c1:
+                    fig=px.line(weekly,x="periodo_dt",y="eventos",markers=True,
+                        color_discrete_sequence=[BLUE],
+                        labels={"periodo_dt":"Mes","eventos":"Eventos reportados"})
+                    st.plotly_chart(default_layout(fig,360),use_container_width=True,
+                                    config={"displayModeBar":False})
+                with c2:
+                    fig=px.bar(top.sort_values("eventos"),x="eventos",y="pais",
+                        orientation="h",color_discrete_sequence=[BLUE],
+                        labels={"eventos":"Eventos en el periodo","pais":""})
+                    st.plotly_chart(default_layout(fig,360),use_container_width=True,
+                                    config={"displayModeBar":False})
+                st.caption("Se muestran los últimos 24 meses disponibles por "
+                    "categoría. La suma regional corresponde a los países con "
+                    "registros del mes; no significa cobertura exhaustiva de "
+                    "todos los hechos ocurridos. No se suman categorías superpuestas.")
         choices=[(c["iso3"],c["pais"]) for _,c in sub_countries.iterrows()
                  if c["iso3"] in valid_hapi and c["iso3"] in set(hapi["iso3"])]
         if choices:
