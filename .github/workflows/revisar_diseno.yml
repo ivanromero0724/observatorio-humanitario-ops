@@ -1,0 +1,37 @@
+name: Revision visual de alineacion del dashboard
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/probar_layout_browser.py
+      - .github/workflows/revisar_diseno.yml
+      - observatorio_v3.py
+permissions:
+  contents: read
+jobs:
+  browser-layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias del dashboard y Playwright
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Ejecutar Streamlit en navegador real
+        run: |
+          python -m streamlit run app.py --server.headless true --server.port 8501 > /tmp/app.log 2>&1 &
+          echo $! > /tmp/app.pid
+          python scripts/probar_layout_browser.py
+      - name: Guardar capturas y resultado de geometría
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-observatorio-ops
+          path: docs/qa_capturas/
+          retention-days: 14
