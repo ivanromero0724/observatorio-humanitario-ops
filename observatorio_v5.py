@@ -213,7 +213,7 @@ def display_comparison(frame,sort):
               "Crisis ACAPS","Severidad ACAPS /10","Acceso ACAPS /5",
               "Refugio (datos)","OIM (datos)"]]
 
-def pa_map(frame,mode,legend_title,height=428):
+def pa_map(frame,mode,legend_title,height=428,unit="eventos"):
     """Map actual values, keeping missing and documented zero distinct.
 
     Color shades for events are continuous on log1p scale, descriptive only.
@@ -237,7 +237,7 @@ def pa_map(frame,mode,legend_title,height=428):
             ("#ECF3F8" if v==0 else linear(math.log1p(float(v))/den))
             if pd.notna(v) else "#CED8E0")
     geo["valor_texto"]=x.map(
-        lambda v:(fmt(v,1)+"/10" if mode=="severity" else fmt(v)+" eventos")
+        lambda v:(fmt(v,1)+"/10" if mode=="severity" else fmt(v)+" "+unit)
         if pd.notna(v) else "Sin información comparable")
     m=folium.Map(location=[7,-89],zoom_start=2,tiles=None,zoom_control=True,
                  min_zoom=1,max_zoom=7,prefer_canvas=True,height=height)
