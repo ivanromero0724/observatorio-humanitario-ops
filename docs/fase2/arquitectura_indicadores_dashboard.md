@@ -1,6 +1,6 @@
 # Diseño técnico, variables y fuentes — Observatorio Humanitario OPS/OMS
 
-**Versión:** 6 de noviembre de 2026. **Estado:** prototipo Streamlit con ocho páginas y componentes reutilizados de `el-nino-ops`. **Territorio:** 35 Estados soberanos de América. El GeoPackage Natural Earth 1:50m puede incluir otros territorios como contexto cartográfico gris; no se inventan datos para ellos.
+**Versión:** 6 de noviembre de 2026. **Estado:** prototipo Streamlit con **nueve páginas**; del tablero `el-nino-ops` solo se conservaron logos, paleta y GeoPackage, mientras que los gráficos analíticos tienen un lenguaje visual propio. **Territorio:** 35 Estados soberanos de América. El GeoPackage Natural Earth 1:50m puede incluir otros territorios como contexto cartográfico gris; no se inventan datos para ellos.
 
 ## Principios de lectura
 
@@ -25,8 +25,14 @@
 | **OIM DTM Baseline** | `data/observaciones/oim_dtm_ultima_ronda.csv`, 64 registros de últimas rondas en 12 países + matriz de cobertura regional | `operacion`, `fecha_reporte`, `ronda`, `tipo_evaluacion`, `causa_desplazamiento`, `origen_admin1`, `personas_idp_reportadas`, `hombres`, `mujeres`. **Se visualizan por operación y origen, sin sumar poblaciones ni rondas**. | **Mensual**: `oim_ultimas_rondas.yml` (día 6, 12:45 UTC) y `piloto_americas.yml` (día 6, 13:10 UTC) | Desplazamiento: cifras de última ronda y cobertura |
 | **OIM DTM HNA** | Mismo inventario, cero países americanos en su catálogo consultado | Acceso operativo pero sin datos comparables para los 35 en el catálogo disponible. No se interpreta ausencia como cero personas en necesidad. | Mensual | Estado metodológico |
 | **WarMonit** | `data/observaciones/warmonit_cii_ultimo.csv`, dos países americanos | Indicador propio de inestabilidad contextual. No está en los gráficos por baja cobertura regional. | Revisar por archivo fuente | Respaldo y análisis complementario |
+| **HAPI Humanitarian Needs** | `data/observaciones/hapi_necesidades_nacional.csv`, 1.043 filas, 6 países | PiN por estado, sector, categoría, año y país; solo admin0. No sumar sectores | Día 8 cada mes: `hapi_contexto.yml` | Necesidades y respuesta, perfiles |
+| **HAPI Funding** | `data/observaciones/hapi_financiacion_apelaciones.csv`, 229 filas, 26 países | Aportes y porcentajes de apelaciones, corte, código y tipo; incluir solo apelaciones identificadas para comparaciones | Día 8 cada mes | Necesidades y respuesta, perfiles |
+| **HAPI National Risk** | `data/observaciones/hapi_inform_componentes.csv`, 35 filas | Riesgo, exposición, vulnerabilidad y capacidad. **Corte fuente 2025, distinto a INFORM Mid 2026** | Día 8 cada mes | Necesidades y respuesta |
+| **HAPI Poverty Rate** | `data/observaciones/hapi_pobreza_multidimensional.csv`, 50 filas, 21 países | MPI, incidencia, intensidad, pobreza severa/vulnerable y año; solo admin0 | Día 8 cada mes | Necesidades y respuesta, perfiles |
+| **HAPI Food Security (IPC)** | `data/observaciones/hapi_seguridad_alimentaria_ipc.csv`, 322 filas, 5 países | Fase, tipo actual/proyección, personas y periodo; solo admin0 | Día 8 cada mes | Necesidades y respuesta, perfiles |
+| **HAPI Operational Presence (3W)** | `data/observaciones/hapi_presencia_sector.csv`, 25 resúmenes en 3 países | Número de socios distintos por sector, geografía y fecha; no sumar sectores | Día 8 cada mes: `hapi_presencia.yml` | Necesidades y respuesta, perfiles |
 | **AWSD** | `docs/fase2/accesos_awsd_reliefweb.json` | **Clave detectada, respuesta JSON pendiente de validar.** Futuras variables: incidentes, fechas, países, tipos de incidente y víctimas (sujeto al codebook y licencia). No hay estadísticas AWSD en el dashboard. | Pendiente de validar autenticación; después corte publicado | Seguridad, todavía sin valores |
-| **ACNUR** | API abierta / prueba inicial en 5 países | País de origen, acogida, categoría de población, año, sexo, edad, stock. No integrado a los gráficos todavía. | Por definir tras verificar condiciones de uso | Próxima etapa de movilidad |
+| **ACNUR vía HAPI** | `data/observaciones/hapi_acnur_acogida.csv`, 3.765 filas; 31/35 países de acogida | `asilo_iso3`, `origen_iso3`, `grupo_poblacion`, `anio`, `personas` y periodo; solo filas `gender=all, age_range=all` para evitar doble conteo de sexo/edad. No sumar categorías poblacionales. | **Mensual**: `hapi_acnur.yml`, día 9 | Desplazamiento y perfiles |
 
 **Nota ACAPS:** `Humanitarian Access Events` dejó de recopilarse el 31-jul-2026; disponible solo como histórico. No utilizarlo como señal viva de seguridad.
 
@@ -54,7 +60,7 @@
 1. **Extracción protegida:** GitHub Actions accede a tokens como secretos. AWSD y ReliefWeb quedan nombrados `AWSD_API_KEY` y `RELIEFWEB_APPNAME`. Streamlit no accede directamente a las credenciales.
 2. **Control QA:** autenticación, todas las páginas descargadas, duplicados, claves ISO3, fecha, definiciones, variables, valores ausentes y validez geográfica. Nunca sustituir silenciosamente el último corte bueno por uno incompleto.
 3. **Snapshots versionados:** CSV/JSON en el repositorio público, únicamente cuando el tipo de dato y licencia lo permitan; fuentes restringidas requieren acceso separado.
-4. **Visualización:** ocho páginas: panorama, conflicto, seguridad/acceso, desplazamiento, reportes, salud/vulnerabilidad, perfiles, fuentes. La paleta `#004B87`, `#0072CE`, `#D9EEF7` y tipografía compacta siguen el tablero `el-nino-ops`.
+4. **Visualización:** nueve páginas: panorama, conflicto, seguridad/acceso, necesidades/respuesta, desplazamiento, informes, salud/vulnerabilidad, perfiles, fuentes. De `el-nino-ops` proceden paleta, logos y GeoPackage; los gráficos son originales del Observatorio (`graficos.py`): líneas limpias, rankings horizontales, dot plots y matriz de cobertura.
 5. **Cartografía:** `data/geografia/paises_americas.gpkg` copiado de `el-nino-ops`, Natural Earth 1:50m, EPSG:4326. Se representa el continente, con países sin dato en gris y visualización separada por fuente. El objetivo analítico permanece en 35 países soberanos.
 6. **Fecha:** distinguir `fecha_publicacion_origen`, `fecha_publicacion_rw`, fecha de referencia y `fecha_extraccion_utc`. Un documento publicado puede describir un periodo distinto.
 7. **Gobernanza:** estado de prototipo. Antes de publicarlo institucionalmente, revisar seguridad, control de la plataforma y autorización de ITS en OPS.
@@ -64,6 +70,10 @@
 - [Aplicación Streamlit](../../app.py)
 - [Diseño reutilizado de El Niño](https://github.com/ivanromero0724/el-nino-ops)
 - [Control HAPI 35/35](../fase1/hapi_extraccion_completa.json)
+- [Ocho familias HAPI, variables y decisiones](hapi_familias.md)
+- [Control HAPI cinco conjuntos](hapi_contexto_actualizacion.json)
+- [Control HAPI presencia 3W](hapi_presencia_actualizacion.json)
+- [Control HAPI ACNUR](hapi_acnur_actualizacion.json)
 - [Control ACAPS](acaps_actualizacion.json)
 - [Control OIM (últimas rondas)](oim_actualizacion.json)
 - [Control ReliefWeb](reliefweb_actualizacion.json)
