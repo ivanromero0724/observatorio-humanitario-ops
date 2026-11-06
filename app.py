@@ -313,7 +313,7 @@ ops_header()
 st.caption("Prototipo de análisis con fuentes institucionales. Los indicadores mantienen cortes y denominadores separados; no es una clasificación oficial de prioridades OPS.")
 
 if page == "Panorama regional":
-    section("Situación regional", "01",
+    section("Situación regional", "01.A",
             "Panorama comparativo de riesgo estructural y crisis registradas; "
             "no equivale a un índice compuesto de amenaza humanitaria.")
     rc = risk_snapshot(risk[risk["iso3"].isin(selected)])
@@ -349,7 +349,7 @@ if page == "Panorama regional":
     describe("INFORM Risk, Centro Común de Investigación (JRC/Comisión Europea)",
              "Mid 2026","Índice estructural multiamenaza, no únicamente conflicto.")
 
-    section("Crisis documentadas", "02",
+    section("Crisis documentadas", "01.B",
             "INFORM Severity evalúa cada crisis por separado; "
             "un país puede aparecer varias veces.")
     if sc.empty:
@@ -386,7 +386,7 @@ if page == "Panorama regional":
              "Corte de crisis específicas, no cobertura exhaustiva de cualquier emergencia.")
 
 elif page == "Conflicto y violencia":
-    section("Conflicto y violencia política", "03",
+    section("Conflicto y violencia política", "02",
             "HDX HAPI redistribuye datos mensuales agregados de ACLED. "
             "Nunca se combinan sus tres categorías, porque no son excluyentes.")
     if hapi.empty:
@@ -515,7 +515,7 @@ elif page == "Necesidades y respuesta":
                 countries,selected,hapi_context_meta)
 
 elif page == "Desplazamiento y movilidad":
-    section("Desplazamiento y movilidad humana", "04",
+    section("Desplazamiento y movilidad humana", "05",
             "Mapa de disponibilidad de OIM DTM Baseline. La información agregada "
             "tiene diferentes rondas de levantamiento y años.")
     if coverage.empty:
@@ -693,7 +693,7 @@ elif page == "Informes y situaciones":
     reports_page(reliefweb,rw_meta,countries,selected)
 
 elif page == "Salud y vulnerabilidad":
-    section("Salud y vulnerabilidad", "05",
+    section("Salud y vulnerabilidad", "07",
             "Indicadores básicos OPS: períodos y unidades heterogéneos. "
             "Se muestran valores observados, sin interpolar ni imputar.")
     valid=sorted(ops["indicador"].dropna().unique())
@@ -763,7 +763,7 @@ elif page == "Salud y vulnerabilidad":
              "Los indicadores son descriptivos; no determinan riesgo humanitario.")
 
 elif page == "Perfiles de país":
-    section("Perfiles nacionales", "06",
+    section("Perfiles nacionales", "08",
             "Ficha descriptiva; las fechas de referencia varían por fuente.")
     options=list(sub_countries["iso3"])
     iso=st.selectbox(
@@ -870,7 +870,7 @@ elif page == "Perfiles de país":
     )
 
 elif page == "Fuentes y metodología":
-    section("Fuentes, integridad y metodología", "07",
+    section("Fuentes, integridad y metodología", "09",
             "Transparencia de trazabilidad, fecha y controles de integridad.")
     st.markdown("#### ¿Qué información existe para cada país?")
     st.caption("Matriz de disponibilidad de **registros en el corte consultado**. "
