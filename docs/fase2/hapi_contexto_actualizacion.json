@@ -1,0 +1,1130 @@
+{
+  "fecha_extraccion_utc": "2026-11-06T17:19:23.386915+00:00",
+  "paises_catalogo": 35,
+  "descargas_completas": true,
+  "advertencias": [
+    "Ausencia de registros en un país no significa ausencia de necesidades.",
+    "PiN y estados de población no sumables entre sectores/categorías.",
+    "FINANCIACIÓN: solo apelaciones FTS; no financiación humanitaria total.",
+    "IPC: no agregar admin0 con subnacional ni análisis con proyecciones.",
+    "OPHI: pobreza y dimensiones no son comparables con otras metodologías.",
+    "Los cortes y años varían por indicador; no imputar ni inventar ceros."
+  ],
+  "temas": {
+    "necesidades": {
+      "endpoint": "affected-people/humanitarian-needs",
+      "paises_consultados": 35,
+      "paises_con_datos": 6,
+      "paises_sin_datos": 29,
+      "filas": 1043,
+      "detalle": [
+        {
+          "iso3": "CAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "USA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "MEX",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BLZ",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CRI",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "SLV",
+          "estado": "CON_DATOS",
+          "filas": 167,
+          "paginas": 1
+        },
+        {
+          "iso3": "GTM",
+          "estado": "CON_DATOS",
+          "filas": 146,
+          "paginas": 1
+        },
+        {
+          "iso3": "HND",
+          "estado": "CON_DATOS",
+          "filas": 92,
+          "paginas": 1
+        },
+        {
+          "iso3": "NIC",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ATG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BHS",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CUB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DMA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DOM",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "GRD",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "HTI",
+          "estado": "CON_DATOS",
+          "filas": 374,
+          "paginas": 1
+        },
+        {
+          "iso3": "JAM",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "KNA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "LCA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VCT",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "TTO",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ARG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BOL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CHL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "COL",
+          "estado": "CON_DATOS",
+          "filas": 172,
+          "paginas": 1
+        },
+        {
+          "iso3": "ECU",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "GUY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PRY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PER",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "SUR",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "URY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VEN",
+          "estado": "CON_DATOS",
+          "filas": 92,
+          "paginas": 1
+        }
+      ],
+      "filtros": {
+        "admin_level": 0,
+        "start_date": "2024-01-01"
+      },
+      "unidad_analisis": "Fila original publicada por HAPI a nivel país / apelación / fase / categoría"
+    },
+    "financiacion": {
+      "endpoint": "coordination-context/funding",
+      "paises_consultados": 35,
+      "paises_con_datos": 26,
+      "paises_sin_datos": 9,
+      "filas": 229,
+      "detalle": [
+        {
+          "iso3": "CAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "USA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "MEX",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "BLZ",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CRI",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "SLV",
+          "estado": "CON_DATOS",
+          "filas": 9,
+          "paginas": 1
+        },
+        {
+          "iso3": "GTM",
+          "estado": "CON_DATOS",
+          "filas": 9,
+          "paginas": 1
+        },
+        {
+          "iso3": "HND",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "NIC",
+          "estado": "CON_DATOS",
+          "filas": 6,
+          "paginas": 1
+        },
+        {
+          "iso3": "PAN",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "ATG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BHS",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CUB",
+          "estado": "CON_DATOS",
+          "filas": 8,
+          "paginas": 1
+        },
+        {
+          "iso3": "DMA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DOM",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "GRD",
+          "estado": "CON_DATOS",
+          "filas": 6,
+          "paginas": 1
+        },
+        {
+          "iso3": "HTI",
+          "estado": "CON_DATOS",
+          "filas": 12,
+          "paginas": 1
+        },
+        {
+          "iso3": "JAM",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "KNA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "LCA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VCT",
+          "estado": "CON_DATOS",
+          "filas": 5,
+          "paginas": 1
+        },
+        {
+          "iso3": "TTO",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "ARG",
+          "estado": "CON_DATOS",
+          "filas": 8,
+          "paginas": 1
+        },
+        {
+          "iso3": "BOL",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRA",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "CHL",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "COL",
+          "estado": "CON_DATOS",
+          "filas": 15,
+          "paginas": 1
+        },
+        {
+          "iso3": "ECU",
+          "estado": "CON_DATOS",
+          "filas": 11,
+          "paginas": 1
+        },
+        {
+          "iso3": "GUY",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "PRY",
+          "estado": "CON_DATOS",
+          "filas": 8,
+          "paginas": 1
+        },
+        {
+          "iso3": "PER",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        },
+        {
+          "iso3": "SUR",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "URY",
+          "estado": "CON_DATOS",
+          "filas": 8,
+          "paginas": 1
+        },
+        {
+          "iso3": "VEN",
+          "estado": "CON_DATOS",
+          "filas": 10,
+          "paginas": 1
+        }
+      ],
+      "filtros": {
+        "start_date": "2023-01-01"
+      },
+      "unidad_analisis": "Fila original publicada por HAPI a nivel país / apelación / fase / categoría"
+    },
+    "riesgo": {
+      "endpoint": "coordination-context/national-risk",
+      "paises_consultados": 35,
+      "paises_con_datos": 35,
+      "paises_sin_datos": 0,
+      "filas": 35,
+      "detalle": [
+        {
+          "iso3": "CAN",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "USA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "MEX",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BLZ",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "CRI",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "SLV",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "GTM",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "HND",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "NIC",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "PAN",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "ATG",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BHS",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRB",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "CUB",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "DMA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "DOM",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "GRD",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "HTI",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "JAM",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "KNA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "LCA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "VCT",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "TTO",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "ARG",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BOL",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "CHL",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "COL",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "ECU",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "GUY",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "PRY",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "PER",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "SUR",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "URY",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "VEN",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        }
+      ],
+      "filtros": {},
+      "unidad_analisis": "Fila original publicada por HAPI a nivel país / apelación / fase / categoría"
+    },
+    "pobreza": {
+      "endpoint": "food-security-nutrition-poverty/poverty-rate",
+      "paises_consultados": 35,
+      "paises_con_datos": 21,
+      "paises_sin_datos": 14,
+      "filas": 50,
+      "detalle": [
+        {
+          "iso3": "CAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "USA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "MEX",
+          "estado": "CON_DATOS",
+          "filas": 6,
+          "paginas": 1
+        },
+        {
+          "iso3": "BLZ",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "CRI",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "SLV",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "GTM",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "HND",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "NIC",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "PAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ATG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BHS",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CUB",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "DMA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DOM",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "GRD",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "HTI",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "JAM",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "KNA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "LCA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VCT",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "TTO",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "ARG",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "BOL",
+          "estado": "CON_DATOS",
+          "filas": 4,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRA",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "CHL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "COL",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "ECU",
+          "estado": "CON_DATOS",
+          "filas": 2,
+          "paginas": 1
+        },
+        {
+          "iso3": "GUY",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "PRY",
+          "estado": "CON_DATOS",
+          "filas": 1,
+          "paginas": 1
+        },
+        {
+          "iso3": "PER",
+          "estado": "CON_DATOS",
+          "filas": 6,
+          "paginas": 1
+        },
+        {
+          "iso3": "SUR",
+          "estado": "CON_DATOS",
+          "filas": 3,
+          "paginas": 1
+        },
+        {
+          "iso3": "URY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VEN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        }
+      ],
+      "filtros": {
+        "admin_level": 0
+      },
+      "unidad_analisis": "Fila original publicada por HAPI a nivel país / apelación / fase / categoría"
+    },
+    "inseguridad_alimentaria": {
+      "endpoint": "food-security-nutrition-poverty/food-security",
+      "paises_consultados": 35,
+      "paises_con_datos": 5,
+      "paises_sin_datos": 30,
+      "filas": 322,
+      "detalle": [
+        {
+          "iso3": "CAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "USA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "MEX",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BLZ",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CRI",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "SLV",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "GTM",
+          "estado": "CON_DATOS",
+          "filas": 91,
+          "paginas": 1
+        },
+        {
+          "iso3": "HND",
+          "estado": "CON_DATOS",
+          "filas": 84,
+          "paginas": 1
+        },
+        {
+          "iso3": "NIC",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PAN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ATG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BHS",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CUB",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DMA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "DOM",
+          "estado": "CON_DATOS",
+          "filas": 56,
+          "paginas": 1
+        },
+        {
+          "iso3": "GRD",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "HTI",
+          "estado": "CON_DATOS",
+          "filas": 56,
+          "paginas": 1
+        },
+        {
+          "iso3": "JAM",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "KNA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "LCA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VCT",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "TTO",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ARG",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BOL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "BRA",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "CHL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "COL",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "ECU",
+          "estado": "CON_DATOS",
+          "filas": 35,
+          "paginas": 1
+        },
+        {
+          "iso3": "GUY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PRY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "PER",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "SUR",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "URY",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        },
+        {
+          "iso3": "VEN",
+          "estado": "SIN_REGISTROS",
+          "filas": 0,
+          "paginas": 1
+        }
+      ],
+      "filtros": {
+        "admin_level": 0,
+        "start_date": "2023-01-01"
+      },
+      "unidad_analisis": "Fila original publicada por HAPI a nivel país / apelación / fase / categoría"
+    }
+  }
+}
