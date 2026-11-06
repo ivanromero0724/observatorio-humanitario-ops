@@ -4,14 +4,15 @@ Proyecto de información humanitaria en la Región de las Américas. **Ya existe
 
 ## Dashboard Streamlit — prototipo regional
 
-La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye seis páginas: panorama regional, conflicto y violencia, desplazamiento y movilidad, salud y vulnerabilidad, perfiles por país, y fuentes/metodología.
+La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye **nueve páginas**: panorama regional, conflicto/violencia, seguridad/acceso, necesidades/respuesta, desplazamiento, informes, salud/vulnerabilidad, perfiles por país, y fuentes/metodología. Los gráficos analíticos tienen diseño propio del Observatorio; el estilo institucional y GeoPackage de las Américas proceden de `el-nino-ops`.
 
 - **Mapa regional:** INFORM Risk Mid 2026 (35 países), 25 crisis INFORM Severity del corte más reciente ACAPS (Nov2026), restricciones de acceso ACAPS y metadatos ReliefWeb.
 - **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
-- **Desplazamiento:** disponibilidad OIM DTM para 35 países y 64 registros de últimas rondas/operaciones en 12 países; sin imputar ceros ni sumar operaciones incompatibles.
+- **Desplazamiento:** OIM DTM (64 registros de últimas rondas/operaciones en 12 países) y ACNUR vía HAPI (3.765 registros sin desglose sexo/edad, 31 países de acogida). Nunca sumar stock con flujos ni operaciones incompatibles.
 - **Conflicto:** 8.574 agregados país–mes–categoría de HAPI, a partir de las 35 extracciones completas y con QA; no sumar categorías ACLED.
-- **Países:** ficha con crisis, riesgo, indicadores OPS, y disponibilidad de fuentes.
-- **Fuentes:** fechas y limitaciones para permitir revisión metodológica; tabla de variables y trazabilidad en [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md).
+- **Necesidades y respuesta:** seis nuevas familias HAPI verificadas: necesidades (6 países), financiación (26), componentes INFORM (35), pobreza MPI (21), seguridad alimentaria IPC (5) y presencia de socios 3W (3). Cada fuente se consulta para 35 países, pero su cobertura es desigual.
+- **Países:** perfil de riesgo, crisis, acceso, conflicto, indicadores OPS, OIM DTM y reportes ReliefWeb.
+- **Fuentes:** matriz 35 países × 13 fuentes, fechas, calidad y limitaciones. [Catálogo HAPI ampliado](docs/fase2/hapi_familias.md) y [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md).
 
 ### Ejecutar localmente
 
@@ -29,7 +30,7 @@ streamlit run app.py
 3. Presionar **Deploy**. No es necesario cargar los secretos HAPI/DTM en Streamlit: la app consume las **tablas derivadas y verificadas** publicadas por GitHub Actions, no consulta directamente las API protegidas.
 4. Revisar la URL asignada y los permisos de visibilidad antes de compartir la aplicación con OPS. El repositorio es público y este despliegue es exploratorio.
 
-El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las seis secciones.
+El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las **nueve páginas**.
 
 ## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
 
@@ -50,7 +51,7 @@ La primera ejecución de [`piloto_americas.yml`](.github/workflows/piloto_americ
 - [Matriz de 35 países](data/catalogos/cobertura_piloto.csv)
 - [Metodología y alcance](docs/fase1/alcance_piloto_americas.md)
 
-La exploración preliminar de ACNUR para cinco países sigue documentada como antecedente; no representa el alcance final del observatorio. La cobertura regional de ACNUR podrá completarse en un flujo de trabajo independiente.
+La exploración preliminar de ACNUR para cinco países sigue como antecedente. La serie regional de **ACNUR vía HAPI ya fue extraída para los 35 países de acogida**, con registros en 31 y categorías de población de 2024 en adelante separadas por origen/destino; ver [`hapi_acnur_actualizacion.json`](docs/fase2/hapi_acnur_actualizacion.json).
 
 ## Fase 1 — Datos, factibilidad y extracción inicial (05/11/2026)
 
@@ -65,7 +66,7 @@ La exploración preliminar de ACNUR para cinco países sigue documentada como an
 
 **ACNUR API:** 9 de 10 consultas del piloto de 5 países devolvieron al menos un registro; la combinación Haití/solicitantes de asilo no devolvió filas **con los filtros empleados**. Son pruebas de conectividad y cobertura muestral; no equivalen a análisis completo de flujos. No se han publicado cifras derivadas de esta API.
 
-**HDX HAPI conflicto y OIM DTM:** claves configuradas y autenticación verificada; extracción HAPI completada para 35/35 países y reglas de integridad documentadas. **ACLED detallado:** en espera de licencia de sector público aplicable a OPS. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** solicitud de appname presentada y pendiente de aprobación. No se inventaron resultados para esas fuentes.
+**HDX HAPI conflicto y OIM DTM:** claves configuradas y autenticación verificada; extracción HAPI completada para 35/35 países y reglas de integridad documentadas. **ACLED detallado:** en espera de licencia de sector público aplicable a OPS. **OMS SSA:** revisar exportación/cobertura/licencia. **ReliefWeb:** appname aprobado y metadatos de reportes integrados mediante GitHub Actions semanal. No se inventaron resultados para esas fuentes.
 
 ### Estructura del proyecto
 - `docs/fase1/diagnostico.md`: inventario de 13 fuentes, metodología inicial, límites y decisiones pendientes.
