@@ -855,6 +855,84 @@ elif page == "Perfiles de país":
                 column_config={"Enlace":st.column_config.LinkColumn(
                     "Abrir informe",display_text="Abrir"),
                     "Informe":st.column_config.TextColumn("Informe",width="large")})
+    with st.expander("Más información humanitaria para el país · HAPI",expanded=False):
+        st.caption("Series internacionales con fechas y metodologías propias. "
+            "No se suman poblaciones entre sectores ni se interpreta como "
+            "un índice operacional de prioridad OPS.")
+        available_needs=hapi_needs[hapi_needs["iso3"]==iso].copy() if not hapi_needs.empty else pd.DataFrame()
+        available_poverty=hapi_poverty[hapi_poverty["iso3"]==iso].copy() if not hapi_poverty.empty else pd.DataFrame()
+        l,r=st.columns(2)
+        with l:
+            st.markdown("**Personas en necesidad (intersectorial)**")
+            if not available_needs.empty:
+                ns=available_needs[
+                    (available_needs["sector_code"].astype(str).str.lower()=="intersectoral")&
+                    (available_needs["population_status"]=="INN")&
+                    (available_needs["category"].fillna("").str.lower().isin(["","total","all"]))
+                    ].sort_values("reference_period_start",ascending=False)
+                if not ns.empty:
+                    st.dataframe(ns[["reference_period_start","population",
+                         "population_status"]].rename(columns={
+                         "reference_period_start":"Año/corte","population":"Personas estimadas",
+                         "population_status":"Estado"}).head(6),
+                         hide_index=True,use_container_width=True)
+                else:st.info("Sin estimación intersectorial comparable.")
+            else:st.info("Sin datos nacionales de necesidades para el país.")
+            st.markdown("**Pobreza multidimensional (OPHI)**")
+            if not available_poverty.empty:
+                mpi=available_poverty.sort_values("reference_period_start",ascending=False).iloc[0]
+                v=pd.to_numeric(mpi["headcount_ratio"],errors="coerce")
+                st.metric("Incidencia de pobreza multidimensional",
+                          f"{v:.1f}%" if pd.notna(v) else "—")
+                st.caption("Periodo fuente: "+str(mpi["reference_period_start"])[:4])
+            else:st.info("Sin datos nacionales de MPI.")
+        with r:
+            st.markdown("**Financiación de apelaciones (FTS)**")
+            ff=hapi_funding[hapi_funding["iso3"]==iso].copy() if not hapi_funding.empty else pd.DataFrame()
+            if not ff.empty:
+                ff=ff[(ff["appeal_code"].astype(str)!="Not specified")&
+                      (ff["reference_period_start"].astype(str).str[:4]<=str(pd.Timestamp.now().year))]
+                ff=ff.sort_values("reference_period_start",ascending=False)
+                if not ff.empty:
+                    st.dataframe(ff[["appeal_name","funding_usd","funding_pct"]].head(8).rename(
+                        columns={"appeal_name":"Apelación","funding_usd":"Financiado (USD)",
+                                 "funding_pct":"Cobertura (%)"}),hide_index=True,use_container_width=True)
+                else:st.info("Sin apelaciones identificadas para mostrar.")
+            else:st.info("Sin financiación de apelaciones en el corte.")
+            st.markdown("**Socios operativos por sector (3W)**")
+            presence=hapi_presence[hapi_presence["iso3"]==iso].copy() if not hapi_presence.empty else pd.DataFrame()
+            if not presence.empty:
+                last_date=presence["fecha_hasta"].max()
+                presence=presence[presence["fecha_hasta"]==last_date]
+                st.dataframe(presence[["sector","organizaciones_distintas"]].head(9).rename(
+                    columns={"sector":"Sector","organizaciones_distintas":"Socios reportados"}),
+                    hide_index=True,use_container_width=True)
+            else:st.info("Sin registro de presencia 3W de este país.")
+        if not hapi_ipc.empty:
+            food=hapi_ipc[(hapi_ipc["iso3"]==iso)&
+                (hapi_ipc["ipc_type"]=="current")].copy()
+            if not food.empty:
+                date=food["reference_period_start"].max()
+                food=food[food["reference_period_start"]==date]
+                st.markdown("**Seguridad alimentaria IPC · último análisis actual**")
+                st.dataframe(food[["ipc_phase","population_in_phase",
+                          "population_fraction_in_phase"]].rename(columns={
+                    "ipc_phase":"Fase","population_in_phase":"Personas",
+                    "population_fraction_in_phase":"Fracción"}),
+                    hide_index=True,use_container_width=True)
+        if not hapi_acnur.empty:
+            refuge=hapi_acnur[(hapi_acnur["asilo_iso3"]==iso)&
+                (hapi_acnur["grupo_poblacion"].isin(["REF","ASY"]))].copy()
+            if not refuge.empty:
+                year=refuge["anio"].max()
+                st.markdown("**Refugiados y asilo · orígenes asociados al país de acogida**")
+                st.caption("Último año: "+str(year)+". REF y ASY son grupos distintos.")
+                show=refuge[refuge["anio"]==year].sort_values(
+                    "personas",ascending=False).head(12)
+                st.dataframe(show[["origen_iso3","grupo_poblacion","personas"]].rename(
+                    columns={"origen_iso3":"Origen","grupo_poblacion":"Grupo",
+                             "personas":"Personas registradas"}),
+                    hide_index=True,use_container_width=True)
     st.markdown("#### Estado de fuentes disponibles")
     if not coverage.empty:
         info=coverage[coverage["iso3"]==iso].copy()
