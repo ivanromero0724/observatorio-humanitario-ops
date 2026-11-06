@@ -63,6 +63,19 @@ def main():
             if errs:
                 raise RuntimeError(f"{label}: excepción visible en la app")
             geom=geometries(page)
+            # Diagnóstico DOM: Streamlit puede cambiar el selector de wrapper
+            # entre versiones; registrar geometría antes de evaluar.
+            raw=page.locator('[data-testid="stVerticalBlockBorderWrapper"]').evaluate_all("""
+              es => es.slice(0,25).map(e => {
+                 const b=e.getBoundingClientRect();
+                 return {x:b.x,y:b.y,w:b.width,h:b.height,
+                   className:String(e.className).slice(0,80)}
+              })
+            """)
+            print("GEOMETRIA",name,"filtrada",geom[:12],"raw",raw[:12],flush=True)
+            image=OUTPUT/f"{name}.png"
+            page.screenshot(path=str(image),full_page=True,
+                            animations="disabled",timeout=60000)
             pairs=paired_boxes(geom)
             # Los paneles están definidos con alturas fijas de 490/440.
             mismatch=[]
@@ -75,9 +88,6 @@ def main():
                 raise AssertionError(f"{label}: paneles desalineados {mismatch[:3]}")
             if name in ("situaciones","amenazas","personas","vulnerabilidad","ficha") and not pairs:
                 raise AssertionError(f"{label}: no se detectaron parejas de paneles para verificar")
-            image=OUTPUT/f"{name}.png"
-            page.screenshot(path=str(image),full_page=True,
-                            animations="disabled",timeout=60000)
             results[name]={"paneles_visibles":len(geom),"parejas_alineadas":len(pairs),
                 "captura":str(image)}
             print(label,results[name],flush=True)
