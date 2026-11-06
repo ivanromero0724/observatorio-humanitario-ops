@@ -24,13 +24,20 @@ PAGES=[
 ]
 
 def geometries(page):
-    return page.locator('[data-testid="stVerticalBlockBorderWrapper"]').evaluate_all("""
+    # No depender de data-testid: Streamlit cambia nombres internos.
+    # Localizar el ancestro con borde de cada título de tarjeta.
+    return page.locator(".obs-card-title").evaluate_all("""
       es => es.map(e => {
-        const b=e.getBoundingClientRect(), css=getComputedStyle(e);
-        return {x:b.x,y:b.y,w:b.width,h:b.height,
-          border:css.borderTopWidth,
-          visible:b.height>0 && b.width>0}
-      }).filter(x=>x.visible && x.w>=200 && x.h>=270)
+        let p=e.parentElement,found=null;
+        for(let i=0;i<13 && p;i++,p=p.parentElement){
+          const b=p.getBoundingClientRect(), css=getComputedStyle(p);
+          if(parseFloat(css.borderTopWidth)>=0.8 && b.width>=200 && b.height>=270){
+            found={x:b.x,y:b.y,w:b.width,h:b.height,
+               border:css.borderTopWidth};break;
+          }
+        }
+        return found;
+      }).filter(x=>x!==null)
     """)
 
 def paired_boxes(xs):
@@ -62,17 +69,28 @@ def main():
             errs=page.locator('[data-testid="stException"]').count()
             if errs:
                 raise RuntimeError(f"{label}: excepción visible en la app")
+            if name=="personas":
+                page.get_by_role("tab",name="Refugio y desplazamiento").click()
+                page.wait_for_timeout(1700)
+            elif name=="vulnerabilidad":
+                page.get_by_role("tab",name="Respuesta humanitaria").click()
+                page.wait_for_timeout(1700)
             geom=geometries(page)
-            # Diagnóstico DOM: Streamlit puede cambiar el selector de wrapper
-            # entre versiones; registrar geometría antes de evaluar.
-            raw=page.locator('[data-testid="stVerticalBlockBorderWrapper"]').evaluate_all("""
-              es => es.slice(0,25).map(e => {
-                 const b=e.getBoundingClientRect();
-                 return {x:b.x,y:b.y,w:b.width,h:b.height,
-                   className:String(e.className).slice(0,80)}
-              })
-            """)
-            print("GEOMETRIA",name,"filtrada",geom[:12],"raw",raw[:12],flush=True)
+            print("GEOMETRIA",name,geom[:12],flush=True)
+            if not geom:
+                chains=page.locator(".obs-card-title").evaluate_all("""
+                  es => es.slice(0,3).map(e=>{
+                    let p=e,levels=[];
+                    for(let i=0;i<9 && p;i++,p=p.parentElement){
+                      const b=p.getBoundingClientRect(),c=getComputedStyle(p);
+                      levels.push({tag:p.tagName,
+                        testid:p.getAttribute('data-testid'),
+                        width:b.width,height:b.height,border:c.borderTopWidth});
+                    }
+                    return levels;
+                  })
+                """)
+                print("ANCESTROS",name,chains,flush=True)
             image=OUTPUT/f"{name}.png"
             page.screenshot(path=str(image),full_page=True,
                             animations="disabled",timeout=60000)
@@ -86,7 +104,7 @@ def main():
                     raise AssertionError(f"{label}: panel sin borde")
             if mismatch:
                 raise AssertionError(f"{label}: paneles desalineados {mismatch[:3]}")
-            if name in ("situaciones","amenazas","personas","vulnerabilidad","ficha") and not pairs:
+            if not pairs:
                 raise AssertionError(f"{label}: no se detectaron parejas de paneles para verificar")
             results[name]={"paneles_visibles":len(geom),"parejas_alineadas":len(pairs),
                 "captura":str(image)}
