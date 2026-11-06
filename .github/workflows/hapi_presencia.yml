@@ -1,0 +1,50 @@
+name: HAPI – socios operativos 3W
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 13 8 * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase2/extraer_hapi_presencia.py
+      - .github/workflows/hapi_presencia.yml
+permissions:
+  contents: write
+concurrency:
+  group: hapi-presencia-35
+  cancel-in-progress: true
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'requests>=2.31,<3'
+      - name: Descargar cobertura 3W completa para 35 países
+        env:
+          HDX_APP_IDENTIFIER: ${{ secrets.HDX_APP_IDENTIFIER }}
+        run: python scripts/fase2/extraer_hapi_presencia.py
+      - name: Validar indicadores 3W antes de publicar
+        run: |
+          python - <<'PY'
+          import json,csv
+          m=json.load(open('docs/fase2/hapi_presencia_actualizacion.json'))
+          rows=list(csv.DictReader(open('data/observaciones/hapi_presencia_sector.csv')))
+          assert m['estado']=='COMPLETO' and m['paises_consultados']==35
+          assert len(rows)==m['filas_resumen']
+          assert len(m['detalle'])==35
+          print('OK:',len(rows),'filas resumidas sin org IDs')
+          PY
+      - name: Publicar resumen sin datos personales
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/observaciones/hapi_presencia_sector.csv docs/fase2/hapi_presencia_actualizacion.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: presencia 3W HAPI completa [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
