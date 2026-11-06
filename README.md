@@ -4,7 +4,7 @@ Proyecto de información humanitaria en la Región de las Américas. **Ya existe
 
 ## Dashboard Streamlit — prototipo regional
 
-La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye **nueve páginas**: panorama regional, conflicto/violencia, seguridad/acceso, necesidades/respuesta, desplazamiento, informes, salud/vulnerabilidad, perfiles por país, y fuentes/metodología. Los gráficos analíticos tienen diseño propio del Observatorio; el estilo institucional y GeoPackage de las Américas proceden de `el-nino-ops`.
+La aplicación se encuentra en [`app.py`](app.py), implementada en [`observatorio_v2.py`](observatorio_v2.py). Su **navegación tiene cinco páginas**, fiel a la [propuesta técnica del 5 de noviembre](docs/fase2/guia_operativa_diseno.md): **Panorama regional**, **Amenazas y eventos**, **Vulnerabilidad y respuesta**, **Impacto humanitario y salud** y **Perfiles por país**. Las fuentes se exploran como evidencia dentro de esas páginas; no se crea una página independiente por cada API. Todas las figuras principales usan paneles nativos de Streamlit con bordes gris OPS, títulos azules, fechas y notas de procedencia.
 
 - **Mapa regional:** INFORM Risk Mid 2026 (35 países), 25 crisis INFORM Severity del corte más reciente ACAPS (Nov2026), restricciones de acceso ACAPS y metadatos ReliefWeb.
 - **Salud:** ocho series OPS por país, filtro de año y advertencias de comparabilidad.
@@ -12,7 +12,7 @@ La aplicación se encuentra en [`app.py`](app.py), con paleta OPS/OMS. Incluye *
 - **Conflicto:** 8.574 agregados país–mes–categoría de HAPI, a partir de las 35 extracciones completas y con QA; no sumar categorías ACLED.
 - **Necesidades y respuesta:** seis nuevas familias HAPI verificadas: necesidades (6 países), financiación (26), componentes INFORM (35), pobreza MPI (21), seguridad alimentaria IPC (5) y presencia de socios 3W (3). Cada fuente se consulta para 35 países, pero su cobertura es desigual.
 - **Países:** perfil de riesgo, crisis, acceso, conflicto, indicadores OPS, OIM DTM y reportes ReliefWeb.
-- **Fuentes:** matriz 35 países × 13 fuentes, fechas, calidad y limitaciones. [Catálogo HAPI ampliado](docs/fase2/hapi_familias.md) y [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md).
+- **Fuentes y calidad:** desplegable en la barra lateral con fechas de actualización, límites y enlaces a la [guía operativa](docs/fase2/guia_operativa_diseno.md), [catálogo HAPI](docs/fase2/hapi_familias.md) y [arquitectura de indicadores](docs/fase2/arquitectura_indicadores_dashboard.md). La matriz amplia se reserva para documentación técnica, no ocupa la vista principal.
 
 ### Ejecutar localmente
 
@@ -30,7 +30,7 @@ streamlit run app.py
 3. Presionar **Deploy**. No es necesario cargar los secretos HAPI/DTM en Streamlit: la app consume las **tablas derivadas y verificadas** publicadas por GitHub Actions, no consulta directamente las API protegidas.
 4. Revisar la URL asignada y los permisos de visibilidad antes de compartir la aplicación con OPS. El repositorio es público y este despliegue es exploratorio.
 
-El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las **nueve páginas**.
+El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) realiza una prueba automática de apertura de las **cinco páginas**.
 
 ## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
 
