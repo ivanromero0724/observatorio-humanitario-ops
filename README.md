@@ -2,42 +2,49 @@
 
 Proyecto de información humanitaria en la Región de las Américas. **Ya existe un prototipo de dashboard en Streamlit** y sus pruebas automáticas, pero la aplicación todavía debe desplegarse en Streamlit Cloud. No existe un índice oficial OPS de prioridades: las categorías y umbrales necesitan validación con el equipo técnico.
 
-## Observatorio humanitario — mandato de Mauricio Cerpa y propuesta OPS
+## Observatorio humanitario — propuesta OPS, Mauricio y taxonomía de Laura
 
-**Objetivo:** mapear y monitorear por país el volumen y la evolución de situaciones
-de **violencia, conflicto, migración, desplazamiento forzado y acceso humanitario**
-que puedan requerir discusión y seguimiento de OPS/OMS. No se centra en brotes,
-El Niño o desastres naturales en esta etapa. El enfoque de indicadores y niveles
-de seguimiento requiere la validación técnica de **Laura/PHE**.
+**Objetivo:** mapear por país situaciones humanitarias de interés para OPS/OMS
+(violencia, conflicto, movilidad forzada, acceso y entorno humanitario),
+contextualizar su vulnerabilidad e identificar consecuencias documentadas sobre
+personas y servicios. **No es un monitor de brotes ni de El Niño.**
 
-La aplicación ejecuta [`app.py`](app.py), que carga la interfaz
-[`observatorio_v5.py`](observatorio_v5.py). Sigue cinco páginas:
+**Interfaz activa:** [`app.py`](app.py) → [`observatorio_v6.py`](observatorio_v6.py).
+Las cinco páginas corresponden a la propuesta técnica del 5 de noviembre:
 
-1. **Mapa y seguimiento regional:** mapas alternables de registros de violencia
-   política (12 meses), ataques a civiles (12 meses) o máxima gravedad de crisis
-   ACAPS; matriz por país con eventos y tendencia reciente.
-2. **Violencia, conflicto y acceso:** series HAPI/ACLED por categoría, comparación
-   3 meses frente a 3 meses, restricciones de acceso ACAPS. Crimen y economías
-   ilícitas pendientes de definición y fuentes especializadas.
-3. **Migración y desplazamiento:** país de acogida/origen/grupo de población
-   ACNUR; operaciones y rondas OIM DTM; personas en necesidad PiN intersectorial.
-4. **Vulnerabilidad y respuesta:** condiciones sociales, indicadores sanitarios
-   de contexto OPS, presencia humanitaria 3W y financiación FTS.
-5. **Perfil humanitario por país:** panorama, tendencia, crisis, movilidad,
-   datos sanitarios y enlaces originales de ReliefWeb.
+1. **Panorama regional:** mapa de magnitud documentada por país, tendencia,
+   crisis evaluadas y tabla comparativa, sin índice propio OPS.
+2. **Amenazas y eventos:** nueva [taxonomía de Laura](paginas_laura.py):
+   acciones armadas (indicador parcial ACLED), ataques a civiles, migración,
+   desplazamiento, acceso, fragilidad política, minería ilegal, crimen organizado,
+   cultivos/mercados ilícitos y delincuencia transnacional. Cada subtipo declara
+   fuente disponible, precisión y limitaciones.
+3. **Vulnerabilidad y respuesta:** contexto económico, educación, calidad de aire,
+   contexto social, capacidad sanitaria, morbimortalidad, vacunación y
+   demografía. Los indicadores no conectados figuran como **pendientes**,
+   no como valores inventados.
+4. **Impacto humanitario y salud:** personas en necesidad (PiN), refugiados,
+   establecimientos/personal de salud afectados y servicios esenciales:
+   agua, electricidad, gas y telecomunicaciones. Las últimas variables
+   requieren fuentes oficiales validadas para mostrar números.
+5. **Perfiles por país:** ficha integradora de evidencia disponible,
+   tendencias y reportes originales.
 
-Los mapas de eventos emplean una escala descriptiva de color con valores exactos
-al pasar el cursor. Las áreas sin información quedan **grises**; los ceros reportados
-son distintos de datos faltantes. Las puntuaciones ACAPS e INFORM pertenecen
-a esas fuentes, **no constituyen riesgo ni nivel de prioridad OPS**.
+Los niveles **crítico, alto, elevado y moderado** se muestran como propuesta
+de categorías de trabajo pero **no se asignan a países**, porque Laura y el
+equipo OPS/PHE deben validar indicadores, umbrales, fuentes y criterios.
 
-- [**Correspondencia entre el correo de Mauricio, la propuesta y las páginas**](docs/fase2/mandato_mauricio_propuesta.md)
-- [Catálogo HAPI y variables disponibles](docs/fase2/hapi_familias.md)
-- [Arquitectura de datos y actualizaciones](docs/fase2/arquitectura_indicadores_dashboard.md)
-- [Diseño de interfaz](observatorio_v5.py) · [Gráficos](graficos.py) · [Cartografía OPS](ui_ops.py)
+La cartografía y los gráficos mantienen la paleta OPS, y los mapas representan
+datos a escala **nacional**, nunca coordenadas puntuales inventadas. Países
+sin información quedan diferenciados de ceros reportados. Gráficos adyacentes
+usan tarjetas con borde y alturas iguales.
 
-El alcance actual cubre **35 países soberanos**; los territorios y temas adicionales
-se integrarán de manera modular cuando haya fuentes y definiciones verificadas.
+**Referencias de implementación:**
+- [Correspondencia detallada con la propuesta de Laura](docs/fase2/taxonomia_laura_matriz.md)
+- [Mandato de Mauricio y metodología de seguimiento](docs/fase2/mandato_mauricio_propuesta.md)
+- [Catálogo de fuentes e indicadores HAPI](docs/fase2/hapi_familias.md)
+- [Código de las nuevas páginas](paginas_laura.py)
+- [Arquitectura y limitaciones](docs/fase2/arquitectura_indicadores_dashboard.md)
 
 ### Ejecutar localmente
 
