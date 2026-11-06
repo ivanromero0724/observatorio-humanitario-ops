@@ -16,11 +16,11 @@ from playwright.sync_api import sync_playwright
 OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
-    ("Mapa y seguimiento regional","mapa_regional"),
-    ("Violencia, conflicto y acceso","violencia_acceso"),
-    ("Migración y desplazamiento","movilidad_forzada"),
+    ("Panorama regional","panorama_regional"),
+    ("Amenazas y eventos","amenazas_eventos"),
     ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
-    ("Perfil humanitario por país","perfil_pais"),
+    ("Impacto humanitario y salud","impacto_salud"),
+    ("Perfiles por país","perfil_pais"),
 ]
 
 def geometries(page):
