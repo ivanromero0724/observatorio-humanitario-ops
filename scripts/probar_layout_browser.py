@@ -106,6 +106,15 @@ def main():
             errs=page.locator('[data-testid="stException"]').count()
             if errs:
                 raise RuntimeError(f"{label}: excepción visible en la app")
+            # Los indicadores superiores usan una franja única con divisores,
+            # y no deben volver a verse como tarjetas sueltas.
+            stripe=page.locator(".ops-metric-strip")
+            if stripe.count()==0:
+                raise AssertionError(f"{label}: falta la franja unificada de indicadores")
+            cells=stripe.first.locator(".ops-strip-item")
+            if cells.count()<2:
+                raise AssertionError(f"{label}: banda de KPIs incompleta")
+            print("BANDA_KPI",label,{"indicadores":cells.count()},flush=True)
             # v4 tiene paneles iguales visibles en cada página; no requiere
             # entrar a pestañas para medirlos.
             geom=geometries(page)
