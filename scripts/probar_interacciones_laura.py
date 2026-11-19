@@ -40,6 +40,9 @@ def main():
         if page == "Amenazas y eventos":
             select_if_present(at, "op_event_kind")
             select_if_present(at, "op_event_months")
+            month = next(x for x in at.selectbox if x.key == "op_event_months")
+            month.set_value(1).run()
+            check(at, "último mes disponible")
         elif page == "Movilidad y necesidades":
             select_if_present(at, "op_un_group")
             select_if_present(at, "op_un_year")
