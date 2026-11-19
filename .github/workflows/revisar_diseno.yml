@@ -16,6 +16,8 @@ on:
       - mapa_coe.py
       - panel_coe.py
       - detalle_riesgo.py
+      - perfil_integral.py
+      - tarjetas_resumen.py
       - .streamlit/config.toml
       - app.py
       - ui_ops.py
