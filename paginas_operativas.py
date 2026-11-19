@@ -62,16 +62,22 @@ def _event_tab(D, selected):
         info_missing("categorías de eventos")
         return
 
-    col1, col2 = st.columns([1.2, 1], gap="medium")
-    with col1:
-        kind = st.selectbox("Tipo de evento", available, key="op_event_kind",
-                            format_func=lambda v: EVENT_TYPES[v])
-    with col2:
-        months = st.selectbox(
-            "Periodo", [1, 6, 12, 24], index=2, key="op_event_months",
-            format_func=lambda v: ("Último mes disponible" if v == 1
-                                   else f"Últimos {v} meses"),
+    # La cuadrícula de controles coincide con las dos columnas de gráficos.
+    controls_left, controls_right = st.columns(2, gap="medium")
+    with controls_left:
+        kind = st.selectbox(
+            "Tipo de evento", available, key="op_event_kind",
+            format_func=lambda v: EVENT_TYPES[v],
+            width="stretch",
         )
+    with controls_right:
+        months = st.segmented_control(
+            "Periodo", options=[1, 6, 12], default=12,
+            format_func=lambda v: f"{v} mes" if v == 1 else f"{v} meses",
+            selection_mode="single", key="op_event_months",
+            width="content",
+        )
+        months = months or 12
 
     total_by_country, cut = events_by_country(D, selected, kind, months)
     totals = _scope(D, selected).merge(total_by_country, on="iso3", how="left")
