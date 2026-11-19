@@ -209,7 +209,7 @@ def _subgroup(label, values, key):
     """Única navegación secundaria por página: breve, horizontal y persistente."""
     selected = st.segmented_control(
         label, values, default=values[0],
-        selection_mode="single", key=key, width="stretch",
+        selection_mode="single", key=key, width="content",
         label_visibility="collapsed",
     )
     return selected or values[0]
