@@ -691,7 +691,7 @@ def vulnerability_page(D,selected,names):
             "no un cero o una estimación inferida de eventos de violencia.")
 
 def profile_page(D,selected,names,months):
-    title("05 / FICHA DE PAÍS",
+    title("04 / FICHA DE PAÍS",
         "Situación humanitaria por país",
         "Una ficha que permite revisar eventos, crisis, movilidad, "
         "vulnerabilidad y fuentes antes de discutir posibles necesidades de apoyo.")
