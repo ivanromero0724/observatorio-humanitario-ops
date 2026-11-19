@@ -39,15 +39,15 @@ def main():
         check(at, page)
         if page == "Amenazas y eventos":
             select_if_present(at, "op_event_kind")
-            # Ahora es un selector de periodos, no un selectbox.
+            # Deslizador discreto, solo 1, 6 y 12 meses.
             assert not [x for x in at.selectbox if x.key == "op_event_months"]
-            periods = [x for x in at.get("segmented_control")
+            sliders = [x for x in at.get("select_slider")
                        if x.key == "op_event_months"]
-            assert len(periods) == 1, "Falta el selector compacto de periodos"
+            assert len(sliders) == 1, "No aparece el deslizador de períodos"
             for value in (1, 6, 12):
-                periods[0].set_value(value).run()
+                sliders[0].set_value(value).run()
                 check(at, f"periodo de {value} meses")
-                periods = [x for x in at.get("segmented_control")
+                sliders = [x for x in at.get("select_slider")
                            if x.key == "op_event_months"]
         elif page == "Movilidad y necesidades":
             select_if_present(at, "op_un_group")
