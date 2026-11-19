@@ -290,17 +290,6 @@ def _acnur_tab(D, selected):
             else:
                 plot(rank_bars(present, label="pais", value="personas",
                                limit=11, formats=".0f", units="Personas"), height=355)
-    with st.expander("Detalle opcional: países de origen"):
-        hosts = sorted(un["asilo_iso3"].dropna().unique(),
-                       key=lambda x: _countries(D).get(x, x))
-        if hosts:
-            host = st.selectbox("País de acogida", hosts,
-                        format_func=lambda x: _countries(D).get(x, x), key="op_un_host")
-            subset = un[un["asilo_iso3"] == host].copy()
-            subset["origen"] = subset["origen_iso3"].map(_countries(D)).fillna(subset["origen_iso3"])
-            plot(rank_bars(subset, label="origen", value="personas",
-                           limit=15, units="Personas", formats=".0f"), height=380)
-
 
 def _dtm_tab(D, selected):
     d = oim_scope(filtered(D["dtm"], selected))
@@ -435,10 +424,6 @@ def _ops_tab(D, selected):
               "OPS · Indicadores Básicos"):
         plot(strip_countries(picked, name="pais", val="valor", year="anio",
                              units=OPS_LABELS.get(choice, choice), max_items=25), height=425)
-        with st.expander("Ver tabla del indicador"):
-            table(picked[["pais", "anio", "valor"]], height=290,
-                  labels={"pais": "País", "anio": "Año", "valor": "Valor"})
-
 
 def _mpi_tab(D, selected):
     mpi = filtered(D["mpi"], selected)
@@ -498,15 +483,6 @@ def _ipc_tab(D, selected):
             plot(rank_bars(chart, label="ipc_phase", value="population_in_phase",
                            units="Personas", formats=".0f", limit=5), height=330)
             st.caption("Fase 1 = mínima; fase 5 = catástrofe/hambruna según metodología IPC.")
-        with st.expander("Ver los registros y sus porcentajes"):
-            table(q, height=330,
-                  columns=["ipc_phase", "ipc_type", "population_in_phase",
-                           "population_fraction_in_phase", "reference_period_start",
-                           "reference_period_end"],
-                  labels={"ipc_phase": "Fase", "ipc_type": "Tipo",
-                          "population_in_phase": "Personas", "population_fraction_in_phase": "Fracción",
-                          "reference_period_start": "Inicio", "reference_period_end": "Fin"})
-
 
 def _response_tab(D, selected):
     st.markdown("#### Presencia de organizaciones humanitarias")
@@ -669,7 +645,7 @@ def perfil_page(D, selected, names):
         n = n[~n.duplicated(["iso3", "anio"], keep=False)]
         if not n.empty:
             n = n.sort_values("anio").tail(1)
-            with st.expander("Personas en necesidad humanitaria (PiN)"):
+            with st.container():
                 st.metric(f"Total intersectorial documentado · {n['anio'].iloc[0]}",
                           fmt(n["population"].iloc[0]))
                 st.caption("PiN no es un conteo de víctimas de hechos violentos.")
