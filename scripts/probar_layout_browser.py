@@ -17,8 +17,8 @@ OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
     ("Amenazas y eventos","amenazas_eventos"),
+    ("Movilidad y necesidades","movilidad_necesidades"),
     ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
-    ("Impacto humanitario y salud","impacto_salud"),
     ("Perfiles por país","perfil_pais"),
 ]
 
