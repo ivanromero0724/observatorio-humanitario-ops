@@ -76,12 +76,16 @@ def main():
     profile=(ROOT/"perfil_integral.py").read_text(encoding="utf-8")
     for label in ("Amenazas y crisis","Movilidad y necesidades",
                   "Riesgo y vulnerabilidad","Respuesta e informes",
-                  "Crises evaluadas" if False else "Crisis humanitarias evaluadas"):
+                  "Crisis humanitarias evaluadas"):
         assert label in profile
     for key in ('"inform_hapi"','"mpi"','"ipc"','"presence"',
                 '"funding"','"reports"','"acnur"','"dtm"','"needs"'):
         assert key in profile, f"Falta fuente {key} en perfil integral"
     assert "metric_strip(" in operational and "metric_strip(" in profile
+    assert "OCHA ReliefWeb" in profile and "OIM DTM" in profile
+    for field in ("indicador_9", "impacto_geografico",
+                  "personas_idp_reportadas", "headcount_ratio", "funding_usd"):
+        assert field in profile, f"Perfil incompleto: falta {field}"
     assert "def perfil_page(" in operational and "profile_page(D, selected, names)" in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
     assert all(page in nav for page in PAGES)
