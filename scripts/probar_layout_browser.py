@@ -161,8 +161,12 @@ def main():
              "Población estimada por fase IPC", "vulnerabilidad_ipc"),
             ("Vulnerabilidad y respuesta", "Respuesta",
              "Organizaciones reportadas por sector", "vulnerabilidad_respuesta_3w"),
-            ("Perfiles por país", "Informes recientes",
-             "Informes humanitarios recientes", "perfil_informes"),
+            ("Perfiles por país", "Movilidad y necesidades",
+             "Refugio y asilo en el país de acogida", "perfil_movilidad"),
+            ("Perfiles por país", "Riesgo y vulnerabilidad",
+             "Riesgo estructural INFORM", "perfil_riesgo"),
+            ("Perfiles por país", "Respuesta e informes",
+             "Informes humanitarios asociados al país", "perfil_informes"),
         ]:
             page.locator('[data-testid="stSidebar"]').get_by_text(
                 page_label, exact=True).click(timeout=25000)
@@ -172,7 +176,8 @@ def main():
             if page.locator('[data-testid="stException"]').count():
                 raise RuntimeError(f"{page_label} / {topic}: excepción en la app")
             if shot in ("acaps_desglose", "vulnerabilidad_ops",
-                        "vulnerabilidad_respuesta_3w"):
+                        "vulnerabilidad_respuesta_3w", "perfil_movilidad",
+                        "perfil_riesgo", "perfil_informes"):
                 page.screenshot(path=str(OUTPUT/f"{shot}.png"),
                                 full_page=True, animations="disabled", timeout=60000)
             validate_grid(geometries(page), f"{page_label} / {topic}")
