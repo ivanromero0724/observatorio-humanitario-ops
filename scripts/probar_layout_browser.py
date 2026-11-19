@@ -54,16 +54,22 @@ def validate_grid(geom, label):
     """
     if len(geom) < 2:
         return
-    xs=sorted(geom, key=lambda g:g["x"])
+    # No incluir tarjetas a ancho completo en comprobaciones de dos columnas.
+    # Son paneles intencionales y se evalúan por separado.
+    base_width=min(g["w"] for g in geom)
+    candidates=[g for g in geom if g["w"]<=base_width*1.35]
+    if len(candidates)<2:
+        return
+    xs=sorted(candidates, key=lambda g:g["x"])
     left=xs[0]["x"]
     # Cada pareja tiene columnas izquierda/derecha. Una tarjeta a ancho
     # completo no genera dos posiciones horizontales y se excluye.
-    right_candidates=sorted(x["x"] for x in geom if x["x"] > left+75)
+    right_candidates=sorted(x["x"] for x in candidates if x["x"] > left+75)
     if not right_candidates:
         return
     right=right_candidates[0]
-    cols=[x for x in geom if abs(x["x"]-left)<8 or abs(x["x"]-right)<8]
-    displaced=[x for x in geom if x not in cols and x["w"]<max(g["w"] for g in cols)*1.3]
+    cols=[x for x in candidates if abs(x["x"]-left)<8 or abs(x["x"]-right)<8]
+    displaced=[x for x in candidates if x not in cols]
     if displaced:
         raise AssertionError(f"{label}: tarjetas desplazadas fuera de la cuadrícula: {displaced}")
     left_cards=sorted((x for x in cols if abs(x["x"]-left)<8), key=lambda x:x["y"])
