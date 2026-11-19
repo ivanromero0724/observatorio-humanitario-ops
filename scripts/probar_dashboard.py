@@ -7,8 +7,8 @@ ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
     "Amenazas y eventos",
+    "Movilidad y necesidades",
     "Vulnerabilidad y respuesta",
-    "Impacto humanitario y salud",
     "Perfiles por país",
 ]
 
@@ -57,17 +57,14 @@ def main():
     assert "def crisis_core(" in code
     assert "desplazamiento forzado" in code.lower()
     assert "no constituyen" in code or "no constituye" in code.lower()
-    laura=(ROOT/"paginas_laura.py").read_text(encoding="utf-8")
-    for subtype in ["Acciones armadas","Ataques a objetivos y población civil",
-                    "Extracción de minería ilegal","Crimen organizado",
-                    "Mercados de drogas ilícitas y cultivos",
-                    "Delincuencia organizada transnacional"]:
-        assert subtype in laura, f"Falta subtipo de Laura: {subtype}"
-    for dimension in ["Económico","Educación","Ambiental","Social",
-                      "Capacidad del sistema de salud","Morbimortalidad",
-                      "Cobertura de vacunación","Demografía"]:
-        assert dimension in laura
-    assert "OMS SSA" in laura and "Telecomunicaciones" in laura
+    operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
+    for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
+        assert f"def {name}(" in operational
+    for label in ("Eventos de violencia", "Crisis y acceso humanitario",
+                  "Refugio y asilo", "Desplazamiento interno",
+                  "Personas en necesidad", "Respuesta humanitaria"):
+        assert label in operational
+    assert "Minería ilegal" not in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
     assert all(page in nav for page in PAGES)
     at=AppTest.from_file(str(APP),default_timeout=90)
