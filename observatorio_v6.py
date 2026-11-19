@@ -1,7 +1,7 @@
 """Observatorio OPS/OMS · organización funcional definida por Laura.
 
-La estructura respeta las cinco páginas de la Propuesta Técnica:
-Panorama regional; amenazas; vulnerabilidad; impacto; perfiles de país.
+La navegación presenta cuatro páginas sin duplicar el mapa general:
+amenazas, vulnerabilidad, impacto y perfiles de país.
 La página Amenazas inicia por tipo/subtipo; los niveles OPS permanecen
 pendientes de metodología y validación editorial.
 """
@@ -9,11 +9,10 @@ from __future__ import annotations
 import streamlit as st
 
 from observatorio_v2 import load_all
-from observatorio_v5 import STYLES, UX_CSS, header, map_page, profile_page, quality_footer
+from observatorio_v5 import STYLES, UX_CSS, header, profile_page, quality_footer
 from paginas_laura import amenazas_page, vulnerabilidad_page, impacto_page
 
 PAGES=[
-    "Panorama regional",
     "Amenazas y eventos",
     "Vulnerabilidad y respuesta",
     "Impacto humanitario y salud",
@@ -71,12 +70,10 @@ def main():
                    "a validación de Laura y OPS/PHE.")
     header()
     if page==PAGES[0]:
-        map_page(D,selected,names)
-    elif page==PAGES[1]:
         amenazas_page(D,selected,names,months)
-    elif page==PAGES[2]:
+    elif page==PAGES[1]:
         vulnerabilidad_page(D,selected,names)
-    elif page==PAGES[3]:
+    elif page==PAGES[2]:
         impacto_page(D,selected,names)
     else:
         profile_page(D,selected,names,months)
