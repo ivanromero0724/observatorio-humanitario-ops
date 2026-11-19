@@ -242,7 +242,7 @@ div.stButton>button[kind="primary"]{
   flex:1 1 auto!important;min-height:0!important;display:flex!important;flex-direction:column!important;
 }
 [class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) .ops-table-wrap {
-  flex:1 1 auto!important;height:100%!important;
+  flex:1 1 auto!important;
 }
 [class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) .ops-data-table {
   height:100%;
