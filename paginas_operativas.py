@@ -71,13 +71,14 @@ def _event_tab(D, selected):
             width="stretch",
         )
     with controls_right:
-        months = st.segmented_control(
-            "Periodo", options=[1, 6, 12], default=12,
+        months = st.select_slider(
+            "Periodo",
+            options=[1, 6, 12],
+            value=12,
             format_func=lambda v: f"{v} mes" if v == 1 else f"{v} meses",
-            selection_mode="single", key="op_event_months",
-            width="content",
+            key="op_event_months",
+            help="Desliza el control para comparar el último mes, 6 o 12 meses.",
         )
-        months = months or 12
 
     total_by_country, cut = events_by_country(D, selected, kind, months)
     totals = _scope(D, selected).merge(total_by_country, on="iso3", how="left")
