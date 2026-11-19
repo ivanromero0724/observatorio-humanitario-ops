@@ -2,7 +2,7 @@
 """Auditoría automática del diseño del Observatorio en navegador Chromium.
 
 Verifica en DOM alturas de paneles *en paralelo* con el CSS real aplicado,
-captura las cinco páginas a viewport 1440px. No inspecciona credenciales ni
+captura las cuatro páginas a viewport 1440px. No inspecciona credenciales ni
 navega a APIs. Las capturas se guardan como artifact de GitHub Actions.
 """
 from __future__ import annotations
@@ -16,7 +16,6 @@ from playwright.sync_api import sync_playwright
 OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
-    ("Panorama regional","panorama_regional"),
     ("Amenazas y eventos","amenazas_eventos"),
     ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
     ("Impacto humanitario y salud","impacto_salud"),
