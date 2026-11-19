@@ -21,7 +21,7 @@ def select_if_present(at, key):
         assert len(matching[0].options) >= 1, f"{key}: sin opciones"
         # Probar solo valores originales; las etiquetas format_func son texto visible.
         values = {"op_event_kind": "civilian_targeting",
-                  "op_event_months": 24, "op_un_group": "ASY",
+                  "op_un_group": "ASY",
                   "op_ops_ind": "Médicos"}
         if key in values:
             matching[0].set_value(values[key]).run()
@@ -39,10 +39,16 @@ def main():
         check(at, page)
         if page == "Amenazas y eventos":
             select_if_present(at, "op_event_kind")
-            select_if_present(at, "op_event_months")
-            month = next(x for x in at.selectbox if x.key == "op_event_months")
-            month.set_value(1).run()
-            check(at, "último mes disponible")
+            # Ahora es un selector de periodos, no un selectbox.
+            assert not [x for x in at.selectbox if x.key == "op_event_months"]
+            periods = [x for x in at.get("segmented_control")
+                       if x.key == "op_event_months"]
+            assert len(periods) == 1, "Falta el selector compacto de periodos"
+            for value in (1, 6, 12):
+                periods[0].set_value(value).run()
+                check(at, f"periodo de {value} meses")
+                periods = [x for x in at.get("segmented_control")
+                           if x.key == "op_event_months"]
         elif page == "Movilidad y necesidades":
             select_if_present(at, "op_un_group")
             select_if_present(at, "op_un_year")
