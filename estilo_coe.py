@@ -166,6 +166,38 @@ div.stButton>button[kind="primary"]{
   .paho-brand{max-height:65px}
   .obs-page{font-size:1.18rem!important}
 }
+
+/* El COE separa títulos del área gráfica y evita las tarjetas enormes. */
+.obs-card-title {
+  font-size:.97rem!important;font-weight:800!important;color:#005A8B!important;
+  margin:12px 1px 3px!important;line-height:1.24!important;min-height:0!important;
+}
+.obs-card-sub {
+  font-size:.77rem!important;color:#607B8A!important;
+  margin:0 1px 8px!important;min-height:0!important;line-height:1.38!important;
+}
+.obs-card-source {
+  color:#718594!important;font-size:.70rem!important;line-height:1.25!important;
+  margin:5px 1px 17px!important;border:0!important;padding:0!important;
+}
+/* Un solo marco, blanco uniforme, alrededor del área gráfica; no otro recuadro interior. */
+div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"],
+div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"] > div {
+  background:#FFFFFF!important;border-color:#DFE9F1!important;
+  border-radius:12px!important;
+}
+div[class*="st-key-coe_chart_"] [data-testid="stPlotlyChart"] {
+  background:#FFFFFF!important;border:0!important;
+  box-shadow:none!important;border-radius:0!important;
+}
+div[class*="st-key-coe_chart_"] .js-plotly-plot,
+div[class*="st-key-coe_chart_"] .plot-container {
+  background:#FFFFFF!important;
+}
+div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
+  gap:.25rem!important;
+}
+
 </style>
 """
 
