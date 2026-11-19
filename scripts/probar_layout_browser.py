@@ -246,19 +246,31 @@ def main():
                 style=frame.evaluate("""
                     e => {
                         let wrap=e.querySelector('[data-testid="stVerticalBlockBorderWrapper"]');
-                        const a=e.getBoundingClientRect();
-                        const t=e.querySelector('.ops-table-wrap').getBoundingClientRect();
-                        return {wrapper_border:wrap?getComputedStyle(wrap).borderTopWidth:null,
-                                table_border:getComputedStyle(e.querySelector('.ops-table-wrap')).borderTopWidth,
-                                container_height:Math.round(a.height),
-                                table_height:Math.round(t.height),
-                                empty_space:Math.round(a.height-t.height)};
+                        let t=e.querySelector('.ops-table-wrap');
+                        let a=e.getBoundingClientRect();
+                        let b=t.getBoundingClientRect();
+                        return {
+                          wrapper_border:wrap?getComputedStyle(wrap).borderTopWidth:null,
+                          table_border:getComputedStyle(t).borderTopWidth,
+                          x:a.x,y:a.y,width:a.width,height:a.height,
+                          table_height:Math.round(b.height),
+                          bottom_space:Math.round(a.bottom-b.bottom)
+                        };
                     }
                 """)
-                if style["wrapper_border"] not in (None,"0px"):
-                    raise AssertionError(f"Tabla sigue dentro de otra caja: {style}")
-                if style["table_border"]=="0px" or style["empty_space"]>50:
-                    raise AssertionError(f"Tabla PiN todavía tiene caja vacía: {style}")
+                if style["wrapper_border"] != "1px" or style["table_border"] != "0px":
+                    raise AssertionError(f"El marco debe ser único y del estilo COE: {style}")
+                graph=page.locator('[class*="st-key-coe_chart_"]').first
+                graph_bounds=graph.bounding_box()
+                if graph_bounds and (
+                    abs(graph_bounds["height"]-style["height"])>6 or
+                    abs(graph_bounds["width"]-style["width"])>6 or
+                    abs(graph_bounds["y"]-style["y"])>6
+                ):
+                    raise AssertionError(f"Tabla y gráfico de PiN no son de igual tamaño: "
+                                         f"{style} / {graph_bounds}")
+                if style["bottom_space"]>35:
+                    raise AssertionError(f"Demasiado espacio vacío bajo la tabla: {style}")
                 print("TABLA_PIN_COMPACTA", {"filas":num_rows,
                       "cifras":numbers[:4],"estilo":style},flush=True)
             validate_grid(geometries(page), f"{page_label} / {topic}")
