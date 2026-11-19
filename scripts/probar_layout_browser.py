@@ -236,8 +236,27 @@ def main():
                     raise AssertionError(f"Tabla PiN no es compacta: {num_rows} filas")
                 if not any("," in v for v in numbers if len(v.strip()) >= 5):
                     raise AssertionError(f"PiN sin separadores de miles: {numbers}")
+                frame=page.locator('[class*="st-key-coe_table_"]').filter(
+                    has=page.locator(".ops-data-table")).first
+                frame.wait_for(timeout=10000)
+                style=frame.evaluate("""
+                    e => {
+                        let wrap=e.querySelector('[data-testid="stVerticalBlockBorderWrapper"]');
+                        const a=e.getBoundingClientRect();
+                        const t=e.querySelector('.ops-table-wrap').getBoundingClientRect();
+                        return {wrapper_border:wrap?getComputedStyle(wrap).borderTopWidth:null,
+                                table_border:getComputedStyle(e.querySelector('.ops-table-wrap')).borderTopWidth,
+                                container_height:Math.round(a.height),
+                                table_height:Math.round(t.height),
+                                empty_space:Math.round(a.height-t.height)};
+                    }
+                """)
+                if style["wrapper_border"] not in (None,"0px"):
+                    raise AssertionError(f"Tabla sigue dentro de otra caja: {style}")
+                if style["table_border"]=="0px" or style["empty_space"]>50:
+                    raise AssertionError(f"Tabla PiN todavía tiene caja vacía: {style}")
                 print("TABLA_PIN_COMPACTA", {"filas":num_rows,
-                      "cifras":numbers[:4]},flush=True)
+                      "cifras":numbers[:4],"estilo":style},flush=True)
             validate_grid(geometries(page), f"{page_label} / {topic}")
             print("OK SUBTEMA", page_label, topic, flush=True)
 
