@@ -6,7 +6,6 @@ from streamlit.testing.v1 import AppTest
 ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
-    "Panorama regional",
     "Amenazas y eventos",
     "Vulnerabilidad y respuesta",
     "Impacto humanitario y salud",
@@ -77,7 +76,7 @@ def main():
     for page in PAGES[1:]:
         at.sidebar.radio[0].set_value(page).run()
         check(at,page)
-    # Regresión: las cinco páginas deben soportar países con cobertura limitada.
+    # Regresión: las cuatro páginas deben soportar países con cobertura limitada.
     at.sidebar.selectbox[0].set_value("Caribe").run()
     at.sidebar.selectbox[1].set_value("ATG").run()
     for page in PAGES:
