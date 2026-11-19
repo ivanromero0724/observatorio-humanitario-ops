@@ -1,21 +1,19 @@
 """Observatorio OPS/OMS · organización funcional definida por Laura.
 
-La navegación presenta cuatro páginas sin duplicar el mapa general:
-amenazas, vulnerabilidad, impacto y perfiles de país.
-La página Amenazas inicia por tipo/subtipo; los niveles OPS permanecen
-pendientes de metodología y validación editorial.
+Cuatro vistas de datos integrados: amenazas, movilidad, vulnerabilidad/respuesta
+ y fichas nacionales. Sin categorías vacías ni niveles OPS no validados.
 """
 from __future__ import annotations
 import streamlit as st
 
 from observatorio_v2 import load_all
-from observatorio_v5 import STYLES, UX_CSS, header, profile_page, quality_footer
-from paginas_laura import amenazas_page, vulnerabilidad_page, impacto_page
+from observatorio_v5 import STYLES, UX_CSS, header, quality_footer
+from paginas_operativas import amenazas_page, movilidad_page, vulnerabilidad_page, perfil_page
 
 PAGES=[
     "Amenazas y eventos",
+    "Movilidad y necesidades",
     "Vulnerabilidad y respuesta",
-    "Impacto humanitario y salud",
     "Perfiles por país",
 ]
 
@@ -58,25 +56,19 @@ def main():
         scope=st.selectbox("Ámbito",["Todos los países"]+opts,
                format_func=lambda code:names.get(code,code),key="scope")
         selected=set(opts) if scope=="Todos los países" else {scope}
-        months=st.selectbox("Periodo de eventos",
-            [6,12,24],index=1,
-            format_func=lambda value:f"Últimos {value} meses",
-            key="months")
-        st.caption("El periodo se aplica a eventos mensuales. "
-                   "Las demás fuentes mantienen su fecha original.")
         st.divider()
         st.caption("Prototipo de monitoreo humanitario. "
                    "Criterios y niveles de seguimiento sujetos "
                    "a validación de Laura y OPS/PHE.")
     header()
     if page==PAGES[0]:
-        amenazas_page(D,selected,names,months)
+        amenazas_page(D,selected,names)
     elif page==PAGES[1]:
-        vulnerabilidad_page(D,selected,names)
+        movilidad_page(D,selected,names)
     elif page==PAGES[2]:
-        impacto_page(D,selected,names)
+        vulnerabilidad_page(D,selected,names)
     else:
-        profile_page(D,selected,names,months)
+        perfil_page(D,selected,names)
     quality_footer(D,selected)
     st.caption("Fuentes: OCHA HAPI/ACLED, ACAPS, ACNUR, OIM DTM, "
       "OPS y ReliefWeb. Sin asignación automática de riesgo OPS. "
