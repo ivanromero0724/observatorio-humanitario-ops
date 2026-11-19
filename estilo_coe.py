@@ -198,6 +198,42 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
   gap:.25rem!important;
 }
 
+
+/* Panel blanco de extremo a extremo: contenido, relleno, lienzo Plotly y marco. */
+[class*="st-key-coe_chart_"] {
+  background:#FFFFFF!important;border-radius:12px!important;
+}
+[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"],
+[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"],
+[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"] > div,
+[class*="st-key-coe_chart_"] [data-testid="stElementContainer"],
+[class*="st-key-coe_chart_"] [data-testid="stPlotlyChart"],
+[class*="st-key-coe_chart_"] [data-testid="stDataFrame"] {
+  background:#FFFFFF!important;
+}
+[class*="st-key-coe_chart_"] .js-plotly-plot,
+[class*="st-key-coe_chart_"] .svg-container,
+[class*="st-key-coe_chart_"] .plot-container {
+  background:#FFFFFF!important;
+}
+[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"]{
+  box-shadow:none!important;
+}
+/* Selector principal de subtema: compacto, horizontal y con identidad COE. */
+[data-testid="stSegmentedControl"] {
+  background:#FFFFFF!important;border:1px solid #DFE9F1!important;
+  padding:8px 10px!important;border-radius:12px!important;
+  margin:3px 0 14px!important;
+}
+[data-testid="stSegmentedControl"] button {
+  font-size:.83rem!important;font-weight:700!important;
+  border-radius:8px!important;
+}
+[data-testid="stSegmentedControl"] button[aria-checked="true"],
+[data-testid="stSegmentedControl"] button[aria-pressed="true"]{
+  background:#EAF3F9!important;color:#005A8B!important;
+}
+[data-testid="stSegmentedControl"] label {display:none!important;}
 </style>
 """
 
