@@ -166,27 +166,122 @@ def info_missing(what):
     st.info(f"Sin registros de {what} en este ámbito. No equivale "
             "a ausencia de la situación.")
 
+def _table_decimals(col, series):
+    """Precision visual solamente; los valores originales no se modifican."""
+    name=str(col).strip().casefold()
+    if name in {"año","anio","year","año de referencia"} or name.endswith(" (año)"):
+        return 0
+    if name in {"mpi","índice mpi"}:
+        return 3
+    values=pd.to_numeric(series,errors="coerce").dropna()
+    if values.empty or ((values-values.round()).abs()<1e-9).all():
+        return 0
+    if any(key in name for key in ("porcentaje","puntuación","severidad",
+                                   "acceso /","cobertura (%)","intensidad","%")):
+        return 1
+    return 1 if (values.abs()>=1).all() else 2
+
+
+def _table_display(value, *,numeric=False,decimals=0,year=False):
+    """Representación segura: 7,900,000 y 4.5; años sin coma."""
+    if value is None:
+        return "—"
+    try:
+        if pd.isna(value):
+            return "—"
+    except (TypeError,ValueError):
+        pass
+    if year:
+        try:
+            return str(int(float(value)))
+        except (TypeError,ValueError,OverflowError):
+            return str(value)
+    if numeric:
+        try:
+            return f"{float(value):,.{decimals}f}"
+        except (TypeError,ValueError,OverflowError):
+            pass
+    return str(value)
+
+
 def table(df,*,height=270,columns=None,labels=None,link=None):
-    """Tabla numérica: coma para miles y punto para decimales, sin alterar datos."""
-    data=df[columns].rename(columns=labels or {}) if columns else df
+    """Tablas OPS limpias: compactas sin filas vacías y con miles legibles.
+
+    Hasta 12 filas se usa tabla semántica HTML, mejor para lectura que una
+    planilla de celdas. Para catálogos largos se conserva dataframe
+    interactivo con altura ajustada a las filas (scroll si es necesario).
+    """
+    from html import escape
+    from urllib.parse import urlparse
+
+    data=(df[columns].rename(columns=labels or {}) if columns else df).copy()
+    if data.empty:
+        st.caption("Sin registros para esta selección.")
+        return
+    numeric={
+        col: (pd.api.types.is_numeric_dtype(data[col])
+              and not pd.api.types.is_bool_dtype(data[col]))
+        for col in data.columns
+    }
+    decimals={col:_table_decimals(col,data[col]) for col in data.columns if numeric[col]}
+    year_cols={col for col in data.columns
+               if str(col).strip().casefold() in {"año","anio","year","año de referencia"}}
+
+    if len(data)<=12:
+        head="".join(
+            f'<th scope="col" class="{"ops-numeric" if numeric[col] else ""}">'
+            f'{escape(str(col))}</th>'
+            for col in data.columns
+        )
+        rows=[]
+        for values in data.itertuples(index=False,name=None):
+            cells=[]
+            for col,value in zip(data.columns,values):
+                if col==link and isinstance(value,str) and value.strip():
+                    uri=value.strip()
+                    parsed=urlparse(uri)
+                    if parsed.scheme in ("http","https") and parsed.netloc:
+                        label="Abrir documento"
+                        cell=(f'<a href="{escape(uri,quote=True)}" target="_blank" '
+                              f'rel="noopener noreferrer">{label}</a>')
+                    else:
+                        cell=escape(uri)
+                else:
+                    cell=escape(_table_display(
+                        value,numeric=numeric[col],
+                        decimals=decimals.get(col,0),year=col in year_cols))
+                css_class=' class="ops-numeric"' if numeric[col] else ""
+                cells.append(f"<td{css_class}>{cell}</td>")
+            rows.append("<tr>"+"".join(cells)+"</tr>")
+        st.markdown(
+            '<div class="ops-table-wrap" role="region" aria-label="Tabla de datos">'
+            '<table class="ops-data-table"><thead><tr>'+head+'</tr></thead><tbody>'+
+            "".join(rows)+'</tbody></table></div>',
+            unsafe_allow_html=True,
+        )
+        return
+
     cfg={}
     for col in data.columns:
-        if col in {"Contexto evaluado","Informe","Descripción",
-                   "Situación","Plan humanitario","Descriptores","Dimensión",
-                   "Componente","Indicador","Crisis"}:
-            cfg[col]=st.column_config.TextColumn(col,width="large")
-        if pd.api.types.is_numeric_dtype(data[col]) and not pd.api.types.is_bool_dtype(data[col]):
-            values=pd.to_numeric(data[col],errors="coerce").dropna()
-            is_integer=values.empty or ((values-values.round()).abs()<1e-9).all()
-            lower=str(col).lower()
-            decimals=(3 if lower in {"mpi","índice mpi"} else
-                      0 if is_integer else 1 if (values.abs()>=1).all() else 2)
+        if numeric[col]:
+            precision=decimals[col]
+            fmt_str=f"%,.{precision}f"
+            if col in year_cols:
+                fmt_str="%.0f"
             cfg[col]=st.column_config.NumberColumn(
-                col,format=f"%,.{decimals}f")
-    if link in data.columns:
-        cfg[link]=st.column_config.LinkColumn(link,display_text="Abrir ↗")
-    st.dataframe(data,use_container_width=True,hide_index=True,
-                 height=height,column_config=cfg)
+                col,format=fmt_str,alignment="right")
+        elif col==link:
+            cfg[col]=st.column_config.LinkColumn(col,display_text="Abrir documento")
+        else:
+            cfg[col]=st.column_config.TextColumn(
+                col,width="large" if str(col).casefold() in {
+                    "informe","descripción","situación","plan humanitario",
+                    "crisis","contexto evaluado","componente","indicador"
+                } else "medium")
+    # Evitar filas de relleno en conjuntos pequeños, conservar scroll en grandes.
+    h=min(int(height), max(160, 40 + 36*len(data)))
+    st.dataframe(data,width="stretch",hide_index=True,
+                 height=h,row_height=36,column_config=cfg)
 
 
 def crisis_table(D,chosen):
