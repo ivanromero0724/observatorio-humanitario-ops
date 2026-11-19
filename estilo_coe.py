@@ -250,6 +250,56 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
   top:11px!important;
 }
 
+/* Indicadores superiores unidos: misma banda visual de Clúster Salud OPS. */
+.ops-metric-strip{
+  --ops-items:4;
+  display:grid;
+  grid-template-columns:repeat(var(--ops-items),minmax(0,1fr));
+  background:#FFFFFF;
+  border:1px solid #D8E5EE;
+  border-radius:18px;
+  box-shadow:0 4px 13px rgba(14,63,96,.045);
+  overflow:hidden;
+  margin:12px 0 15px;
+}
+.ops-strip-item{
+  padding:14px 17px 15px;
+  min-width:0;
+  background:#FFFFFF;
+}
+.ops-strip-item + .ops-strip-item{
+  border-left:1px solid #DFE9F1;
+}
+.ops-strip-value{
+  color:#0068A9;
+  font-size:clamp(1.3rem,1.9vw,1.87rem);
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+}
+.ops-strip-label{
+  font-size:.70rem;
+  font-weight:800;
+  color:#536A7C;
+  letter-spacing:.045em;
+  line-height:1.2;
+  margin-top:8px;
+  overflow-wrap:anywhere;
+}
+.ops-strip-desc{
+  font-size:.70rem;
+  font-weight:500;
+  color:#72889A;
+  margin-top:5px;
+  line-height:1.3;
+  overflow-wrap:anywhere;
+}
+@media(max-width:900px){
+ .ops-metric-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;}
+ .ops-strip-item{flex:1 0 145px;scroll-snap-align:start;}
+}
+
 /* Selector principal de subtema: compacto, horizontal y con identidad COE. */
 [data-testid="stSegmentedControl"] {
   background:#FFFFFF!important;border:1px solid #DFE9F1!important;
