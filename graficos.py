@@ -8,14 +8,14 @@ from __future__ import annotations
 import pandas as pd
 import plotly.graph_objects as go
 
-NAVY="#004B87"
-BLUE="#0072CE"
-TEAL="#008C95"
-ORANGE="#E87C2A"
-LIGHT="#A7CFE4"
+NAVY="#005A8B"
+BLUE="#009BDA"
+TEAL="#75B8D6"
+ORANGE="#F36B32"
+LIGHT="#75B8D6"
 INK="#17324D"
-MUTED="#657988"
-GRID="#E7EEF3"
+MUTED="#607B8A"
+GRID="#E7EDF3"
 PAPER="#FFFFFF"
 SERIES=[BLUE,TEAL,ORANGE,"#6758A4","#4C85AC","#AA705F"]
 
@@ -24,9 +24,9 @@ def finish(fig:go.Figure,*,height=400,orient="default",units="",zero=True):
     fig.update_layout(
         template="none",height=height,
         paper_bgcolor=PAPER,plot_bgcolor=PAPER,
-        font=dict(family="Arial,sans-serif",size=12,color=INK),
+        font=dict(family="DM Sans, Avenir Next, Segoe UI, Arial, sans-serif",size=11,color=INK),
         margin=dict(l=12,r=42,t=20,b=48),
-        hoverlabel=dict(bgcolor="white",bordercolor=GRID,font_size=12),
+        hoverlabel=dict(bgcolor="white",bordercolor=GRID,font_size=11,font_color=INK),
         showlegend=False,
         transition_duration=150,
         uniformtext=dict(minsize=9,mode="hide"),
@@ -60,7 +60,7 @@ def rank_bars(df:pd.DataFrame,*,label:str,value:str,limit=13,
     vals=frame[value].tolist()
     fig.add_trace(go.Bar(
         y=labels,x=vals,orientation="h",
-        marker=dict(color=[color if i>=len(vals)-3 else LIGHT for i in range(len(vals))],
+        marker=dict(color=[color for _ in vals],
                     line=dict(width=0)),
         text=[f"{v:,.1f}" if formats==".1f" else f"{v:,.0f}" for v in vals],
         textposition="outside",cliponaxis=False,
@@ -86,7 +86,7 @@ def trend(df:pd.DataFrame,*,x:str,y:str,units="",color=BLUE,area=True):
             x=frame[x],y=frame[y],mode="lines",
             line=dict(color=color,width=2.9,shape="linear"),
             fill="tozeroy" if area else None,
-            fillcolor="rgba(0,114,206,0.07)" if area else None,
+            fillcolor="rgba(0,155,218,0.08)" if area else None,
             hovertemplate="%{x|%b %Y}<br><b>%{y:,.1f}</b>"+
                 (f" {units}" if units else "")+"<extra></extra>",
         ))
