@@ -158,13 +158,17 @@ div.stButton>button[kind="primary"]{
    paneles de gráficos. No hay una segunda tarjeta/borde dentro. */
 [class*="st-key-coe_table_"] {
   background:#FFFFFF!important;
-  border-radius:12px!important;
-}
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background:#FFFFFF!important;
   border:1px solid #DFE9F1!important;
   border-radius:12px!important;
   padding:11px 13px!important;
+  box-shadow:none!important;
+  box-sizing:border-box!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
+  background:#FFFFFF!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
   box-shadow:none!important;
   box-sizing:border-box!important;
 }
@@ -252,6 +256,7 @@ div.stButton>button[kind="primary"]{
   [class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"]{
     padding:8px!important;
   }
+  [class*="st-key-coe_table_"]{padding:8px!important}
   .ops-data-table{font-size:.74rem}
   .ops-data-table thead th,.ops-data-table tbody td{padding:8px 7px}
 }
