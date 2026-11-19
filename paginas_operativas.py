@@ -10,7 +10,7 @@ import streamlit as st
 
 from observatorio_v2 import filtered, latest_ops, valid_needs, OPS_LABELS, HAPI_TYPES
 from observatorio_v4 import plot, table, info_missing, crisis_table, reports, fmt
-from panel_coe import card
+from panel_coe import card, table_card
 from observatorio_v5 import (
     title, events_by_country, common_last, list_months,
     crisis_core, oim_scope,
@@ -324,7 +324,7 @@ def _dtm_tab(D, selected):
         "necesariamente el stock nacional actual. Se excluyen operaciones etiquetadas "
         "como desastre natural; una causa no indicada no se asume conflicto."
     )
-    with card("Población desplazada registrada en la operación",
+    with table_card("Población desplazada registrada en la operación",
               "Desagregación territorial y por sexo cuando el proveedor informa esos datos.",
               "OIM DTM Baseline"):
         table(d, height=380,
@@ -367,7 +367,7 @@ def _pin_tab(D, selected):
             plot(strip_countries(n, name="pais", val="population", year="anio",
                                  units="Personas en necesidad", decimals=0), height=365)
     with right:
-        with card("Valores y años de referencia",
+        with table_card("Valores y años de referencia",
                   "Cada fila corresponde a una estimación intersectorial distinta.",
                   "OCHA Humanitarian Needs vía HAPI", height=H):
             table(n.sort_values("population", ascending=False),
@@ -510,7 +510,7 @@ def _response_tab(D, selected):
                                units="Organizaciones", formats=".0f", limit=12), height=340)
                 st.caption("No sumar sectores: una misma organización puede trabajar en varios.")
     with right:
-        with card("Financiación de planes humanitarios",
+        with table_card("Financiación de planes humanitarios",
                   "Requerimientos y fondos reportados para apelaciones identificadas.",
                   "OCHA FTS vía HAPI · USD", height=520):
             if f.empty:
