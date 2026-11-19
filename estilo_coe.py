@@ -148,9 +148,46 @@ h2{font-size:1.42rem!important} h3{font-size:1.06rem!important}
 div.stButton>button[kind="primary"]{
   background:#005A8B!important;border-color:#005A8B!important;
 }
-[data-testid="stDataFrame"] {
-  border:1px solid #DFE9F1!important;border-radius:9px!important;
-  overflow:hidden!important;
+/* Las tarjetas ya tienen un borde: evitar una segunda caja en tablas
+   de muchas filas, que permanecen interactivas. */
+[class*="st-key-coe_chart_"] [data-testid="stDataFrame"] {
+  border:0!important;border-radius:0!important;
+  background:#FFFFFF!important;box-shadow:none!important;
+}
+.ops-table-wrap{
+  width:100%;overflow-x:auto;overflow-y:hidden;
+  background:#FFFFFF;border:0;border-radius:0;
+  padding:2px 1px;scrollbar-color:#C5DAE7 transparent;
+}
+.ops-data-table{
+  width:100%;border-collapse:separate;border-spacing:0;
+  border:0;background:#FFFFFF;color:#17324D;
+  font-family:'DM Sans','Avenir Next','Segoe UI',Arial,sans-serif;
+  font-size:.83rem;line-height:1.35;table-layout:auto;
+}
+.ops-data-table thead th{
+  padding:11px 12px;text-align:left;vertical-align:middle;
+  background:#EFF6FA;color:#526C7F;
+  font-size:.72rem;letter-spacing:.025em;font-weight:800;
+  border-bottom:1px solid #DCE8F0;white-space:normal;
+}
+.ops-data-table tbody td{
+  padding:11px 12px;vertical-align:middle;
+  border-bottom:1px solid #ECF2F6;background:#FFFFFF;
+  color:#17324D;white-space:normal;word-break:normal;
+}
+.ops-data-table tbody tr:nth-child(even) td{background:#FAFCFD;}
+.ops-data-table tbody tr:hover td{background:#EAF5FB;}
+.ops-data-table tbody tr:last-child td{border-bottom:0;}
+.ops-data-table .ops-numeric{
+  text-align:right;font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.ops-data-table a{color:#0068A9;text-decoration:none;font-weight:700;}
+.ops-data-table a:hover{text-decoration:underline;}
+@media(max-width:700px){
+ .ops-data-table{font-size:.77rem;}
+ .ops-data-table thead th,.ops-data-table tbody td{padding:9px 10px;}
 }
 [data-testid="stExpander"] {
   border:1px solid #DFE9F1!important;border-radius:10px!important;
