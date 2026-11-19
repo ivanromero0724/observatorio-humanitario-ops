@@ -152,6 +152,20 @@ def main():
         white="rgb(255, 255, 255)"
         if backgrounds["grafico"] != white or backgrounds["contenedor"] != white:
             raise AssertionError(f"Hay fondos distintos al blanco: {backgrounds}")
+        # Comprobar que el gráfico no quede pegado al borde superior.
+        chart_positions=page.locator('[class*="st-key-coe_chart_"]').evaluate_all("""
+          elements => elements.map(e => {
+            const chart=e.querySelector('[data-testid="stPlotlyChart"]');
+            if(!chart) return null;
+            if(e.querySelector('[data-testid="stDataFrame"], [data-testid="stMetric"], [data-testid="stSelectbox"]')) return null;
+            const b=e.getBoundingClientRect(),p=chart.getBoundingClientRect();
+            return {alto:b.height, grafico:p.height, arriba:Math.round(p.top-b.top),
+                    abajo:Math.round(b.bottom-p.bottom)};
+          }).filter(Boolean)
+        """)
+        print("CENTRADO_GRAFICOS",chart_positions,flush=True)
+        if chart_positions and any(abs(x["arriba"]-x["abajo"])>28 for x in chart_positions):
+            raise AssertionError(f"Gráfico descentrado verticalmente: {chart_positions}")
         browser.close()
     (OUTPUT/"resultado.json").write_text(json.dumps(results,indent=2),encoding="utf-8")
     print("OK: todas las parejas de paneles están alineadas en navegador real")
