@@ -85,8 +85,9 @@ def main():
 
     assert "metric_strip(" in operational and "metric_strip(" in profile
     assert "OCHA ReliefWeb" in profile and "OIM DTM" in profile
-    for field in ("indicador_9", "impacto_geografico",
-                  "personas_idp_reportadas", "headcount_ratio", "funding_usd"):
+    assert 'f"indicador_{n}"' in profile, "Falta desglose I1-I9 de ACAPS"
+    for field in ("impacto_geografico", "personas_idp_reportadas",
+                  "headcount_ratio", "funding_usd"):
         assert field in profile, f"Perfil incompleto: falta {field}"
     assert "def perfil_page(" in operational and "profile_page(D, selected, names)" in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
