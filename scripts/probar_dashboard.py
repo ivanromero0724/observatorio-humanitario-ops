@@ -79,8 +79,10 @@ def main():
                   "Crisis humanitarias evaluadas"):
         assert label in profile
     for key in ('"inform_hapi"','"mpi"','"ipc"','"presence"',
-                '"funding"','"reports"','"acnur"','"dtm"','"needs"'):
+                '"funding"','"acnur"','"dtm"','"needs"'):
         assert key in profile, f"Falta fuente {key} en perfil integral"
+    assert "reports(D,chosen" in profile, "No integra ReliefWeb"
+
     assert "metric_strip(" in operational and "metric_strip(" in profile
     assert "OCHA ReliefWeb" in profile and "OIM DTM" in profile
     for field in ("indicador_9", "impacto_geografico",
