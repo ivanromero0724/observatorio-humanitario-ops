@@ -154,67 +154,106 @@ div.stButton>button[kind="primary"]{
   border:0!important;border-radius:0!important;
   background:#FFFFFF!important;box-shadow:none!important;
 }
+/* COE EOC-NET: las tablas comparten el MISMO marco exterior que los
+   paneles de gráficos. No hay una segunda tarjeta/borde dentro. */
+[class*="st-key-coe_table_"] {
+  background:#FFFFFF!important;
+  border-radius:12px!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
+  background:#FFFFFF!important;
+  border:1px solid #DFE9F1!important;
+  border-radius:12px!important;
+  padding:11px 13px!important;
+  box-shadow:none!important;
+  box-sizing:border-box!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] > div,
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"] {
+  background:#FFFFFF!important;
+  box-shadow:none!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"] {
+  gap:.35rem!important;
+}
 .ops-table-wrap{
-  width:100%;overflow-x:auto;overflow-y:hidden;
-  background:#FFFFFF;border:1px solid #DFE9F1;border-radius:12px;
-  box-shadow:0 2px 9px rgba(0,75,120,.035);
-  padding:0;scrollbar-color:#C5DAE7 transparent;
+  width:100%;max-width:100%;
+  overflow-x:auto;overflow-y:auto;
+  background:#FFFFFF;
+  border:0;border-radius:0;box-shadow:none;
+  padding:0;margin:0;box-sizing:border-box;
+  scrollbar-color:#C5DAE7 transparent;
 }
 .ops-data-table{
-  width:100%;border-collapse:separate;border-spacing:0;
+  width:100%;
+  border-collapse:collapse;border-spacing:0;
   border:0;background:#FFFFFF;color:#17324D;
   font-family:'DM Sans','Avenir Next','Segoe UI',Arial,sans-serif;
-  font-size:.83rem;line-height:1.35;table-layout:auto;
+  font-size:.80rem;line-height:1.35;
+  table-layout:auto;
 }
+.ops-data-table.ops-cols-3{table-layout:fixed}
+.ops-data-table.ops-cols-3 th:first-child{width:36%}
+.ops-data-table.ops-cols-3 th:nth-child(2){width:20%}
 .ops-data-table thead th{
-  padding:11px 12px;text-align:left;vertical-align:middle;
-  background:#EFF6FA;color:#526C7F;
-  font-size:.72rem;letter-spacing:.025em;font-weight:800;
-  border-bottom:1px solid #DCE8F0;white-space:normal;
+  padding:10px 11px;
+  color:#005A8B;font-size:.76rem;font-weight:800;
+  text-align:left;vertical-align:middle;
+  background:#F5F9FC;
+  border-bottom:1px solid #DFE9F1;
+  border-right:1px solid #E7EEF4;
+  letter-spacing:0;
+  white-space:normal;
 }
+.ops-data-table thead th:last-child{border-right:0}
 .ops-data-table tbody td{
-  padding:11px 12px;vertical-align:middle;
-  border-bottom:1px solid #ECF2F6;background:#FFFFFF;
-  color:#17324D;white-space:normal;word-break:normal;
+  padding:10px 11px;
+  vertical-align:middle;
+  border-bottom:1px solid #EBF0F4;
+  border-right:1px solid #EDF2F6;
+  background:#FFFFFF;color:#29485F;
+  white-space:normal;overflow-wrap:anywhere;
 }
-.ops-data-table tbody tr:nth-child(even) td{background:#FAFCFD;}
-.ops-data-table tbody tr:hover td{background:#EAF5FB;}
-.ops-data-table tbody tr:last-child td{border-bottom:0;}
+.ops-data-table tbody td:last-child{border-right:0}
+.ops-data-table tbody td:first-child{font-weight:680}
+.ops-data-table tbody tr:last-child td{border-bottom:0}
+.ops-data-table tbody tr:hover td{background:#F6FAFD}
 .ops-data-table .ops-numeric{
   text-align:right;font-variant-numeric:tabular-nums;
   white-space:nowrap;
 }
-.ops-data-table a{color:#0068A9;text-decoration:none;font-weight:700;}
-.ops-data-table a:hover{text-decoration:underline;}
-@media(max-width:700px){
- .ops-data-table{font-size:.77rem;}
- .ops-data-table thead th,.ops-data-table tbody td{padding:9px 10px;}
+.ops-data-table a{color:#0068A9;text-decoration:none;font-weight:700}
+.ops-data-table a:hover{text-decoration:underline}
+
+/* En paneles con una tabla como ÚNICO contenido, repartir su altura de
+   forma uniforme: la tabla ocupa el marco del gráfico vecino, sin un
+   bloque blanco vacío al final. Los paneles con filtros/notas no se estiran. */
+[class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) [data-testid="stVerticalBlockBorderWrapper"] > div {
+  display:flex!important;flex-direction:column!important;min-height:0!important;
 }
-/* Tablas del dashboard: una única superficie, sin el contenedor blanco
-   exterior de altura fija que crea el efecto de caja dentro de otra caja. */
-[class*="st-key-coe_table_"],
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"],
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"],
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] > div {
-  background:transparent!important;
-  box-shadow:none!important;
+[class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) [data-testid="stVerticalBlock"] {
+  display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;
 }
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
-  border:0!important;
-  border-radius:0!important;
-  padding:0!important;
-  height:auto!important;
-  min-height:0!important;
+[class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) [data-testid="stElementContainer"]:has(.ops-table-wrap) {
+  flex:1 1 auto!important;min-height:0!important;display:flex!important;flex-direction:column!important;
+}
+[class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) .ops-table-wrap {
+  flex:1 1 auto!important;height:100%!important;
+}
+[class*="st-key-coe_table_"]:has(.ops-table-wrap):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) .ops-data-table {
+  height:100%;
 }
 [class*="st-key-coe_table_"] [data-testid="stDataFrame"] {
-  border:1px solid #DFE9F1!important;
-  border-radius:12px!important;
-  background:#FFFFFF!important;
-  box-shadow:0 2px 9px rgba(0,75,120,.035)!important;
+  border:0!important;border-radius:0!important;
+  box-shadow:none!important;background:#FFFFFF!important;
   overflow:hidden!important;
 }
-[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"] {
-  gap:.45rem!important;
+@media(max-width:700px){
+  [class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"]{
+    padding:8px!important;
+  }
+  .ops-data-table{font-size:.74rem}
+  .ops-data-table thead th,.ops-data-table tbody td{padding:8px 7px}
 }
 
 [data-testid="stExpander"] {
