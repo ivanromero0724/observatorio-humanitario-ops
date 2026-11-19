@@ -47,6 +47,7 @@ def main():
         st.caption("Prototipo de monitoreo humanitario. "
                    "Criterios y niveles de seguimiento sujetos "
                    "a validación de Laura y OPS/PHE.")
+        st.caption("Versión de interfaz: 2026-11-19 · controles 1 / 6 / 12 meses")
     header()
     if page==PAGES[0]:
         amenazas_page(D,selected,names)
