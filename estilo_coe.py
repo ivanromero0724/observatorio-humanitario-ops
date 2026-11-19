@@ -136,7 +136,9 @@ h2{font-size:1.42rem!important} h3{font-size:1.06rem!important}
 [data-testid="stTabs"] button[aria-selected="true"] {
   color:#005A8B!important;border-bottom:3px solid #009BDA!important;
 }
-[data-testid="stSelectbox"] label p,[data-testid="stCheckbox"] label p {
+[data-testid="stSelectbox"] label p,
+[data-testid="stCheckbox"] label p,
+.st-key-op_event_months [data-testid="stWidgetLabel"] p {
   color:#526F84!important;font-size:.79rem!important;font-weight:700!important;
 }
 [data-baseweb="select"] > div, [data-testid="stSelectbox"] [role="combobox"] {
