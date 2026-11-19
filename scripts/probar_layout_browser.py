@@ -100,6 +100,58 @@ def main():
             results[name]={"paneles_visibles":len(geom),"parejas_alineadas":len(pairs),
                 "captura":str(image)}
             print(label,results[name],flush=True)
+        # Abrir opciones que no están visibles por defecto. El objetivo es
+        # comprobar que la navegación secundaria evita páginas larguísimas.
+        for page_label, topic, expected, shot in [
+            ("Amenazas y eventos", "Crisis evaluadas y acceso",
+             "Tres pilares de acceso", "acaps_desglose"),
+            ("Movilidad y necesidades", "Desplazamiento interno",
+             "Población desplazada registrada en la operación", "movilidad_dtm"),
+            ("Movilidad y necesidades", "Personas en necesidad",
+             "Estimaciones nacionales de PiN", "movilidad_pin"),
+            ("Vulnerabilidad y respuesta", "Salud y sociedad",
+             "Comparación entre países", "vulnerabilidad_ops"),
+            ("Vulnerabilidad y respuesta", "Pobreza",
+             "Incidencia de pobreza multidimensional", "vulnerabilidad_pobreza"),
+            ("Vulnerabilidad y respuesta", "Seguridad alimentaria",
+             "Población estimada por fase IPC", "vulnerabilidad_ipc"),
+            ("Vulnerabilidad y respuesta", "Respuesta",
+             "Organizaciones reportadas por sector", "vulnerabilidad_respuesta_3w"),
+            ("Perfiles por país", "Informes recientes",
+             "Informes humanitarios recientes", "perfil_informes"),
+        ]:
+            page.locator('[data-testid="stSidebar"]').get_by_text(
+                page_label, exact=True).click(timeout=25000)
+            page.get_by_text(topic, exact=True).last.click(timeout=25000)
+            page.get_by_text(expected, exact=True).first.wait_for(timeout=50000)
+            page.wait_for_timeout(900)
+            if page.locator('[data-testid="stException"]').count():
+                raise RuntimeError(f"{page_label} / {topic}: excepción en la app")
+            if shot in ("acaps_desglose", "vulnerabilidad_ops",
+                        "vulnerabilidad_respuesta_3w"):
+                page.screenshot(path=str(OUTPUT/f"{shot}.png"),
+                                full_page=True, animations="disabled", timeout=60000)
+            print("OK SUBTEMA", page_label, topic, flush=True)
+
+        # Fondo blanco uniforme desde el borde hasta el interior del gráfico.
+        page.locator('[data-testid="stSidebar"]').get_by_text(
+            "Amenazas y eventos", exact=True).click(timeout=25000)
+        frame=page.locator('[class*="st-key-coe_chart_"]').first
+        frame.wait_for(timeout=30000)
+        backgrounds=frame.evaluate("""
+          e => {
+            const get = el => el ? getComputedStyle(el).backgroundColor : null;
+            return {
+              contenedor:get(e),
+              area:get(e.querySelector('[data-testid="stVerticalBlockBorderWrapper"]')),
+              grafico:get(e.querySelector('[data-testid="stPlotlyChart"]'))
+            };
+          }
+        """)
+        print("FONDOS_PANEL", backgrounds, flush=True)
+        white="rgb(255, 255, 255)"
+        if any(c != white for c in backgrounds.values()):
+            raise AssertionError(f"Hay fondos distintos al blanco: {backgrounds}")
         browser.close()
     (OUTPUT/"resultado.json").write_text(json.dumps(results,indent=2),encoding="utf-8")
     print("OK: todas las parejas de paneles están alineadas en navegador real")
