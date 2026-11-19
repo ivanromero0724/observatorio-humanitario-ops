@@ -59,6 +59,8 @@ def main():
     assert "no constituyen" in code or "no constituye" in code.lower()
     # La escala numérica del mapa debe representar valores reales, no
     # solo tonalidades descriptivas. ACAPS/INFORM mantienen rango 0–10.
+    import sys
+    sys.path.insert(0, str(ROOT))
     from mapa_coe import _legend_ticks
     ticks = _legend_ticks("events", 10000)
     assert ticks[0] == (0.0, "0")
