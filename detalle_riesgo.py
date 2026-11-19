@@ -32,15 +32,15 @@ ACCESS_PILLARS = {
 # Los indicadores quedan identificados con su código ACAPS en lugar de
 # atribuirles nombres que no consten en el snapshot de la API.
 ACCESS_INDICATORS = {
-    "indicador_1": "I1 · P1",
-    "indicador_2": "I2 · P1",
-    "indicador_3": "I3 · P2",
-    "indicador_4": "I4 · P2",
-    "indicador_5": "I5 · P2",
-    "indicador_6": "I6 · P2",
-    "indicador_7": "I7 · P3",
-    "indicador_8": "I8 · P3",
-    "indicador_9": "I9 · P3",
+    "indicador_1": "I1 · Negación de necesidades",
+    "indicador_2": "I2 · Acceso a servicios",
+    "indicador_3": "I3 · Entrada al país",
+    "indicador_4": "I4 · Movilidad interna",
+    "indicador_5": "I5 · Interferencia a la ayuda",
+    "indicador_6": "I6 · Violencia contra actores",
+    "indicador_7": "I7 · Inseguridad",
+    "indicador_8": "I8 · Minas y explosivos",
+    "indicador_9": "I9 · Barreras físicas",
 }
 
 
@@ -120,6 +120,10 @@ def risk_page(D, selected):
             recent = record.get("meta_avg_recentness_years")
             st.caption(f"Antigüedad media de indicadores: {recent:.2f} años."
                        if pd.notna(recent) else "Antigüedad no informada.")
+            st.caption(
+                "Clase de riesgo INFORM: " + str(record.get("risk_class", "—")) +
+                " · Posición global: " + str(record.get("global_rank", "—"))
+            )
             st.caption("Edición 2025; no comparar directamente con la base INFORM Mid 2026.")
 
 
