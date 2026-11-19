@@ -17,8 +17,8 @@ from observatorio_v5 import (
 from graficos import rank_bars, trend, strip_countries
 from mapa_coe import pa_map
 
-BLUE = "#0072CE"
-ORANGE = "#F39200"
+BLUE = "#009BDA"
+ORANGE = "#F36B32"
 H = 580
 EVENT_TYPES = {
     "political_violence": "Violencia política",
