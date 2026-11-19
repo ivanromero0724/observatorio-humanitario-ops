@@ -255,7 +255,7 @@ def table(df,*,height=270,columns=None,labels=None,link=None):
             rows.append("<tr>"+"".join(cells)+"</tr>")
         st.markdown(
             '<div class="ops-table-wrap" role="region" aria-label="Tabla de datos">'
-            '<table class="ops-data-table"><thead><tr>'+head+'</tr></thead><tbody>'+
+            f'<table class="ops-data-table ops-cols-{len(data.columns)}"><thead><tr>'+head+'</tr></thead><tbody>'+
             "".join(rows)+'</tbody></table></div>',
             unsafe_allow_html=True,
         )
