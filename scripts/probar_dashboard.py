@@ -64,7 +64,7 @@ def main():
     from mapa_coe import _legend_ticks
     ticks = _legend_ticks("events", 10000)
     assert ticks[0] == (0.0, "0")
-    assert ticks[-1] == (1.0, "10.000")
+    assert ticks[-1] == (1.0, "10,000")
     assert len(ticks) >= 4
     assert _legend_ticks("severity", 10) == [(0.0,"0"),(0.5,"5"),(1.0,"10")]
     assert _legend_ticks("risk", 10)[-1][1] == "10"
