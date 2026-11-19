@@ -156,8 +156,9 @@ div.stButton>button[kind="primary"]{
 }
 .ops-table-wrap{
   width:100%;overflow-x:auto;overflow-y:hidden;
-  background:#FFFFFF;border:0;border-radius:0;
-  padding:2px 1px;scrollbar-color:#C5DAE7 transparent;
+  background:#FFFFFF;border:1px solid #DFE9F1;border-radius:12px;
+  box-shadow:0 2px 9px rgba(0,75,120,.035);
+  padding:0;scrollbar-color:#C5DAE7 transparent;
 }
 .ops-data-table{
   width:100%;border-collapse:separate;border-spacing:0;
@@ -189,6 +190,33 @@ div.stButton>button[kind="primary"]{
  .ops-data-table{font-size:.77rem;}
  .ops-data-table thead th,.ops-data-table tbody td{padding:9px 10px;}
 }
+/* Tablas del dashboard: una única superficie, sin el contenedor blanco
+   exterior de altura fija que crea el efecto de caja dentro de otra caja. */
+[class*="st-key-coe_table_"],
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"],
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"],
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] > div {
+  background:transparent!important;
+  box-shadow:none!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  height:auto!important;
+  min-height:0!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stDataFrame"] {
+  border:1px solid #DFE9F1!important;
+  border-radius:12px!important;
+  background:#FFFFFF!important;
+  box-shadow:0 2px 9px rgba(0,75,120,.035)!important;
+  overflow:hidden!important;
+}
+[class*="st-key-coe_table_"] [data-testid="stVerticalBlock"] {
+  gap:.45rem!important;
+}
+
 [data-testid="stExpander"] {
   border:1px solid #DFE9F1!important;border-radius:10px!important;
   background:#FFFFFF!important;
