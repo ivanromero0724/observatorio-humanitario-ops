@@ -26,22 +26,22 @@ INFORM_DIMENSIONS = {
 }
 
 ACCESS_PILLARS = {
-    "pilar_1": "P1 · Acceso de la población a la ayuda",
-    "pilar_2": "P2 · Acceso de actores humanitarios",
-    "pilar_3": "P3 · Restricciones físicas, ambientales y de seguridad",
+    "pilar_1": "Acceso de población a la ayuda",
+    "pilar_2": "Acceso de organizaciones humanitarias",
+    "pilar_3": "Seguridad y barreras físicas",
 }
-# Los indicadores quedan identificados con su código ACAPS en lugar de
-# atribuirles nombres que no consten en el snapshot de la API.
+# Etiquetas legibles para los nueve indicadores de la metodología ACAPS.
+# Se mantienen las claves técnicas originales para enlazar con la API.
 ACCESS_INDICATORS = {
-    "indicador_1": "I1 · Negación de necesidades",
-    "indicador_2": "I2 · Acceso a servicios",
-    "indicador_3": "I3 · Entrada al país",
-    "indicador_4": "I4 · Movilidad interna",
-    "indicador_5": "I5 · Interferencia a la ayuda",
-    "indicador_6": "I6 · Violencia contra actores",
-    "indicador_7": "I7 · Inseguridad",
-    "indicador_8": "I8 · Minas y explosivos",
-    "indicador_9": "I9 · Barreras físicas",
+    "indicador_1": "Negación de necesidades",
+    "indicador_2": "Barreras a servicios y ayuda",
+    "indicador_3": "Obstáculos de entrada al país",
+    "indicador_4": "Restricciones a la movilidad",
+    "indicador_5": "Interferencia en actividades",
+    "indicador_6": "Violencia contra personal y bienes",
+    "indicador_7": "Inseguridad y hostilidades",
+    "indicador_8": "Minas y explosivos",
+    "indicador_9": "Barreras físicas y ambientales",
 }
 
 
@@ -196,7 +196,7 @@ def acaps_detail(D, selected):
                                units="Puntuación / 5"), height=320)
     with right:
         with card("Nueve indicadores de acceso",
-                  "I1–I9, agrupados por pilar; cada uno en escala 0–3.",
+                  "Restricciones específicas, agrupadas por dimensión; escala 0–3.",
                   "ACAPS Humanitarian Access · escala 0–3", height=384):
             if indicators.empty:
                 info_missing("indicadores de acceso")
@@ -205,8 +205,8 @@ def acaps_detail(D, selected):
                                formats=".1f", max_x=3, limit=9, color=ORANGE,
                                units="Puntuación / 3"), height=320)
     st.caption(
-        "P1: acceso de personas afectadas a la ayuda (I1–I2). "
-        "P2: acceso de actores humanitarios (I3–I6). "
-        "P3: restricciones físicas, ambientales y de seguridad (I7–I9). "
-        "La brecha de información expresa datos insuficientes, no ausencia de restricciones."
+        "Dimensiones ACAPS: acceso de la población a la ayuda, acceso de organizaciones "
+        "humanitarias y restricciones físicas, ambientales y de seguridad. "
+        "Los indicadores específicos se presentan por su significado y no por su código. "
+        "La brecha de información refleja información insuficiente, no ausencia de restricciones."
     )
