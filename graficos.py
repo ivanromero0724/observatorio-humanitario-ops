@@ -22,7 +22,7 @@ SERIES=[BLUE,TEAL,ORANGE,"#6758A4","#4C85AC","#AA705F"]
 def finish(fig:go.Figure,*,height=400,orient="default",units="",zero=True):
     """Preparar figura legible en desktop/mobile sin etiquetas superpuestas."""
     fig.update_layout(
-        template="none",height=height,
+        template="none",height=height,separators=".,",
         paper_bgcolor=PAPER,plot_bgcolor=PAPER,
         font=dict(family="DM Sans, Avenir Next, Segoe UI, Arial, sans-serif",size=11,color=INK),
         margin=dict(l=12,r=42,t=20,b=48),
@@ -35,6 +35,12 @@ def finish(fig:go.Figure,*,height=400,orient="default",units="",zero=True):
         ticks="",tickfont=dict(color=MUTED,size=11),title_font_size=11)
     fig.update_yaxes(showline=False,showgrid=False,zeroline=False,
         ticks="",tickfont=dict(color=INK,size=11),title_font_size=11)
+    # Mantener números completos con miles por coma y decimales por punto
+    # tanto en ejes como en etiquetas y cuadros emergentes.
+    if orient=="horizontal":
+        fig.update_xaxes(tickformat=",~f",separatethousands=True)
+    elif orient in ("vertical","temporal"):
+        fig.update_yaxes(tickformat=",~f",separatethousands=True)
     if orient=="horizontal":
         fig.update_xaxes(showgrid=True,gridcolor=GRID,gridwidth=1,
             rangemode="tozero" if zero else "normal",title_text=units or None)
