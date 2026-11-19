@@ -254,6 +254,16 @@ def main():
                           outer_radius:getComputedStyle(e).borderTopLeftRadius,
                           wrapper_border:wrap?getComputedStyle(wrap).borderTopWidth:null,
                           table_border:getComputedStyle(t).borderTopWidth,
+                          last_row_border: getComputedStyle(
+                            t.querySelector('tbody tr:last-child td')
+                          ).borderBottomWidth,
+                          header_color: getComputedStyle(
+                            t.querySelector('thead th')
+                          ).backgroundColor,
+                          inner_borders: Array.from(e.querySelectorAll(
+                            '[data-testid="stVerticalBlockBorderWrapper"]'
+                          )).map(w=>getComputedStyle(w).borderTopWidth),
+                          border_color:getComputedStyle(e).borderTopColor,
                           x:a.x,y:a.y,width:a.width,height:a.height,
                           table_height:Math.round(b.height),
                           bottom_space:Math.round(a.bottom-b.bottom)
@@ -266,8 +276,28 @@ def main():
                     raise AssertionError(f"El marco debe ser único y del estilo COE: {style}")
                 if float(style["outer_radius"].replace("px",""))<10:
                     raise AssertionError(f"El borde no coincide con las tarjetas COE: {style}")
+                if style["last_row_border"]!="1px":
+                    raise AssertionError(f"Falta el cierre horizontal de la última fila: {style}")
+                if any(border!="0px" for border in style["inner_borders"]):
+                    raise AssertionError(f"Marcos interiores duplicados: {style}")
                 graph=page.locator('[class*="st-key-coe_chart_"]').first
                 graph_bounds=graph.bounding_box()
+                graph_style=graph.evaluate("""
+                    e=>({border:getComputedStyle(e).borderTopWidth,
+                          radius:getComputedStyle(e).borderTopLeftRadius,
+                          color:getComputedStyle(e).borderTopColor,
+                          inner:Array.from(e.querySelectorAll(
+                            '[data-testid="stVerticalBlockBorderWrapper"]'
+                          )).map(w=>getComputedStyle(w).borderTopWidth)})
+                """)
+                if (graph_style["border"]!=style["outer_border"] or
+                    graph_style["radius"]!=style["outer_radius"] or
+                    graph_style["color"]!=style["border_color"]):
+                    raise AssertionError(
+                        f"El borde de tabla y gráfico no es idéntico: {style} / {graph_style}")
+                if any(border!="0px" for border in graph_style["inner"]):
+                    raise AssertionError(f"Gráfico con segunda línea interna: {graph_style}")
+
                 if graph_bounds and (
                     abs(graph_bounds["height"]-style["height"])>6 or
                     abs(graph_bounds["width"]-style["width"])>6 or
@@ -315,6 +345,24 @@ def main():
         print("CENTRADO_GRAFICOS",chart_positions,flush=True)
         if chart_positions and any(abs(x["arriba"]-x["abajo"])>12 for x in chart_positions):
             raise AssertionError(f"Gráfico descentrado verticalmente: {chart_positions}")
+        # La tabla de fuentes del desplegable usa EXACTAMENTE el mismo
+        # componente que las tablas de la cuadrícula y debe cerrar la última fila.
+        footer=page.get_by_text("Fuentes, alcance y limitaciones de los datos",
+                                exact=True).first
+        footer.click(timeout=25000)
+        footer_table=page.locator('[data-testid="stExpander"] .ops-data-table').first
+        footer_table.wait_for(timeout=25000)
+        footer_style=footer_table.evaluate("""
+            t=>({header:getComputedStyle(t.querySelector('thead th')).backgroundColor,
+                 bottom:getComputedStyle(t.querySelector(
+                   'tbody tr:last-child td')).borderBottomWidth,
+                 rows:t.querySelectorAll('tbody tr').length})
+        """)
+        if footer_style["bottom"]!="1px" or footer_style["rows"]<5:
+            raise AssertionError(f"Pie de fuentes sin fila inferior: {footer_style}")
+        if footer_style["header"]!=style["header_color"]:
+            raise AssertionError(f"Tablas con diferentes colores: {footer_style} vs {style}")
+        print("TABLAS_UNIFICADAS",footer_style,flush=True)
         browser.close()
     (OUTPUT/"resultado.json").write_text(json.dumps(results,indent=2),encoding="utf-8")
     print("OK: todas las parejas de paneles están alineadas en navegador real")
