@@ -72,13 +72,13 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
             shown = "Sin dato comparable"
         elif value == 0:
             color = ZERO
-            shown = "0 " + unit if mode != "severity" else "0 / 10"
+            shown = "0 / 10" if mode in ("severity", "risk") else "0 " + unit
         else:
-            z = (float(value) / 10) if mode == "severity" else (
+            z = (float(value) / 10) if mode in ("severity", "risk") else (
                 math.log1p(max(0, float(value))) / math.log1p(float(maximum)))
             z = min(1, max(0, z))
             color = _gradient(z)
-            shown = (f"{float(value):,.1f} / 10" if mode == "severity"
+            shown = (f"{float(value):,.1f} / 10" if mode in ("severity", "risk")
                      else f"{float(value):,.0f} {unit}")
         x, y = [], []
         for polygon in _parts(item.geometry):
@@ -112,6 +112,7 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
                         font=dict(family=FONT, color=TEXT, size=11), align="left"),
     )
     legend = ("Severidad ACAPS · 0–10" if mode == "severity"
+              else "Riesgo INFORM · 0–10" if mode == "risk"
               else "Magnitud de "+unit+" · escala logarítmica")
     fig.add_annotation(
         x=.018, y=.025, xref="paper", yref="paper",
