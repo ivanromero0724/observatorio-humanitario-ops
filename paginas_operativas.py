@@ -258,7 +258,7 @@ def _acnur_tab(D, selected):
     b.metric("Año seleccionado", str(year))
     _section_note("Son poblaciones registradas en el año, no movimientos ocurridos durante ese año. "
                   "No se suman grupos poblacionales diferentes.")
-    left, right = st.columns([1.05, .95], gap="medium")
+    left, right = st.columns(2, gap="medium")
     with left:
         with card("¿En qué países se encuentran?",
                   "Población por país de acogida y categoría seleccionada.",
