@@ -71,6 +71,24 @@ def main():
     map_code=(ROOT/"mapa_coe.py").read_text(encoding="utf-8")
     assert "_numeric_legend(fig, mode, maximum, legend_title)" in map_code
     assert "Azul claro: menor" not in map_code
+    # Regresión visual/funcional de tablas: sin relleno artificial,
+    # con formato de miles y escapes seguros para contenido externo.
+    from unittest.mock import patch
+    from observatorio_v4 import table
+    import pandas as pd
+    example=pd.DataFrame({
+        "País":["Venezuela","<script>alert(1)</script>"],
+        "Año":[2026,2024],
+        "Personas en necesidad":[7900000,6414193],
+    })
+    with patch("observatorio_v4.st.markdown") as renderer:
+        table(example,height=390)
+        html=renderer.call_args.args[0]
+    assert html.count("<tbody>")==1 and html.count("<tr>")==3
+    assert "7,900,000" in html and "6,414,193" in html
+    assert "2026" in html and "2,026" not in html
+    assert "<script>" not in html and "&lt;script&gt;" in html
+    assert "ops-data-table" in html
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
