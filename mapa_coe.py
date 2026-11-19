@@ -40,6 +40,71 @@ def _parts(geometry):
     return []
 
 
+def _legend_ticks(mode, maximum):
+    """Etiquetas numéricas en la misma escala que los colores reales.
+
+    Para eventos/personas conservamos la transformación logarítmica,
+    pero las etiquetas corresponden a cantidades, no a logaritmos.
+    """
+    if mode in ("severity", "risk"):
+        return [(0.0, "0"), (0.5, "5"), (1.0, "10")]
+    if maximum <= 0:
+        return [(0.0, "0")]
+    positions = (0.0, 1 / 3, 2 / 3, 1.0)
+    ticks = []
+    for z in positions:
+        actual = math.expm1(math.log1p(maximum) * z)
+        if math.isclose(z, 1.0):
+            actual = maximum
+        value = int(round(actual)) if float(maximum).is_integer() else actual
+        label = (f"{value:,.0f}".replace(",", ".") if float(value).is_integer()
+                 else f"{value:,.1f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        if not ticks or label != ticks[-1][1]:
+            ticks.append((z, label))
+    return ticks
+
+
+def _numeric_legend(fig, mode, maximum, legend_title):
+    """Barra continua con valores 0–máximo dentro del mapa, estilo COE."""
+    # Los rectángulos usan coordenadas del papel y nunca dependen del zoom.
+    x0, x1 = .039, .405
+    y0, y1 = .022, .225
+    fig.add_shape(
+        type="rect", xref="paper", yref="paper", x0=.017, x1=.429,
+        y0=y0, y1=y1, fillcolor="rgba(255,255,255,0.96)",
+        line=dict(color=BORDER, width=1), layer="above",
+    )
+    title = (legend_title.split(" · ")[0] if mode not in ("severity", "risk")
+             else "Severidad ACAPS" if mode == "severity" else "Riesgo INFORM")
+    fig.add_annotation(
+        x=x0, y=.194, xref="paper", yref="paper",
+        xanchor="left", yanchor="middle", showarrow=False,
+        text=f"<b>{title}</b>", font=dict(size=10, color=TEXT),
+    )
+    for i in range(48):
+        a, b = i / 48, (i + 1) / 48
+        fig.add_shape(
+            type="rect", xref="paper", yref="paper",
+            x0=x0 + (x1 - x0) * a, x1=x0 + (x1 - x0) * b + 0.0003,
+            y0=.129, y1=.156, fillcolor=_gradient((a + b) / 2),
+            line=dict(width=0), layer="above",
+        )
+    for pos, label in _legend_ticks(mode, maximum):
+        fig.add_annotation(
+            x=x0 + (x1 - x0) * pos, y=.103, xref="paper", yref="paper",
+            text=label, showarrow=False,
+            xanchor="left" if pos == 0 else "right" if pos == 1 else "center",
+            yanchor="middle", font=dict(size=9, color=TEXT),
+        )
+    fig.add_annotation(
+        x=x0, y=.051, xref="paper", yref="paper",
+        xanchor="left", yanchor="middle", showarrow=False,
+        text=("Gris: sin datos · Escala logarítmica"
+              if mode not in ("severity", "risk") else "Gris: sin datos · Escala 0–10"),
+        font=dict(size=9, color=MUTED),
+    )
+
+
 def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
     """Coropleta descriptiva nacional sin zoom/pan y con hover accesible."""
     geo = geography()
@@ -62,7 +127,8 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
 
     maximum = vals["valor"].max()
     if pd.isna(maximum) or maximum <= 0:
-        maximum = 1.0
+        maximum = 0.0
+    color_maximum = max(1.0, float(maximum))
 
     fig = go.Figure()
     for _, item in geo.iterrows():
@@ -71,11 +137,11 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
             color = NODATA
             shown = "Sin dato comparable"
         elif value == 0:
-            color = ZERO
+            color = BLUES[0]
             shown = "0 / 10" if mode in ("severity", "risk") else "0 " + unit
         else:
             z = (float(value) / 10) if mode in ("severity", "risk") else (
-                math.log1p(max(0, float(value))) / math.log1p(float(maximum)))
+                math.log1p(max(0, float(value))) / math.log1p(color_maximum))
             z = min(1, max(0, z))
             color = _gradient(z)
             shown = (f"{float(value):,.1f} / 10" if mode in ("severity", "risk")
@@ -111,16 +177,6 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
         hoverlabel=dict(bgcolor="#FFFFFF", bordercolor=BORDER,
                         font=dict(family=FONT, color=TEXT, size=11), align="left"),
     )
-    legend = ("Severidad ACAPS · 0–10" if mode == "severity"
-              else "Riesgo INFORM · 0–10" if mode == "risk"
-              else "Magnitud de "+unit+" · escala logarítmica")
-    fig.add_annotation(
-        x=.018, y=.025, xref="paper", yref="paper",
-        xanchor="left", yanchor="bottom", showarrow=False,
-        text=f"<b>{legend}</b><br>Azul claro: menor · azul oscuro: mayor<br>"
-             "Gris: sin dato comparable",
-        bgcolor="rgba(255,255,255,0.95)", bordercolor=BORDER, borderwidth=1,
-        borderpad=8, align="left", font=dict(size=10, color=MUTED),
-    )
+    _numeric_legend(fig, mode, maximum, legend_title)
     st.plotly_chart(fig, width="stretch",
         config={"displayModeBar":False,"scrollZoom":False,"responsive":True})
