@@ -327,8 +327,7 @@ def _needs(D,chosen):
                     else:
                         v["personas"]=pd.to_numeric(v["population_in_phase"],errors="coerce")
                         plot(rank_bars(v,label="ipc_phase",value="personas",
-                          limit=5,formats=".0f",units="Personas"),height=292)
-                        st.caption("Corte: "+str(end)[:10]+". No sumar fases agregadas 3+.")
+                          limit=5,formats=".0f",units="Personas"),height=366)
 
 
 def _risk(D,chosen):
@@ -425,8 +424,7 @@ def _response(D,chosen):
                 d=p["fecha_hasta"].max()
                 p=p[p["fecha_hasta"]==d]
                 plot(rank_bars(p,label="sector",value="organizaciones_distintas",
-                     limit=12,formats=".0f",units="Organizaciones"),height=310)
-                st.caption("Corte: "+str(d)[:10])
+                     limit=12,formats=".0f",units="Organizaciones"),height=386)
     with right:
         with card("Financiación de planes humanitarios",
                   "Apelaciones identificadas, no toda la financiación recibida.",
