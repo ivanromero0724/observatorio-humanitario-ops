@@ -11,6 +11,7 @@ on:
       - observatorio_v5.py
       - observatorio_v6.py
       - paginas_laura.py
+      - paginas_operativas.py
       - app.py
       - ui_ops.py
       - graficos.py
