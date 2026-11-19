@@ -124,3 +124,7 @@ En GitHub Actions configura `HDX_APP_IDENTIFIER` como secreto, no dentro del rep
 **Pendiente de validación humana:** aprobación por Laura de definiciones y taxonomía, selección de indicadores operativos, licencias/accesos, territorios adicionales, alojamiento ITS, y reglas de prioridad crítico/alto/elevado/moderado.
 
 La matriz Excel validada y el informe de cierre Word se entregan aparte, listos para revisión técnica.
+
+## Identidad visual
+
+El observatorio usa la identidad del repositorio `COE-regional`: tipografía DM Sans, azul `#005A8B`, cian `#009BDA`, naranja `#F36B32`, fondo `#F7FAFC`, tarjetas blancas con borde `#DFE9F1`. Los mapas del observatorio utilizan una vista fija Plotly, sin zoom ni desplazamiento y con el mismo tratamiento de superficies y bordes del COE (dominio completo de las Américas). No se cambian fuentes ni niveles de seguimiento por motivos visuales. Componentes: `estilo_coe.py`, `mapa_coe.py`, `graficos.py`.
