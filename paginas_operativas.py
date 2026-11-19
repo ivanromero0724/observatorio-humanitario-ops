@@ -73,11 +73,11 @@ def _event_tab(D, selected):
     with controls_right:
         months = st.select_slider(
             "Periodo",
-            options=[1, 6, 12],
+            options=[1, 3, 6, 9, 12],
             value=12,
             format_func=lambda v: f"{v} mes" if v == 1 else f"{v} meses",
             key="op_event_months",
-            help="Desliza el control para comparar el último mes, 6 o 12 meses.",
+            help="Desliza el control para comparar 1, 3, 6, 9 o 12 meses.",
         )
 
     total_by_country, cut = events_by_country(D, selected, kind, months)
