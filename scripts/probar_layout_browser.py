@@ -250,6 +250,8 @@ def main():
                         let a=e.getBoundingClientRect();
                         let b=t.getBoundingClientRect();
                         return {
+                          outer_border:getComputedStyle(e).borderTopWidth,
+                          outer_radius:getComputedStyle(e).borderTopLeftRadius,
                           wrapper_border:wrap?getComputedStyle(wrap).borderTopWidth:null,
                           table_border:getComputedStyle(t).borderTopWidth,
                           x:a.x,y:a.y,width:a.width,height:a.height,
@@ -258,8 +260,12 @@ def main():
                         };
                     }
                 """)
-                if style["wrapper_border"] != "1px" or style["table_border"] != "0px":
+                if (style["outer_border"] != "1px" or
+                    style["wrapper_border"] not in (None,"0px") or
+                    style["table_border"] != "0px"):
                     raise AssertionError(f"El marco debe ser único y del estilo COE: {style}")
+                if float(style["outer_radius"].replace("px",""))<10:
+                    raise AssertionError(f"El borde no coincide con las tarjetas COE: {style}")
                 graph=page.locator('[class*="st-key-coe_chart_"]').first
                 graph_bounds=graph.bounding_box()
                 if graph_bounds and (
