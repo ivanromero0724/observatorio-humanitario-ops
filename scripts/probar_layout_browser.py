@@ -23,19 +23,14 @@ PAGES=[
 ]
 
 def geometries(page):
-    # No depender de data-testid: Streamlit cambia nombres internos.
-    # Localizar el ancestro con borde de cada título de tarjeta.
-    return page.locator(".obs-card-title").evaluate_all("""
+    """Medir el marco único de cada gráfico. Títulos y fuentes quedan fuera."""
+    return page.locator('[class*="st-key-coe_chart_"]').evaluate_all("""
       es => es.map(e => {
-        let p=e.parentElement,found=null;
-        for(let i=0;i<13 && p;i++,p=p.parentElement){
-          const b=p.getBoundingClientRect(), css=getComputedStyle(p);
-          if(parseFloat(css.borderTopWidth)>=0.8 && b.width>=200 && b.height>=270){
-            found={x:b.x,y:b.y,w:b.width,h:b.height,
-               border:css.borderTopWidth};break;
-          }
-        }
-        return found;
+        const b=e.getBoundingClientRect();
+        const c=getComputedStyle(e);
+        if(b.width<200 || b.height<240) return null;
+        return {x:b.x,y:b.y,w:b.width,h:b.height,
+                border:c.borderTopWidth || '1px'};
       }).filter(x=>x!==null)
     """)
 
