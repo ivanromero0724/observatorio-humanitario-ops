@@ -317,63 +317,22 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
 [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
   background:#EAF3F9!important;color:#005A8B!important;
 }
-/* Mostrar la etiqueta de Periodo: los selectores de subtema ya usan
-   label_visibility="collapsed" desde Python y no necesitan ocultación global. */
-/* Periodos como píldoras; solo modifica el control de eventos, sin alterar
-   el menú horizontal de subtemas ni el ancho de su columna. */
-:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
-    [data-testid="stSegmentedControl"].st-key-op_event_months) {
-  background:transparent!important;
-  border:0!important;
-  padding:0!important;
-  margin:0!important;
-  width:fit-content!important;
-  box-shadow:none!important;
+/* Selector deslizante: tres posiciones discretas (1, 6 y 12 meses). */
+.st-key-op_event_months [data-testid="stSlider"] {
+  width:100%!important;
+  max-width:100%!important;
 }
-:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
-    [data-testid="stSegmentedControl"].st-key-op_event_months) button {
-  border:1px solid #D4E1EB!important;
-  border-radius:999px!important;
-  min-height:39px!important;
-  padding:7px 17px!important;
-  margin-right:6px!important;
-  font-size:.82rem!important;
-  font-weight:700!important;
-  background:#FFFFFF!important;
-  color:#36566E!important;
+.st-key-op_event_months [data-testid="stTickBar"] {
+  color:#607B8A!important;
+  font-size:.78rem!important;
 }
-:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
-    [data-testid="stSegmentedControl"].st-key-op_event_months) button[aria-checked="true"],
-:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
-    [data-testid="stSegmentedControl"].st-key-op_event_months) button[aria-pressed="true"] {
+.st-key-op_event_months [data-baseweb="slider"] {
+  margin-top:5px!important;
+  margin-bottom:5px!important;
+}
+.st-key-op_event_months [data-baseweb="slider"] [role="slider"] {
   border-color:#009BDA!important;
-  background:#EAF5FC!important;
-  color:#005A8B!important;
-}
-
-
-/* La clave Streamlit está en el contenedor del elemento; aplicar la
-   forma píldora directamente a sus botones independientemente del
-   nivel interno donde Streamlit monte el radiogroup. */
-[class*="st-key-op_event_months"] button {
-  border-radius:999px!important;
-  border:1px solid #D4E1EB!important;
-  background:#FFFFFF!important;
-  color:#36566E!important;
-  min-height:39px!important;
-  padding:7px 17px!important;
-  margin-right:6px!important;
-  flex:0 0 auto!important;
-}
-[class*="st-key-op_event_months"] [role="radiogroup"] {
-  gap:5px!important;
-}
-[class*="st-key-op_event_months"] button[aria-checked="true"],
-[class*="st-key-op_event_months"] button[aria-pressed="true"] {
-  border-radius:999px!important;
-  border-color:#009BDA!important;
-  background:#EAF5FC!important;
-  color:#005A8B!important;
+  box-shadow:0 1px 5px rgba(0,90,139,.16)!important;
 }
 </style>
 """
