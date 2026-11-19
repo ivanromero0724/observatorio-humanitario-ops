@@ -274,7 +274,7 @@ def _access_visual(D,selected,political=False):
                        "sin evaluación no reciben puntuación cero.")
 
 def amenazas_page(D,selected,names,months):
-    title("02 / AMENAZAS · TAXONOMÍA DE LAURA",
+    title("01 / AMENAZAS · TAXONOMÍA DE LAURA",
           "Amenazas y eventos humanitarios",
           "Primera categoría del análisis: qué ocurrió, dónde, cuándo "
           "y qué evidencia existe sobre su impacto.")
@@ -339,7 +339,7 @@ def _pin_latest(D,selected):
     return n.sort_values("Año").drop_duplicates("iso3",keep="last")
 
 def impacto_page(D,selected,names):
-    title("04 / IMPACTO HUMANITARIO Y EN SALUD",
+    title("03 / IMPACTO HUMANITARIO Y EN SALUD",
           "Personas y servicios potencialmente afectados",
           "Mostrar únicamente daños y necesidades documentados; "
           "mantener visible la información que todavía falta.")
@@ -445,7 +445,7 @@ def _ops_context(D,selected,ind,title_text):
                "Indicador de contexto, no evento actual.")
 
 def vulnerabilidad_page(D,selected,names):
-    title("03 / NIVEL DE VULNERABILIDAD",
+    title("02 / NIVEL DE VULNERABILIDAD",
           "Condiciones que pueden agravar una situación humanitaria",
           "Separar dimensiones económicas, educativas, ambientales, sociales, "
           "capacidad del sistema de salud, morbimortalidad, vacunación y demografía.")
