@@ -60,6 +60,7 @@ URLS={
 }
 SOURCES={
     "risk":"data/observaciones/inform_risk_mid_2026.csv",
+    "inform_hapi":"data/observaciones/hapi_inform_componentes.csv",
     "severity":"data/observaciones/acaps_severity_americas.csv",
     "access":"data/observaciones/acaps_acceso_americas.csv",
     "conflict":"data/observaciones/hapi_conflicto_pais_mes.csv",
@@ -124,6 +125,12 @@ def load_all()->dict:
                 })]
             elif key in ("severity","risk"):
                 df["puntuacion"]=pd.to_numeric(df["puntuacion"],errors="coerce")
+            elif key=="inform_hapi":
+                for col in ("overall_risk","hazard_exposure_risk",
+                            "vulnerability_risk","coping_capacity_risk",
+                            "meta_missing_indicators_pct",
+                            "meta_avg_recentness_years"):
+                    df[col]=pd.to_numeric(df[col],errors="coerce")
             elif key=="access":
                 for col in ("acceso","pilar_1","pilar_2","pilar_3"):
                     df[col]=pd.to_numeric(df[col],errors="coerce")
