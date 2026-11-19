@@ -100,7 +100,7 @@ def risk_page(D, selected):
         {"Componente": label, "Puntuación": record.get(key)}
         for key, label in INFORM_DIMENSIONS.items()
     ]).dropna(subset=["Puntuación"])
-    left, right = st.columns([1.15,.85], gap="medium")
+    left, right = st.columns(2, gap="medium")
     with left:
         with card(f"¿Qué explica el riesgo en {names.get(selected_iso,selected_iso)}?",
                   "Componentes estructurales; no son porcentajes ni son sumables.",
