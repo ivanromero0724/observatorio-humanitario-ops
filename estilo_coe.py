@@ -241,6 +241,15 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
   margin-bottom:auto!important;
 }
 
+/* Ajuste óptico medido en Chromium: el lienzo Plotly queda 11px más
+   cerca del borde superior con la disposición nativa de Streamlit.
+   Desplazar SOLO paneles de gráfico puro (sin filtros, tablas ni métricas)
+   equilibra los márgenes superior e inferior de la tarjeta. */
+[class*="st-key-coe_chart_"]:has([data-testid="stPlotlyChart"]):not(:has([data-testid="stDataFrame"])):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])):not(:has([data-testid="stCaptionContainer"])) [data-testid="stPlotlyChart"] {
+  position:relative!important;
+  top:11px!important;
+}
+
 /* Selector principal de subtema: compacto, horizontal y con identidad COE. */
 [data-testid="stSegmentedControl"] {
   background:#FFFFFF!important;border:1px solid #DFE9F1!important;
