@@ -205,11 +205,11 @@ def _table_display(value, *,numeric=False,decimals=0,year=False):
 
 
 def table(df,*,height=270,columns=None,labels=None,link=None):
-    """Tablas OPS limpias: compactas sin filas vacías y con miles legibles.
+    """Una sola tabla COE para todo el Observatorio, incluidos los desplegables.
 
-    Hasta 12 filas se usa tabla semántica HTML, mejor para lectura que una
-    planilla de celdas. Para catálogos largos se conserva dataframe
-    interactivo con altura ajustada a las filas (scroll si es necesario).
+    Filas compactas, colores y bordes compartidos, números con separadores y
+    encabezado fijo si hay muchos registros. Ninguna tabla incorpora un
+    segundo marco: el contenedor de su panel/expander es el único borde.
     """
     from html import escape
     from urllib.parse import urlparse
@@ -219,70 +219,52 @@ def table(df,*,height=270,columns=None,labels=None,link=None):
         st.caption("Sin registros para esta selección.")
         return
     numeric={
-        col: (pd.api.types.is_numeric_dtype(data[col])
-              and not pd.api.types.is_bool_dtype(data[col]))
+        col:(pd.api.types.is_numeric_dtype(data[col])
+             and not pd.api.types.is_bool_dtype(data[col]))
         for col in data.columns
     }
     decimals={col:_table_decimals(col,data[col]) for col in data.columns if numeric[col]}
     year_cols={col for col in data.columns
                if str(col).strip().casefold() in {"año","anio","year","año de referencia"}}
 
-    if len(data)<=12:
-        head="".join(
-            f'<th scope="col" class="{"ops-numeric" if numeric[col] else ""}">'
-            f'{escape(str(col))}</th>'
-            for col in data.columns
-        )
-        rows=[]
-        for values in data.itertuples(index=False,name=None):
-            cells=[]
-            for col,value in zip(data.columns,values):
-                if col==link and isinstance(value,str) and value.strip():
-                    uri=value.strip()
-                    parsed=urlparse(uri)
-                    if parsed.scheme in ("http","https") and parsed.netloc:
-                        label="Abrir documento"
-                        cell=(f'<a href="{escape(uri,quote=True)}" target="_blank" '
-                              f'rel="noopener noreferrer">{label}</a>')
-                    else:
-                        cell=escape(uri)
+    head="".join(
+        f'<th scope="col" class="{"ops-numeric" if numeric[col] else ""}">'
+        f'{escape(str(col))}</th>'
+        for col in data.columns
+    )
+    rows=[]
+    for values in data.itertuples(index=False,name=None):
+        cells=[]
+        for col,value in zip(data.columns,values):
+            if col==link and isinstance(value,str) and value.strip():
+                uri=value.strip()
+                parsed=urlparse(uri)
+                if parsed.scheme in ("http","https") and parsed.netloc:
+                    cell=(f'<a href="{escape(uri,quote=True)}" target="_blank" '
+                          f'rel="noopener noreferrer">Abrir documento</a>')
                 else:
-                    cell=escape(_table_display(
-                        value,numeric=numeric[col],
-                        decimals=decimals.get(col,0),year=col in year_cols))
-                css_class=' class="ops-numeric"' if numeric[col] else ""
-                cells.append(f"<td{css_class}>{cell}</td>")
-            rows.append("<tr>"+"".join(cells)+"</tr>")
-        st.markdown(
-            f'<div class="ops-table-wrap" role="region" aria-label="Tabla de datos" '
-            f'style="height:{max(150,int(height))}px">'
-            f'<table class="ops-data-table ops-cols-{len(data.columns)}"><thead><tr>'+head+'</tr></thead><tbody>'+
-            "".join(rows)+'</tbody></table></div>',
-            unsafe_allow_html=True,
-        )
-        return
+                    cell=escape(uri)
+            else:
+                cell=escape(_table_display(
+                    value,numeric=numeric[col],
+                    decimals=decimals.get(col,0),year=col in year_cols))
+            css_class=' class="ops-numeric"' if numeric[col] else ""
+            cells.append(f"<td{css_class}>{cell}</td>")
+        rows.append("<tr>"+"".join(cells)+"</tr>")
 
-    cfg={}
-    for col in data.columns:
-        if numeric[col]:
-            precision=decimals[col]
-            fmt_str=f"%,.{precision}f"
-            if col in year_cols:
-                fmt_str="%.0f"
-            cfg[col]=st.column_config.NumberColumn(
-                col,format=fmt_str,alignment="right")
-        elif col==link:
-            cfg[col]=st.column_config.LinkColumn(col,display_text="Abrir documento")
-        else:
-            cfg[col]=st.column_config.TextColumn(
-                col,width="large" if str(col).casefold() in {
-                    "informe","descripción","situación","plan humanitario",
-                    "crisis","contexto evaluado","componente","indicador"
-                } else "medium")
-    # Evitar filas de relleno en conjuntos pequeños, conservar scroll en grandes.
-    h=min(int(height), max(160, 40 + 36*len(data)))
-    st.dataframe(data,width="stretch",hide_index=True,
-                 height=h,row_height=36,column_config=cfg)
+    # Se conserva el alto definido por cada panel para respetar la cuadrícula.
+    # El desplazamiento es interno y la cabecera permanece visible.
+    view_height=max(150,int(height))
+    style=f'height:{view_height}px;'
+    scroll_class=" ops-table-scroll" if len(data)>12 else ""
+    st.markdown(
+        f'<div class="ops-table-wrap{scroll_class}" role="region" '
+        f'aria-label="Tabla de datos" tabindex="0" style="{style}">'
+        f'<table class="ops-data-table ops-cols-{len(data.columns)}">'
+        '<thead><tr>'+head+'</tr></thead><tbody>'+
+        "".join(rows)+'</tbody></table></div>',
+        unsafe_allow_html=True,
+    )
 
 
 def crisis_table(D,chosen):
