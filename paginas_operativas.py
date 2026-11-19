@@ -9,7 +9,8 @@ import pandas as pd
 import streamlit as st
 
 from observatorio_v2 import filtered, latest_ops, valid_needs, OPS_LABELS, HAPI_TYPES
-from observatorio_v4 import card, plot, table, info_missing, crisis_table, reports, fmt
+from observatorio_v4 import plot, table, info_missing, crisis_table, reports, fmt
+from panel_coe import card
 from observatorio_v5 import (
     title, events_by_country, common_last, list_months,
     crisis_core, oim_scope,
@@ -19,7 +20,7 @@ from mapa_coe import pa_map
 
 BLUE = "#009BDA"
 ORANGE = "#F36B32"
-H = 580
+H = 420
 EVENT_TYPES = {
     "political_violence": "Violencia política",
     "civilian_targeting": "Violencia contra civiles",
@@ -48,6 +49,7 @@ def _source(text):
 
 
 def _event_tab(D, selected):
+    """Serie mensual comparable y fallecimientos reportados, sin superponer categorías."""
     e = filtered(D["conflict"], selected)
     if e.empty:
         info_missing("eventos de violencia")
@@ -56,68 +58,118 @@ def _event_tab(D, selected):
     if not available:
         info_missing("categorías de eventos")
         return
-    a, b = st.columns([1.7, 1], gap="medium")
-    with a:
-        kind = st.selectbox(
-            "Categoría de eventos", available, key="op_event_kind",
-            format_func=lambda x: EVENT_TYPES[x],
-        )
-    with b:
+
+    col1, col2 = st.columns([1.2, 1], gap="medium")
+    with col1:
+        kind = st.selectbox("Tipo de evento", available, key="op_event_kind",
+                            format_func=lambda v: EVENT_TYPES[v])
+    with col2:
         months = st.selectbox(
-            "Periodo comparable", [6, 12, 24], index=1,
-            format_func=lambda x: f"Últimos {x} meses",
-            key="op_event_months",
+            "Periodo", [1, 6, 12, 24], index=2, key="op_event_months",
+            format_func=lambda v: ("Último mes disponible" if v == 1
+                                   else f"Últimos {v} meses"),
         )
-    totals, cut = events_by_country(D, selected, kind, months)
-    totals = _scope(D, selected).merge(totals, on="iso3", how="left")
+
+    total_by_country, cut = events_by_country(D, selected, kind, months)
+    totals = _scope(D, selected).merge(total_by_country, on="iso3", how="left")
     eligible = totals.dropna(subset=["eventos"]).copy()
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Países con serie completa", f"{len(eligible)}/{len(selected)}")
-    c2.metric("Eventos reportados", fmt(eligible["eventos"].sum()) if not eligible.empty else "—")
-    c3.metric("Último mes de referencia", cut.strftime("%Y-%m") if cut is not None else "—")
-    _section_note(
-        "Una categoría a la vez: las categorías ACLED se pueden superponer. "
-        "Las cifras son eventos, no personas afectadas; el mismo periodo se exige a todos los países."
-    )
-    left, right = st.columns([1.08, .92], gap="medium")
+
+    # La fuente informa fallecimientos para violencia política y contra civiles.
+    # "demonstration" tiene el campo vacío: nunca imputar muertes=0.
+    deaths = pd.DataFrame(columns=["iso3", "muertes_reportadas"])
+    if cut is not None and not eligible.empty:
+        expected = list_months(cut, months)
+        window = e[(e["tipo_evento"] == kind) &
+                   e["iso3"].isin(eligible["iso3"]) &
+                   e["fecha"].isin(expected)].copy()
+        window["muertes_reportadas"] = pd.to_numeric(
+            window["muertes_reportadas"], errors="coerce")
+        by_month = window.groupby(["iso3", "fecha"], as_index=False).agg(
+            muertes_reportadas=("muertes_reportadas", lambda x: x.sum(min_count=1)),
+        )
+        counts = by_month.groupby("iso3").agg(
+            meses=("fecha", "nunique"),
+            completos=("muertes_reportadas", "count"),
+            muertes_reportadas=("muertes_reportadas", lambda x: x.sum(min_count=1)),
+        )
+        counts.loc[counts["completos"] != months, "muertes_reportadas"] = float("nan")
+        counts.loc[counts["meses"] != months, "muertes_reportadas"] = float("nan")
+        deaths = counts[["muertes_reportadas"]].reset_index()
+    eligible = eligible.merge(deaths, on="iso3", how="left")
+    has_deaths = eligible["muertes_reportadas"].notna().any()
+
+    kpis = st.columns(4 if has_deaths else 3, gap="small")
+    kpis[0].metric("Países con serie completa", f"{len(eligible)}/{len(selected)}")
+    kpis[1].metric("Eventos registrados", fmt(eligible["eventos"].sum())
+                    if not eligible.empty else "—")
+    offset = 2
+    if has_deaths:
+        kpis[2].metric("Muertes reportadas", fmt(eligible["muertes_reportadas"].sum()))
+        offset = 3
+    kpis[offset].metric("Último mes con registros",
+                        cut.strftime("%Y-%m") if cut is not None else "—")
+
+    period_text = ("último mes disponible" if months == 1 else f"últimos {months} meses")
+    st.caption("Comparación por país en el mismo periodo. Las categorías ACLED pueden "
+               "solaparse y no deben sumarse entre sí. "
+               + ("El último mes disponible puede estar incompleto." if months == 1 else ""))
+
+    left, right = st.columns(2, gap="medium")
     with left:
         with card(
-            "¿Dónde se registraron eventos?",
-            f"Cantidad por país · {EVENT_TYPES[kind].lower()} · {months} meses.",
-            "OCHA HAPI / ACLED · agregados país–mes", height=H,
+            "Distribución geográfica de eventos",
+            f"{EVENT_TYPES[kind]} · {period_text}",
+            "OCHA HAPI / ACLED · registros agregados por país y mes", height=H,
         ):
-            geographic = totals[["iso3", "pais", "eventos"]].rename(columns={"eventos": "valor"})
-            pa_map(geographic, "events", "Eventos registrados", height=360)
-            st.caption("Gris: sin una serie completa comparable. El mapa no sitúa incidentes individuales.")
+            geo = totals[["iso3", "pais", "eventos"]].rename(
+                columns={"eventos": "valor"})
+            pa_map(geo, "events", "Eventos registrados", height=366)
     with right:
         with card(
-            "¿Qué países registraron más eventos?",
-            "Ranking de registros en la misma categoría y ventana temporal.",
+            "Países con más eventos",
+            f"Ranking · {EVENT_TYPES[kind].lower()}",
             "OCHA HAPI / ACLED", height=H,
         ):
             if eligible.empty:
                 info_missing("series nacionales completas")
             else:
                 plot(rank_bars(eligible, label="pais", value="eventos",
-                     limit=11, formats=".0f", units="Eventos"), height=360)
-                st.caption(f"Se muestran hasta 11 de los {len(eligible)} países comparables.")
-    with card(
-        "¿Cómo han cambiado los eventos?",
-        "Serie mensual de los países con cobertura completa en la ventana seleccionada.",
-        "OCHA HAPI / ACLED",
-    ):
-        if eligible.empty or cut is None:
-            info_missing("evolución de eventos")
-        else:
-            months_list = list_months(cut, months)
-            period = e[(e["tipo_evento"] == kind) &
-                       (e["iso3"].isin(eligible["iso3"])) &
-                       (e["fecha"].isin(months_list))]
-            series = period.groupby("fecha", as_index=False)["eventos"].sum()
-            plot(trend(series, x="fecha", y="eventos", units="Eventos por mes"), height=320)
-            with st.expander("Ver tabla de países y valores"):
-                table(eligible[["pais", "eventos"]], height=300,
-                      labels={"pais": "País", "eventos": "Eventos"})
+                               limit=11, formats=".0f", units="Eventos"), height=366)
+
+    st.markdown("#### Evolución y consecuencias registradas")
+    left, right = st.columns(2, gap="medium") if has_deaths else (None, None)
+    if has_deaths:
+        with left:
+            with card("Evolución de los eventos",
+                      "Registro mensual de la categoría y países comparables.",
+                      "OCHA HAPI / ACLED", height=H):
+                series = window.groupby("fecha", as_index=False)["eventos"].sum()
+                plot(trend(series, x="fecha", y="eventos",
+                           units="Eventos por mes"), height=366)
+        with right:
+            with card("Muertes reportadas por país",
+                      "Fallecimientos asociados a eventos de la categoría seleccionada.",
+                      "OCHA HAPI / ACLED · estimaciones de fallecimientos", height=H):
+                fatalities = eligible.dropna(subset=["muertes_reportadas"])
+                plot(rank_bars(fatalities, label="pais", value="muertes_reportadas",
+                               limit=11, formats=".0f", color=ORANGE,
+                               units="Muertes reportadas"), height=366)
+        st.caption("Las muertes reportadas por ACLED son estimaciones asociadas a eventos, "
+                   "no equivalen al registro oficial de defunciones ni al total de personas afectadas.")
+    else:
+        with card("Evolución de los eventos",
+                  "Registro mensual para la categoría y los países con serie completa.",
+                  "OCHA HAPI / ACLED", height=H):
+            if eligible.empty or cut is None:
+                info_missing("evolución de eventos")
+            else:
+                months_list = list_months(cut, months)
+                period = e[(e["tipo_evento"] == kind) &
+                           (e["iso3"].isin(eligible["iso3"])) &
+                           (e["fecha"].isin(months_list))]
+                series = period.groupby("fecha", as_index=False)["eventos"].sum()
+                plot(trend(series, x="fecha", y="eventos",
+                           units="Eventos por mes"), height=366)
 
 
 def _crisis_tab(D, selected):
@@ -163,7 +215,7 @@ def _crisis_tab(D, selected):
         with left:
             with card("¿Qué crisis tienen mayores restricciones?",
                       "Puntuación de acceso por crisis según ACAPS.",
-                      "ACAPS Humanitarian Access · escala 0–5", height=490):
+                      "ACAPS Humanitarian Access · escala 0–5", height=420):
                 access["contexto"] = access["pais"] + " · " + access["crisis"].str.slice(0, 38)
                 plot(rank_bars(access, label="contexto", value="acceso",
                                limit=10, units="Restricción / 5",
@@ -171,7 +223,7 @@ def _crisis_tab(D, selected):
         with right:
             with card("Comparación de contextos evaluados",
                       "Severidad y restricción de acceso son dos mediciones distintas.",
-                      "ACAPS Severity + Humanitarian Access", height=490):
+                      "ACAPS Severity + Humanitarian Access", height=420):
                 table(crises, height=350,
                       columns=["pais", "crisis", "puntuacion", "acceso"],
                       labels={"pais": "País", "crisis": "Crisis",
@@ -181,11 +233,11 @@ def _crisis_tab(D, selected):
 def amenazas_page(D, selected, names):
     title("01 / AMENAZAS Y EVENTOS", "Amenazas y eventos humanitarios",
           "Examinar eventos de violencia y crisis evaluadas, con sus periodos y fuentes originales.")
-    events, crises = st.tabs(["Eventos de violencia", "Crisis y acceso humanitario"])
-    with events:
-        _event_tab(D, selected)
-    with crises:
-        _crisis_tab(D, selected)
+    st.markdown("### Eventos de violencia")
+    _event_tab(D, selected)
+    st.divider()
+    st.markdown("### Crisis evaluadas y acceso")
+    _crisis_tab(D, selected)
 
 
 def _acnur_tab(D, selected):
@@ -238,7 +290,7 @@ def _acnur_tab(D, selected):
             else:
                 plot(rank_bars(present, label="pais", value="personas",
                                limit=11, formats=".0f", units="Personas"), height=355)
-    with st.expander("Explorar los países de origen de esta población"):
+    with st.expander("Detalle opcional: países de origen"):
         hosts = sorted(un["asilo_iso3"].dropna().unique(),
                        key=lambda x: _countries(D).get(x, x))
         if hosts:
@@ -338,13 +390,14 @@ def _pin_tab(D, selected):
 def movilidad_page(D, selected, names):
     title("02 / MOVILIDAD Y NECESIDADES", "Población desplazada y necesidades humanitarias",
           "Separar existencias de población, rondas operativas y estimaciones de necesidad.")
-    a, b, c = st.tabs(["Refugio y asilo", "Desplazamiento interno", "Personas en necesidad"])
-    with a:
-        _acnur_tab(D, selected)
-    with b:
-        _dtm_tab(D, selected)
-    with c:
-        _pin_tab(D, selected)
+    st.markdown("### Refugio y asilo")
+    _acnur_tab(D, selected)
+    st.divider()
+    st.markdown("### Desplazamiento interno")
+    _dtm_tab(D, selected)
+    st.divider()
+    st.markdown("### Personas en necesidad humanitaria")
+    _pin_tab(D, selected)
 
 
 def _ops_tab(D, selected):
@@ -463,7 +516,7 @@ def _response_tab(D, selected):
     with left:
         with card("Organizaciones reportadas por sector",
                   "Número de organizaciones distintas dentro de cada sector y periodo.",
-                  "OCHA 3W vía HAPI", height=600):
+                  "OCHA 3W vía HAPI", height=520):
             if p.empty:
                 info_missing("presencia operativa en el ámbito")
             else:
@@ -481,7 +534,7 @@ def _response_tab(D, selected):
     with right:
         with card("Financiación de planes humanitarios",
                   "Requerimientos y fondos reportados para apelaciones identificadas.",
-                  "OCHA FTS vía HAPI · USD", height=600):
+                  "OCHA FTS vía HAPI · USD", height=520):
             if f.empty:
                 info_missing("financiación humanitaria en el ámbito")
             else:
@@ -513,18 +566,17 @@ def _response_tab(D, selected):
 def vulnerabilidad_page(D, selected, names):
     title("03 / VULNERABILIDAD Y RESPUESTA", "Contexto de vulnerabilidad y respuesta",
           "Indicadores sociales y sanitarios, seguridad alimentaria y recursos de respuesta.")
-    a, b, c, d = st.tabs([
-        "Contexto social y sanitario", "Pobreza multidimensional",
-        "Seguridad alimentaria", "Respuesta humanitaria",
-    ])
-    with a:
-        _ops_tab(D, selected)
-    with b:
-        _mpi_tab(D, selected)
-    with c:
-        _ipc_tab(D, selected)
-    with d:
-        _response_tab(D, selected)
+    st.markdown("### Contexto social y sanitario")
+    _ops_tab(D, selected)
+    st.divider()
+    st.markdown("### Pobreza multidimensional")
+    _mpi_tab(D, selected)
+    st.divider()
+    st.markdown("### Seguridad alimentaria")
+    _ipc_tab(D, selected)
+    st.divider()
+    st.markdown("### Respuesta humanitaria")
+    _response_tab(D, selected)
 
 
 def perfil_page(D, selected, names):
@@ -550,7 +602,7 @@ def perfil_page(D, selected, names):
     with left:
         with card("Violencia política reciente",
                   "Serie mensual de eventos reportados para el país.",
-                  "OCHA HAPI / ACLED", height=530):
+                  "OCHA HAPI / ACLED", height=420):
             source = filtered(D["conflict"], chosen)
             if source.empty or last is None:
                 info_missing("eventos en el país")
@@ -565,7 +617,7 @@ def perfil_page(D, selected, names):
     with right:
         with card("Crisis evaluadas y restricciones de acceso",
                   "Puntuaciones por crisis según metodología de ACAPS.",
-                  "ACAPS Severity + Access", height=530):
+                  "ACAPS Severity + Access", height=420):
             if c.empty:
                 info_missing("evaluaciones ACAPS")
             else:
@@ -577,7 +629,7 @@ def perfil_page(D, selected, names):
     with left:
         with card("Personas refugiadas y solicitantes de asilo",
                   "Poblaciones de acogida según ACNUR, por año y grupo.",
-                  "ACNUR vía HAPI", height=500):
+                  "ACNUR vía HAPI", height=410):
             if un.empty:
                 info_missing("registros ACNUR")
             else:
@@ -598,7 +650,7 @@ def perfil_page(D, selected, names):
     with right:
         with card("Capacidad sanitaria de referencia",
                   "Último indicador publicado; no representa recursos disponibles en la crisis.",
-                  "OPS Indicadores Básicos", height=500):
+                  "OPS Indicadores Básicos", height=410):
             data = filtered(D["ops"], chosen)
             rows = []
             for key in ["Médicos", "Enfermería", "Camas hospitalarias", "DTP3", "SRP1"]:
