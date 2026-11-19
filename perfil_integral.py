@@ -13,7 +13,7 @@ from observatorio_v2 import filtered, latest_ops, valid_needs, OPS_LABELS
 from observatorio_v4 import plot, table, info_missing, reports, fmt
 from observatorio_v5 import title, events_by_country, common_last, list_months, crisis_core, oim_scope
 from graficos import rank_bars, trend
-from panel_coe import card
+from panel_coe import card, table_card
 from tarjetas_resumen import metric_strip
 from detalle_riesgo import ACCESS_PILLARS, ACCESS_INDICATORS
 
@@ -166,7 +166,7 @@ def _acaps(D,chosen):
     names=acaps[["crisis_id","crisis","puntuacion","acceso","drivers","corte_api"]].copy()
     left,right=st.columns(2,gap="medium")
     with left:
-        with card("Crisis humanitarias evaluadas",
+        with table_card("Crisis humanitarias evaluadas",
                   "Severidad y acceso se expresan en escalas diferentes.",
                   "ACAPS Severity / Humanitarian Access",height=420):
             table(names,height=354,
@@ -207,7 +207,7 @@ def _acaps(D,chosen):
     v=acaps[acaps["crisis_id"]==cid].iloc[0]
     left,right=st.columns(2,gap="medium")
     with left:
-        with card("Dimensiones de severidad ACAPS",
+        with table_card("Dimensiones de severidad ACAPS",
                   "Puntuaciones de una crisis; no son recuentos de personas.",
                   "ACAPS INFORM Severity · escala 0–10",height=425):
             dim=pd.DataFrame([
@@ -215,7 +215,7 @@ def _acaps(D,chosen):
                 for key,label in severity_dimensions])
             table(dim,height=345)
     with right:
-        with card("Indicadores de acceso humanitario",
+        with table_card("Indicadores de acceso humanitario",
                   "Restricciones para personas, organizaciones y seguridad.",
                   "ACAPS Humanitarian Access",height=425):
             sub=access[access["crisis_id"]==cid]
@@ -244,7 +244,7 @@ def _movement(D,chosen):
     dtm=oim_scope(filtered(D["dtm"],chosen))
     left,right=st.columns(2,gap="medium")
     with left:
-        with card("Refugio y asilo en el país de acogida",
+        with table_card("Refugio y asilo en el país de acogida",
                   "Existencias de población por año, no nuevos desplazamientos.",
                   "ACNUR / OCHA HAPI",height=420):
             data=[]
@@ -259,7 +259,7 @@ def _movement(D,chosen):
             else:
                 info_missing("datos de acogida ACNUR")
     with right:
-        with card("Desplazamiento interno por operación",
+        with table_card("Desplazamiento interno por operación",
                   "Últimas rondas reportadas; no equivalen al stock nacional.",
                   "OIM DTM Baseline",height=420):
             if dtm.empty:
@@ -288,7 +288,7 @@ def _needs(D,chosen):
     ipc=filtered(D["ipc"],chosen)
     left,right=st.columns(2,gap="medium")
     with left:
-        with card("Personas en necesidad humanitaria",
+        with table_card("Personas en necesidad humanitaria",
                   "Total intersectorial publicado, cuando existe una estimación inequívoca.",
                   "OCHA Humanitarian Needs / HAPI",height=420):
             if top is None:
@@ -354,7 +354,7 @@ def _risk(D,chosen):
                 plot(rank_bars(data,label="Componente",value="Valor",limit=3,
                     formats=".1f",max_x=10,units="Puntuación / 10"),height=225)
     with right:
-        with card("Indicadores sociales y sanitarios",
+        with table_card("Indicadores sociales y sanitarios",
                   "Último año publicado de cada indicador; años no necesariamente iguales.",
                   "OPS · Indicadores Básicos",height=420):
             rows=[]
@@ -377,7 +377,7 @@ def _poverty(D,chosen):
     mpi=filtered(D["mpi"],chosen)
     left,right=st.columns(2,gap="medium")
     with left:
-        with card("Pobreza multidimensional",
+        with table_card("Pobreza multidimensional",
                   "Indicadores OPHI: incidencia, intensidad y privación.",
                   "OPHI MPI / OCHA HAPI",height=350):
             recent=_latest_record(mpi,"reference_period_start")
@@ -427,7 +427,7 @@ def _response(D,chosen):
                 plot(rank_bars(p,label="sector",value="organizaciones_distintas",
                      limit=12,formats=".0f",units="Organizaciones"),height=386)
     with right:
-        with card("Financiación de planes humanitarios",
+        with table_card("Financiación de planes humanitarios",
                   "Apelaciones identificadas, no toda la financiación recibida.",
                   "OCHA FTS / HAPI · USD",height=440):
             if funding.empty:
@@ -456,7 +456,7 @@ def _documents(D,chosen):
         return
     data=data.drop_duplicates("reporte_id").copy()
     data["Fecha"]=data["fecha_publicacion_rw"].astype(str).str[:10]
-    with card("Informes humanitarios asociados al país",
+    with table_card("Informes humanitarios asociados al país",
               "Documentos originales, organizaciones y fecha de publicación.",
               "OCHA ReliefWeb · metadatos publicados"):
         table(data,height=490,columns=["Fecha","titulo","fuentes","url"],
