@@ -99,8 +99,9 @@ def main():
                     raise AssertionError(f"{label}: panel sin borde")
             if mismatch:
                 raise AssertionError(f"{label}: paneles desalineados {mismatch[:3]}")
-            if not pairs:
-                raise AssertionError(f"{label}: no se detectaron parejas de paneles para verificar")
+            if not geom:
+                raise AssertionError(f"{label}: no se detectaron paneles visibles")
+            # Algunas páginas muestran un único gráfico ancho; en ellas no hay parejas.
             results[name]={"paneles_visibles":len(geom),"parejas_alineadas":len(pairs),
                 "captura":str(image)}
             print(label,results[name],flush=True)
