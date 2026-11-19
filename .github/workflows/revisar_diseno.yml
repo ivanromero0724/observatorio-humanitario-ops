@@ -14,6 +14,7 @@ on:
       - paginas_operativas.py
       - estilo_coe.py
       - mapa_coe.py
+      - panel_coe.py
       - .streamlit/config.toml
       - app.py
       - ui_ops.py
