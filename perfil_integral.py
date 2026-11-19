@@ -15,6 +15,7 @@ from observatorio_v5 import title, events_by_country, common_last, list_months, 
 from graficos import rank_bars, trend
 from panel_coe import card
 from tarjetas_resumen import metric_strip
+from detalle_riesgo import ACCESS_PILLARS, ACCESS_INDICATORS
 
 PAHO_BLUE="#009BDA"
 ORANGE="#F36B32"
@@ -215,7 +216,7 @@ def _acaps(D,chosen):
             table(dim,height=345)
     with right:
         with card("Indicadores de acceso humanitario",
-                  "Pilares P1–P3 e indicadores I1–I9 de la crisis elegida.",
+                  "Restricciones para personas, organizaciones y seguridad.",
                   "ACAPS Humanitarian Access",height=425):
             sub=access[access["crisis_id"]==cid]
             if sub.empty:
@@ -223,19 +224,19 @@ def _acaps(D,chosen):
             else:
                 z=sub.iloc[0]
                 measures=[
-                    {"Componente":f"P{n} · Pilar","Valor":z.get(f"pilar_{n}")}
-                    for n in range(1,4)
+                    {"Componente":label,"Puntuación":z.get(key),"Escala":"0–5"}
+                    for key,label in ACCESS_PILLARS.items()
                 ]+[
-                    {"Componente":f"I{n} · Indicador","Valor":z.get(f"indicador_{n}")}
-                    for n in range(1,10)
+                    {"Componente":label,"Puntuación":z.get(key),"Escala":"0–3"}
+                    for key,label in ACCESS_INDICATORS.items()
                 ]
                 table(pd.DataFrame(measures),height=323)
                 gap=z.get("brecha_info")
                 if pd.notna(gap):
                     st.caption("Brecha de información: "+_number(float(gap)*100,1)+" %.")
-    st.caption("Los valores de severidad, acceso, pilares e indicadores usan escalas "
-               "distintas y no deben sumarse. P1–P3 e I1–I9 se interpretan "
-               "conforme al código de ACAPS.")
+    st.caption("Las puntuaciones de severidad, acceso general, dimensiones e "
+               "indicadores específicos utilizan escalas distintas y no deben sumarse. "
+               "Nombres conforme a la metodología de acceso humanitario de ACAPS.")
 
 
 def _movement(D,chosen):
