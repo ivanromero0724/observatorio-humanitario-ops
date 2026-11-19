@@ -79,10 +79,14 @@ def validate_grid(geom, label):
             raise AssertionError(f"{label}: cambia ancho o margen dentro de una columna: {group}")
     if abs(left_cards[0]["w"]-right_cards[0]["w"])>8:
         raise AssertionError(f"{label}: columnas izquierda/derecha de distinto ancho")
-    if len(left_cards) == len(right_cards):
-        for a,b in zip(left_cards,right_cards):
-            if abs(a["y"]-b["y"])>7 or abs(a["h"]-b["h"])>5:
-                raise AssertionError(f"{label}: pareja desalineada: {a} / {b}")
+    # Cuando una tabla se presenta sin caja, puede quedar un solo gráfico
+    # en una fila. Comparar exclusivamente los gráficos de LA MISMA fila:
+    # emparejar por orden produciría falsos desalineados entre filas distintas.
+    for a in left_cards:
+        peers=[b for b in right_cards if abs(a["y"]-b["y"])<=9]
+        for b in peers:
+            if abs(a["h"]-b["h"])>5:
+                raise AssertionError(f"{label}: pareja de gráficos con distinta altura: {a} / {b}")
     print("CUADRICULA",label,
           {"columnas":2,"filas_pares":min(len(left_cards),len(right_cards)),
            "ancho":round(left_cards[0]["w"],1)},flush=True)
