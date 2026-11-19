@@ -191,24 +191,51 @@ def _acaps(D,chosen):
             plot(rank_bars(components,label="Dimensión",value="Puntuación",
                            limit=4,formats=".1f",units="Puntuación / 10",
                            max_x=10),height=250)
-    if access.empty:
-        return
-    sub=access[access["crisis_id"].isin(acaps["crisis_id"])].copy()
-    if sub.empty:
-        return
-    st.caption("Acceso humanitario: un índice por crisis, tres pilares y nueve indicadores. "
-               "El identificador ACAPS vincula las mediciones de severidad y acceso.")
-    measures=[]
-    for _,r in sub.iterrows():
-        item={"Crisis":r["crisis"],"Acceso / 5":r.get("acceso"),
-              "Brecha de información (%)":round(r["brecha_info"]*100,1)
-              if pd.notna(r.get("brecha_info")) else None,
-              "P1":r.get("pilar_1"),"P2":r.get("pilar_2"),"P3":r.get("pilar_3")}
-        measures.append(item)
-    with card("Desglose de acceso por crisis",
-              "Tres pilares y brecha de información; los indicadores I1–I9 se consultan en Amenazas.",
-              "ACAPS Humanitarian Access"):
-        table(pd.DataFrame(measures),height=210)
+    # Dimensiones completas de Severidad para la crisis elegida.
+    severity_dimensions=[
+        ("impacto_crisis","Impacto de la crisis"),
+        ("impacto_geografico","Impacto geográfico"),
+        ("impacto_humano","Impacto humano"),
+        ("condiciones_afectados","Condiciones de afectados"),
+        ("personas_necesidad","Personas en necesidad · componente"),
+        ("concentracion_condiciones","Concentración de condiciones"),
+        ("complejidad","Complejidad"),
+        ("sociedad_seguridad","Sociedad y seguridad"),
+        ("entorno_operativo","Entorno operativo"),
+    ]
+    v=acaps[acaps["crisis_id"]==cid].iloc[0]
+    left,right=st.columns(2,gap="medium")
+    with left:
+        with card("Dimensiones de severidad ACAPS",
+                  "Puntuaciones de una crisis; no son recuentos de personas.",
+                  "ACAPS INFORM Severity · escala 0–10",height=425):
+            dim=pd.DataFrame([
+                {"Dimensión":label,"Puntuación":v.get(key)}
+                for key,label in severity_dimensions])
+            table(dim,height=345)
+    with right:
+        with card("Indicadores de acceso humanitario",
+                  "Pilares P1–P3 e indicadores I1–I9 de la crisis elegida.",
+                  "ACAPS Humanitarian Access",height=425):
+            sub=access[access["crisis_id"]==cid]
+            if sub.empty:
+                info_missing("desglose de acceso de la crisis")
+            else:
+                z=sub.iloc[0]
+                measures=[
+                    {"Componente":f"P{n} · Pilar","Valor":z.get(f"pilar_{n}")}
+                    for n in range(1,4)
+                ]+[
+                    {"Componente":f"I{n} · Indicador","Valor":z.get(f"indicador_{n}")}
+                    for n in range(1,10)
+                ]
+                table(pd.DataFrame(measures),height=323)
+                gap=z.get("brecha_info")
+                if pd.notna(gap):
+                    st.caption("Brecha de información: "+_number(float(gap)*100,1)+" %.")
+    st.caption("Los valores de severidad, acceso, pilares e indicadores usan escalas "
+               "distintas y no deben sumarse. P1–P3 e I1–I9 se interpretan "
+               "conforme al código de ACAPS.")
 
 
 def _movement(D,chosen):
@@ -237,14 +264,21 @@ def _movement(D,chosen):
             if dtm.empty:
                 info_missing("operaciones de conflicto/inseguridad DTM")
             else:
-                dtm=dtm.sort_values("fecha_reporte")
-                # Misma operación y ronda puede incluir diversas áreas geográficas.
-                latest=dtm.groupby("operacion",as_index=False).tail(1)[
-                    ["operacion","fecha_reporte","ronda","causa_desplazamiento"]]
-                table(latest,height=284,columns=list(latest.columns),
-                    labels={"operacion":"Operación","fecha_reporte":"Corte",
-                            "ronda":"Ronda","causa_desplazamiento":"Causa"})
-                st.caption("Las áreas y operaciones no se suman entre sí.")
+                operations=sorted(dtm["operacion"].dropna().unique())
+                operation=st.selectbox("Operación DTM",operations,
+                                       key="op_profile_dtm_operation")
+                detail=dtm[dtm["operacion"]==operation].copy()
+                latest=detail["fecha_reporte"].max()
+                detail=detail[detail["fecha_reporte"]==latest]
+                rounds=pd.to_numeric(detail["ronda"],errors="coerce")
+                if rounds.notna().any():
+                    detail=detail[rounds==rounds.max()]
+                table(detail,height=246,
+                    columns=["origen_admin1","personas_idp_reportadas","hombres","mujeres"],
+                    labels={"origen_admin1":"Área","personas_idp_reportadas":"Personas",
+                            "hombres":"Hombres","mujeres":"Mujeres"})
+                st.caption("Corte: "+str(latest)[:10]+
+                           ". No sumar diferentes rondas u operaciones.")
 
 
 def _needs(D,chosen):
