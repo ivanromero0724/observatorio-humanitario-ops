@@ -254,7 +254,8 @@ def table(df,*,height=270,columns=None,labels=None,link=None):
                 cells.append(f"<td{css_class}>{cell}</td>")
             rows.append("<tr>"+"".join(cells)+"</tr>")
         st.markdown(
-            '<div class="ops-table-wrap" role="region" aria-label="Tabla de datos">'
+            f'<div class="ops-table-wrap" role="region" aria-label="Tabla de datos" '
+            f'style="height:{max(150,int(height))}px">'
             f'<table class="ops-data-table ops-cols-{len(data.columns)}"><thead><tr>'+head+'</tr></thead><tbody>'+
             "".join(rows)+'</tbody></table></div>',
             unsafe_allow_html=True,
