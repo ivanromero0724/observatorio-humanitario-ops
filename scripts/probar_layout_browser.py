@@ -136,21 +136,21 @@ def main():
         # Fondo blanco uniforme desde el borde hasta el interior del gráfico.
         page.locator('[data-testid="stSidebar"]').get_by_text(
             "Amenazas y eventos", exact=True).click(timeout=25000)
-        frame=page.locator('[class*="st-key-coe_chart_"]').first
-        frame.wait_for(timeout=30000)
-        backgrounds=frame.evaluate("""
+        plot=page.locator('[data-testid="stPlotlyChart"]').first
+        plot.wait_for(timeout=30000)
+        backgrounds=plot.evaluate("""
           e => {
             const get = el => el ? getComputedStyle(el).backgroundColor : null;
-            return {
-              contenedor:get(e),
-              area:get(e.querySelector('[data-testid="stVerticalBlockBorderWrapper"]')),
-              grafico:get(e.querySelector('[data-testid="stPlotlyChart"]'))
-            };
+            let parent=e;
+            while(parent && !String(parent.className).includes('st-key-coe_chart_')){
+              parent=parent.parentElement;
+            }
+            return {contenedor:get(parent), grafico:get(e)};
           }
         """)
         print("FONDOS_PANEL", backgrounds, flush=True)
         white="rgb(255, 255, 255)"
-        if any(c != white for c in backgrounds.values()):
+        if backgrounds["grafico"] != white or backgrounds["contenedor"] != white:
             raise AssertionError(f"Hay fondos distintos al blanco: {backgrounds}")
         browser.close()
     (OUTPUT/"resultado.json").write_text(json.dumps(results,indent=2),encoding="utf-8")
