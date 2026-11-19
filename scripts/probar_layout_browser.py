@@ -129,12 +129,13 @@ def main():
                         return {x:r.x,width:r.width,y:r.y,height:r.height};
                       };
                       const root = document.querySelector('.st-key-op_event_months');
-                      const buttons = root ? Array.from(root.querySelectorAll('button')).map(
-                        b => ({text:b.innerText.trim(),
-                               radius:getComputedStyle(b).borderTopLeftRadius})
-                      ) : [];
+                      const slider = root ? root.querySelector('[role="slider"]') : null;
                       return {event:bounds('op_event_kind'),
-                              period:bounds('op_event_months'),buttons};
+                              period:bounds('op_event_months'),
+                              slider: slider ? {
+                                value: slider.getAttribute('aria-valuenow'),
+                                label: slider.getAttribute('aria-valuetext')
+                              } : null};
                     }
                 """)
                 print("FILTROS_AMENAZAS",controls,flush=True)
@@ -146,13 +147,8 @@ def main():
                     raise AssertionError("Periodo no inicia en la columna del ranking")
                 if abs(controls["event"]["width"] - geom[0]["w"]) > 10:
                     raise AssertionError("Tipo de evento no ocupa el ancho del mapa")
-                if len(controls["buttons"]) != 3:
-                    raise AssertionError("Se esperaban 1, 6 y 12 meses en botones")
-                if {b["text"] for b in controls["buttons"]} != {"1 mes", "6 meses", "12 meses"}:
-                    raise AssertionError("Las opciones de periodo no son las solicitadas")
-                if any(float(b["radius"].replace("px", "")) < 30
-                       for b in controls["buttons"]):
-                    raise AssertionError("Los botones del periodo deben ser píldoras redondeadas")
+                if not controls["slider"]:
+                    raise AssertionError("Periodo debe ser un control deslizante horizontal")
             print("GEOMETRIA",name,geom[:12],flush=True)
             if not geom:
                 chains=page.locator(".obs-card-title").evaluate_all("""
