@@ -7,7 +7,8 @@ from __future__ import annotations
 import streamlit as st
 
 from observatorio_v2 import load_all
-from observatorio_v5 import STYLES, UX_CSS, header, quality_footer
+from observatorio_v5 import quality_footer
+from estilo_coe import STYLE, header
 from paginas_operativas import amenazas_page, movilidad_page, vulnerabilidad_page, perfil_page
 
 PAGES=[
@@ -17,25 +18,11 @@ PAGES=[
     "Perfiles por país",
 ]
 
-LAURA_CSS="""
-<style>
-/* Identidad visual común: azul PAHO, naranja, fondo muy claro, bordes.
-   Usar paneles de altura idéntica en columnas emparejadas. */
-.obs-hero{margin-bottom:15px!important}
-.obs-page{font-weight:770!important}
-[data-testid="stMetricValue"]{color:#004B87!important}
-[data-testid="stVerticalBlockBorderWrapper"]{
- border:1px solid #D7E2EA!important;border-radius:12px!important;
- background:#FFFFFF!important;
-}
-[data-testid="stSidebar"]{background:#F8FBFD!important}
-</style>
-"""
 
 def main():
     st.set_page_config(page_title="Observatorio Humanitario · OPS/OMS",
        page_icon="🌎",layout="wide",initial_sidebar_state="expanded")
-    st.markdown(STYLES+UX_CSS+LAURA_CSS,unsafe_allow_html=True)
+    st.markdown(STYLE,unsafe_allow_html=True)
     D=load_all()
     countries=D["countries"]
     if countries.empty:
