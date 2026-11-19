@@ -219,6 +219,28 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
 [class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"]{
   box-shadow:none!important;
 }
+/* Centrar VERTICALMENTE gráficos dentro de las tarjetas con altura fija.
+   No aplicar a tarjetas con tablas, métricas ni filtros: allí se prioriza
+   lectura natural y controles accesibles. */
+[class*="st-key-coe_chart_"]:has([data-testid="stPlotlyChart"]):not(:has([data-testid="stDataFrame"])):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])) [data-testid="stVerticalBlockBorderWrapper"] {
+  display:flex!important;
+  flex-direction:column!important;
+}
+[class*="st-key-coe_chart_"]:has([data-testid="stPlotlyChart"]):not(:has([data-testid="stDataFrame"])):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])) [data-testid="stVerticalBlockBorderWrapper"] > div {
+  flex:1 1 auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+[class*="st-key-coe_chart_"]:has([data-testid="stPlotlyChart"]):not(:has([data-testid="stDataFrame"])):not(:has([data-testid="stMetric"])):not(:has([data-testid="stSelectbox"])) [data-testid="stVerticalBlock"] {
+  flex:1 1 auto!important;
+  justify-content:center!important;
+}
+/* Evitar desplazamientos del Plotly respecto al centro del área disponible. */
+[class*="st-key-coe_chart_"] [data-testid="stPlotlyChart"] {
+  margin-top:auto!important;
+  margin-bottom:auto!important;
+}
+
 /* Selector principal de subtema: compacto, horizontal y con identidad COE. */
 [data-testid="stSegmentedControl"] {
   background:#FFFFFF!important;border:1px solid #DFE9F1!important;
