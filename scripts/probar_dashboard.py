@@ -57,6 +57,18 @@ def main():
     assert "def crisis_core(" in code
     assert "desplazamiento forzado" in code.lower()
     assert "no constituyen" in code or "no constituye" in code.lower()
+    # La escala numérica del mapa debe representar valores reales, no
+    # solo tonalidades descriptivas. ACAPS/INFORM mantienen rango 0–10.
+    from mapa_coe import _legend_ticks
+    ticks = _legend_ticks("events", 10000)
+    assert ticks[0] == (0.0, "0")
+    assert ticks[-1] == (1.0, "10.000")
+    assert len(ticks) >= 4
+    assert _legend_ticks("severity", 10) == [(0.0,"0"),(0.5,"5"),(1.0,"10")]
+    assert _legend_ticks("risk", 10)[-1][1] == "10"
+    map_code=(ROOT/"mapa_coe.py").read_text(encoding="utf-8")
+    assert "_numeric_legend(fig, mode, maximum, legend_title)" in map_code
+    assert "Azul claro: menor" not in map_code
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
