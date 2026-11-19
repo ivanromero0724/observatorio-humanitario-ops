@@ -170,7 +170,10 @@ def main():
         ]:
             page.locator('[data-testid="stSidebar"]').get_by_text(
                 page_label, exact=True).click(timeout=25000)
-            page.get_by_text(topic, exact=True).last.click(timeout=25000)
+            # Evitar confundir el botón del subtema con la sección homónima
+            # de la barra lateral (p. ej. "Movilidad y necesidades").
+            page.locator('[data-testid="stSegmentedControl"]').get_by_text(
+                topic, exact=True).click(timeout=25000)
             page.get_by_text(expected, exact=True).first.wait_for(timeout=50000)
             page.wait_for_timeout(900)
             if page.locator('[data-testid="stException"]').count():
