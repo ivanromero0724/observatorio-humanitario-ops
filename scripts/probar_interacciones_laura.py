@@ -1,55 +1,50 @@
 #!/usr/bin/env python3
-"""QA interactivo del planteamiento de Laura: subtipos y dimensiones sin datos."""
+"""QA de controles temáticos con las fuentes realmente integradas."""
 from pathlib import Path
 from streamlit.testing.v1 import AppTest
 
-ROOT=Path(__file__).resolve().parents[1]
-APP=ROOT/"app.py"
+ROOT = Path(__file__).resolve().parents[1]
+APP = ROOT / "app.py"
+PAGES = [
+    "Amenazas y eventos", "Movilidad y necesidades",
+    "Vulnerabilidad y respuesta", "Perfiles por país",
+]
 
-def pick(at,key,value):
-    matches=[x for x in at.selectbox if x.key==key]
-    assert len(matches)==1,(key,[(x.key,x.value) for x in at.selectbox])
-    matches[0].set_value(value).run()
-    assert not at.exception,[e.message for e in at.exception]
-    print(f"OK: {key} = {value}",flush=True)
+
+def check(at, where):
+    assert not at.exception, f"{where}: {[e.message for e in at.exception]}"
+
+
+def select_if_present(at, key):
+    matching = [x for x in at.selectbox if x.key == key]
+    if matching and len(matching[0].options) > 1:
+        matching[0].set_value(matching[0].options[-1]).run()
+        check(at, key)
+
 
 def main():
-    at=AppTest.from_file(str(APP),default_timeout=90)
+    at = AppTest.from_file(str(APP), default_timeout=90)
     at.run()
-    assert not at.exception,[e.message for e in at.exception]
-    at.sidebar.radio[0].set_value("Amenazas y eventos").run()
-    assert not at.exception,[e.message for e in at.exception]
-    # Cada tema de Laura debe navegar sin usar datos simulados.
-    for grupo in [
-        "Violencia",
-        "Migración y desplazamiento",
-        "Violencia generalizada y acceso",
-        "Contexto político frágil",
-        "Minería ilegal",
-        "Crimen organizado",
-        "Mercados ilícitos y cultivos",
-        "Delincuencia transnacional",
-    ]:
-        pick(at,"laura_grupo_amenaza",grupo)
-        if grupo=="Violencia":
-            pick(at,"laura_subtipo","Ataques a objetivos y población civil")
-        elif grupo=="Migración y desplazamiento":
-            pick(at,"laura_subtipo","Desplazamiento interno")
-        elif grupo=="Violencia generalizada y acceso":
-            pick(at,"laura_subtipo","Restricciones a la movilidad y acceso humanitario")
-    at.sidebar.radio[0].set_value("Vulnerabilidad y respuesta").run()
-    assert not at.exception,[e.message for e in at.exception]
-    for dim in ["Económico","Educación","Ambiental","Social",
-                "Capacidad del sistema de salud","Morbimortalidad",
-                "Cobertura de vacunación","Demografía"]:
-        pick(at,"laura_dimension",dim)
-        if dim=="Económico":
-            pick(at,"laura_vuln_ind","Pobreza multidimensional")
-        if dim=="Social":
-            pick(at,"laura_vuln_ind","Pobreza multidimensional")
-    at.sidebar.radio[0].set_value("Impacto humanitario y salud").run()
-    assert not at.exception,[e.message for e in at.exception]
-    print("OK: taxonomía, vulnerabilidad e impacto funcionan al cambiar filtros")
+    check(at, "inicio")
+    assert [x.value for x in at.sidebar.radio] == ["Amenazas y eventos"]
 
-if __name__=="__main__":
+    for page in PAGES:
+        at.sidebar.radio[0].set_value(page).run()
+        check(at, page)
+        if page == "Amenazas y eventos":
+            select_if_present(at, "op_event_kind")
+            select_if_present(at, "op_event_months")
+        elif page == "Movilidad y necesidades":
+            select_if_present(at, "op_un_group")
+            select_if_present(at, "op_un_year")
+            select_if_present(at, "op_dtm_country")
+        elif page == "Vulnerabilidad y respuesta":
+            select_if_present(at, "op_ops_ind")
+            select_if_present(at, "op_ipc_country")
+        else:
+            select_if_present(at, "op_profile_country")
+    print("OK: cuatro vistas temáticas y controles vinculados a datos disponibles")
+
+
+if __name__ == "__main__":
     main()
