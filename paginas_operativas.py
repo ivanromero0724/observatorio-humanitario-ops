@@ -11,10 +11,11 @@ import streamlit as st
 from observatorio_v2 import filtered, latest_ops, valid_needs, OPS_LABELS, HAPI_TYPES
 from observatorio_v4 import card, plot, table, info_missing, crisis_table, reports, fmt
 from observatorio_v5 import (
-    title, pa_map, events_by_country, common_last, list_months,
+    title, events_by_country, common_last, list_months,
     crisis_core, oim_scope,
 )
-from graficos import rank_bars, trend, strip_countries, severity_matrix
+from graficos import rank_bars, trend, strip_countries
+from mapa_coe import pa_map
 
 BLUE = "#0072CE"
 ORANGE = "#F39200"
