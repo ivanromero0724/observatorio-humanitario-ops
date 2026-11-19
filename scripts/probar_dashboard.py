@@ -60,11 +60,14 @@ def main():
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
-    for label in ("Eventos de violencia", "Crisis y acceso humanitario",
+    for label in ("Eventos de violencia", "Crisis evaluadas y acceso",
                   "Refugio y asilo", "Desplazamiento interno",
                   "Personas en necesidad", "Respuesta humanitaria"):
         assert label in operational
     assert "Minería ilegal" not in operational
+    assert "muertes_reportadas" in operational
+    assert "Último mes disponible" in operational
+    assert "st.tabs(" not in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
     assert all(page in nav for page in PAGES)
     at=AppTest.from_file(str(APP),default_timeout=90)
