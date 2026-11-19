@@ -319,7 +319,7 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
 [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
   background:#EAF3F9!important;color:#005A8B!important;
 }
-/* Selector deslizante: tres posiciones discretas (1, 6 y 12 meses). */
+/* Selector deslizante: cinco posiciones discretas (1, 3, 6, 9 y 12 meses). */
 .st-key-op_event_months [data-testid="stSlider"] {
   width:100%!important;
   max-width:100%!important;
