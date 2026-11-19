@@ -17,9 +17,15 @@ def check(at, where):
 
 def select_if_present(at, key):
     matching = [x for x in at.selectbox if x.key == key]
-    if matching and len(matching[0].options) > 1:
-        matching[0].set_value(matching[0].options[-1]).run()
-        check(at, key)
+    if matching:
+        assert len(matching[0].options) >= 1, f"{key}: sin opciones"
+        # Probar solo valores originales; las etiquetas format_func son texto visible.
+        values = {"op_event_kind": "civilian_targeting",
+                  "op_event_months": 24, "op_un_group": "ASY",
+                  "op_ops_ind": "Médicos"}
+        if key in values:
+            matching[0].set_value(values[key]).run()
+            check(at, key)
 
 
 def main():
