@@ -10,23 +10,14 @@ contextualizar su vulnerabilidad e identificar consecuencias documentadas sobre
 personas y servicios. **No es un monitor de brotes ni de El Niño.**
 
 **Interfaz activa:** [`app.py`](app.py) → [`observatorio_v6.py`](observatorio_v6.py).
-Las cuatro páginas corresponden a las dimensiones principales de la propuesta técnica del 5 de noviembre (sin página general repetida):
+Las cuatro páginas visibles utilizan solo indicadores con información integrada:
 
-1. **Amenazas y eventos:** nueva [taxonomía de Laura](paginas_laura.py):
-   acciones armadas (indicador parcial ACLED), ataques a civiles, migración,
-   desplazamiento, acceso, fragilidad política, minería ilegal, crimen organizado,
-   cultivos/mercados ilícitos y delincuencia transnacional. Cada subtipo declara
-   fuente disponible, precisión y limitaciones.
-2. **Vulnerabilidad y respuesta:** contexto económico, educación, calidad de aire,
-   contexto social, capacidad sanitaria, morbimortalidad, vacunación y
-   demografía. Los indicadores no conectados figuran como **pendientes**,
-   no como valores inventados.
-3. **Impacto humanitario y salud:** personas en necesidad (PiN), refugiados,
-   establecimientos/personal de salud afectados y servicios esenciales:
-   agua, electricidad, gas y telecomunicaciones. Las últimas variables
-   requieren fuentes oficiales validadas para mostrar números.
-4. **Perfiles por país:** ficha integradora de evidencia disponible,
-   tendencias y reportes originales.
+1. **Amenazas y eventos:** eventos de violencia agregados (HAPI/ACLED) y crisis/severidad/acceso (ACAPS).
+2. **Movilidad y necesidades:** refugiados y solicitantes de asilo (ACNUR/HAPI), desplazamiento por operación (OIM DTM) y PiN intersectorial (OCHA/HAPI).
+3. **Vulnerabilidad y respuesta:** indicadores sociales y de salud (OPS), pobreza MPI, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
+4. **Perfiles por país:** resumen de eventos, crisis, movilidad, indicadores de capacidad sanitaria y reportes ReliefWeb.
+
+Las categorías aún sin datos integrados (crimen organizado, minería ilegal, ataques a salud y servicios esenciales afectados) no aparecen como filtros ni paneles vacíos; permanecen solo en documentación técnica para futura ampliación.
 
 Los niveles **crítico, alto, elevado y moderado** se muestran como propuesta
 de categorías de trabajo pero **no se asignan a países**, porque Laura y el
@@ -60,7 +51,7 @@ streamlit run app.py
 3. Presionar **Deploy**. No es necesario cargar los secretos HAPI/DTM en Streamlit: la app consume las **tablas derivadas y verificadas** publicadas por GitHub Actions, no consulta directamente las API protegidas.
 4. Revisar la URL asignada y los permisos de visibilidad antes de compartir la aplicación con OPS. El repositorio es público y este despliegue es exploratorio.
 
-El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) prueba las **cuatro páginas**. El job [revisión visual](.github/workflows/revisar_diseno.yml) abre Chromium a 1440 px, comprueba alturas de paneles lado a lado y publica capturas para inspección.
+El job de [CI del dashboard](.github/workflows/dashboard_ci.yml) prueba las **cuatro páginas operativas**. El job [revisión visual](.github/workflows/revisar_diseno.yml) abre Chromium a 1440 px, comprueba alturas de paneles lado a lado y publica capturas para inspección.
 
 ## Piloto ampliado a toda la Región de las Américas — 5 de noviembre de 2026
 
