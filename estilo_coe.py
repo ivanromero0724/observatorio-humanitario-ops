@@ -317,7 +317,40 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
 [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
   background:#EAF3F9!important;color:#005A8B!important;
 }
-[data-testid="stSegmentedControl"] label {display:none!important;}
+/* Mostrar la etiqueta de Periodo: los selectores de subtema ya usan
+   label_visibility="collapsed" desde Python y no necesitan ocultación global. */
+/* Periodos como píldoras; solo modifica el control de eventos, sin alterar
+   el menú horizontal de subtemas ni el ancho de su columna. */
+:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
+    [data-testid="stSegmentedControl"].st-key-op_event_months) {
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  margin:0!important;
+  width:fit-content!important;
+  box-shadow:none!important;
+}
+:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
+    [data-testid="stSegmentedControl"].st-key-op_event_months) button {
+  border:1px solid #D4E1EB!important;
+  border-radius:999px!important;
+  min-height:39px!important;
+  padding:7px 17px!important;
+  margin-right:6px!important;
+  font-size:.82rem!important;
+  font-weight:700!important;
+  background:#FFFFFF!important;
+  color:#36566E!important;
+}
+:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
+    [data-testid="stSegmentedControl"].st-key-op_event_months) button[aria-checked="true"],
+:is(.st-key-op_event_months [data-testid="stSegmentedControl"],
+    [data-testid="stSegmentedControl"].st-key-op_event_months) button[aria-pressed="true"] {
+  border-color:#009BDA!important;
+  background:#EAF5FC!important;
+  color:#005A8B!important;
+}
+
 </style>
 """
 
