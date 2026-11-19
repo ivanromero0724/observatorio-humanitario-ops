@@ -12,6 +12,7 @@ from observatorio_v2 import filtered
 from observatorio_v4 import info_missing, plot, fmt
 from observatorio_v5 import title, crisis_core
 from panel_coe import card
+from tarjetas_resumen import metric_strip
 from mapa_coe import pa_map
 from graficos import rank_bars
 
@@ -61,9 +62,11 @@ def risk_page(D, selected):
                 "meta_missing_indicators_pct", "meta_avg_recentness_years"]:
         risk[col] = pd.to_numeric(risk[col], errors="coerce")
 
-    a, b = st.columns(2)
-    a.metric("Países con perfil INFORM", f"{risk['overall_risk'].notna().sum()}/{len(selected)}")
-    b.metric("Edición del indicador HAPI", "2025")
+    metric_strip([
+        (f"{risk['overall_risk'].notna().sum()}/{len(selected)}",
+         "PAÍSES CON INFORM","Riesgo estructural disponible"),
+        ("2025","EDICIÓN DE LA FUENTE","INFORM vía HAPI"),
+    ])
     st.caption(
         "INFORM integra amenazas de distinto origen (incluidas naturales), "
         "vulnerabilidad y falta de capacidad de afrontamiento. "
@@ -158,16 +161,17 @@ def acaps_detail(D, selected):
         "Identificador de referencia: " + str(record.get("crisis_id", "—")) +
         " · Edición: " + str(record.get("corte_api","—"))
     )
-    x, y, z = st.columns(3)
     severity_score = record.get("puntuacion")
     access_score = record.get("acceso")
     gap = pd.to_numeric(pd.Series([record.get("brecha_info")]), errors="coerce").iloc[0]
-    x.metric("Severidad de la crisis", f"{severity_score:.1f} / 10"
-             if pd.notna(severity_score) else "—")
-    y.metric("Restricción de acceso", f"{access_score:.1f} / 5"
-             if pd.notna(access_score) else "—")
-    z.metric("Brecha de información", f"{gap*100:.1f} %"
-             if pd.notna(gap) else "—")
+    metric_strip([
+        (f"{severity_score:.1f} / 10" if pd.notna(severity_score) else "—",
+         "SEVERIDAD","ACAPS INFORM Severity"),
+        (f"{access_score:.1f} / 5" if pd.notna(access_score) else "—",
+         "RESTRICCIÓN DE ACCESO","ACAPS Humanitarian Access"),
+        (f"{gap*100:.1f} %" if pd.notna(gap) else "—",
+         "BRECHA DE INFORMACIÓN","Calidad de la evidencia"),
+    ])
 
     left, right = st.columns(2, gap="medium")
     pillars = pd.DataFrame([
