@@ -148,6 +148,11 @@ def main():
                     raise AssertionError("Tipo de evento no ocupa el ancho del mapa")
                 if len(controls["buttons"]) != 3:
                     raise AssertionError("Se esperaban 1, 6 y 12 meses en botones")
+                if {b["text"] for b in controls["buttons"]} != {"1 mes", "6 meses", "12 meses"}:
+                    raise AssertionError("Las opciones de periodo no son las solicitadas")
+                if any(float(b["radius"].replace("px", "")) < 30
+                       for b in controls["buttons"]):
+                    raise AssertionError("Los botones del periodo deben ser píldoras redondeadas")
             print("GEOMETRIA",name,geom[:12],flush=True)
             if not geom:
                 chains=page.locator(".obs-card-title").evaluate_all("""
