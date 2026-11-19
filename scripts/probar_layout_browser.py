@@ -45,6 +45,43 @@ def paired_boxes(xs):
                     pairs.append((a,b))
     return pairs
 
+def validate_grid(geom, label):
+    """Verificar anchos y bordes de una cuadrícula real de dos columnas.
+
+    Se excluyen paneles de ancho completo que no deben llenar media columna.
+    No basta con comprobar las parejas: deben conservar la misma división
+    vertical en todas las filas y con los mismos anchos.
+    """
+    if len(geom) < 2:
+        return
+    xs=sorted(geom, key=lambda g:g["x"])
+    left=xs[0]["x"]
+    # Cada pareja tiene columnas izquierda/derecha. Una tarjeta a ancho
+    # completo no genera dos posiciones horizontales y se excluye.
+    right_candidates=sorted(x["x"] for x in geom if x["x"] > left+75)
+    if not right_candidates:
+        return
+    right=right_candidates[0]
+    cols=[x for x in geom if abs(x["x"]-left)<8 or abs(x["x"]-right)<8]
+    displaced=[x for x in geom if x not in cols and x["w"]<max(g["w"] for g in cols)*1.3]
+    if displaced:
+        raise AssertionError(f"{label}: tarjetas desplazadas fuera de la cuadrícula: {displaced}")
+    left_cards=sorted((x for x in cols if abs(x["x"]-left)<8), key=lambda x:x["y"])
+    right_cards=sorted((x for x in cols if abs(x["x"]-right)<8), key=lambda x:x["y"])
+    for group in (left_cards,right_cards):
+        if any(abs(p["x"]-group[0]["x"])>5 or abs(p["w"]-group[0]["w"])>5 for p in group):
+            raise AssertionError(f"{label}: cambia ancho o margen dentro de una columna: {group}")
+    if abs(left_cards[0]["w"]-right_cards[0]["w"])>8:
+        raise AssertionError(f"{label}: columnas izquierda/derecha de distinto ancho")
+    if len(left_cards) == len(right_cards):
+        for a,b in zip(left_cards,right_cards):
+            if abs(a["y"]-b["y"])>7 or abs(a["h"]-b["h"])>5:
+                raise AssertionError(f"{label}: pareja desalineada: {a} / {b}")
+    print("CUADRICULA",label,
+          {"columnas":2,"filas_pares":min(len(left_cards),len(right_cards)),
+           "ancho":round(left_cards[0]["w"],1)},flush=True)
+
+
 def main():
     url=os.getenv("STREAMLIT_URL","http://127.0.0.1:8501")
     results={}
@@ -66,6 +103,7 @@ def main():
             # v4 tiene paneles iguales visibles en cada página; no requiere
             # entrar a pestañas para medirlos.
             geom=geometries(page)
+            validate_grid(geom, label)
             print("GEOMETRIA",name,geom[:12],flush=True)
             if not geom:
                 chains=page.locator(".obs-card-title").evaluate_all("""
@@ -131,6 +169,7 @@ def main():
                         "vulnerabilidad_respuesta_3w"):
                 page.screenshot(path=str(OUTPUT/f"{shot}.png"),
                                 full_page=True, animations="disabled", timeout=60000)
+            validate_grid(geometries(page), f"{page_label} / {topic}")
             print("OK SUBTEMA", page_label, topic, flush=True)
 
         # Fondo blanco uniforme desde el borde hasta el interior del gráfico.
