@@ -226,6 +226,18 @@ def main():
                         "perfil_riesgo", "perfil_informes"):
                 page.screenshot(path=str(OUTPUT/f"{shot}.png"),
                                 full_page=True, animations="disabled", timeout=60000)
+            if shot == "movilidad_pin":
+                # No filas de relleno ni valores pegados como 7900000.
+                compact=page.locator(".ops-data-table").first
+                compact.wait_for(timeout=15000)
+                num_rows=compact.locator("tbody tr").count()
+                numbers=compact.locator("tbody td.ops-numeric").all_text_contents()
+                if not 1 <= num_rows <= 12:
+                    raise AssertionError(f"Tabla PiN no es compacta: {num_rows} filas")
+                if not any("," in v for v in numbers if len(v.strip()) >= 5):
+                    raise AssertionError(f"PiN sin separadores de miles: {numbers}")
+                print("TABLA_PIN_COMPACTA", {"filas":num_rows,
+                      "cifras":numbers[:4]},flush=True)
             validate_grid(geometries(page), f"{page_label} / {topic}")
             print("OK SUBTEMA", page_label, topic, flush=True)
 
