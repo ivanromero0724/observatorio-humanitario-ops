@@ -17,6 +17,7 @@ from observatorio_v5 import (
 )
 from graficos import rank_bars, trend, strip_countries
 from mapa_coe import pa_map
+from detalle_riesgo import risk_page, acaps_detail
 
 BLUE = "#009BDA"
 ORANGE = "#F36B32"
@@ -177,67 +178,52 @@ def _crisis_tab(D, selected):
     if crises.empty:
         info_missing("crisis evaluadas por ACAPS para este ámbito")
         return
-    n = crises["crisis_id"].nunique()
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Contextos de crisis evaluados", n)
-    c2.metric("Países con evaluación", crises["iso3"].nunique())
-    c3.metric("Edición ACAPS", str(crises["corte_api"].dropna().iloc[0])
-              if "corte_api" in crises and crises["corte_api"].notna().any() else "—")
-    _section_note(
-        "ACAPS califica crisis específicas, no países ni niveles oficiales OPS. "
-        "Una crisis puede afectar a varios países; no sumar puntuaciones."
-    )
-    st.markdown("#### Severidad de las crisis")
-    left, right = st.columns([1.08, .92], gap="medium")
+    a, b = st.columns(2)
+    a.metric("Contextos evaluados", crises["crisis_id"].nunique())
+    b.metric("Países con evaluación", crises["iso3"].nunique())
+    st.caption("ACAPS evalúa crisis concretas. Su severidad y su acceso no equivalen al "
+               "riesgo estructural INFORM ni a una prioridad institucional OPS.")
+    left, right = st.columns(2, gap="medium")
     with left:
-        with card("¿Dónde se evalúan las crisis?",
-                  "Se representa la mayor puntuación entre crisis evaluadas de un país, no su riesgo total.",
-                  "ACAPS INFORM Severity · escala 0–10", height=H):
+        with card("Severidad de crisis en las Américas",
+                  "Mayor puntuación entre las crisis evaluadas de cada país.",
+                  "ACAPS INFORM Severity · escala 0–10", height=420):
             m = crises.sort_values("puntuacion").drop_duplicates("iso3", keep="last")
-            m = m[["iso3", "pais", "puntuacion"]].rename(columns={"puntuacion": "valor"})
-            pa_map(m, "severity", "Severidad ACAPS", height=360)
-            st.caption("Países sin evaluación aparecen en gris, no como severidad cero.")
+            m = m[["iso3", "pais", "puntuacion"]].rename(
+                columns={"puntuacion": "valor"})
+            pa_map(m, "severity", "Severidad ACAPS", height=366)
     with right:
-        with card("Crisis de mayor severidad",
-                  "Cada barra es una evaluación de crisis, no un ranking de prioridad de países.",
-                  "ACAPS INFORM Severity · 0–10", height=H):
+        with card("Contextos de mayor severidad",
+                  "Una barra representa una crisis, no la prioridad de un país.",
+                  "ACAPS INFORM Severity", height=420):
             c = crises.dropna(subset=["puntuacion"]).copy()
-            c["contexto"] = c["pais"] + " · " + c["crisis"].str.slice(0, 37)
+            c["contexto"] = c["pais"] + " · " + c["crisis"].str.slice(0, 36)
             plot(rank_bars(c, label="contexto", value="puntuacion",
                            limit=10, units="Severidad / 10",
-                           formats=".1f", max_x=10), height=360)
-    st.markdown("#### Restricciones de acceso humanitario")
-    access = crises.dropna(subset=["acceso"]).copy()
-    if access.empty:
-        info_missing("evaluaciones de acceso")
-    else:
-        left, right = st.columns([1, 1], gap="medium")
-        with left:
-            with card("¿Qué crisis tienen mayores restricciones?",
-                      "Puntuación de acceso por crisis según ACAPS.",
-                      "ACAPS Humanitarian Access · escala 0–5", height=420):
-                access["contexto"] = access["pais"] + " · " + access["crisis"].str.slice(0, 38)
-                plot(rank_bars(access, label="contexto", value="acceso",
-                               limit=10, units="Restricción / 5",
-                               max_x=5, formats=".1f", color=ORANGE), height=340)
-        with right:
-            with card("Comparación de contextos evaluados",
-                      "Severidad y restricción de acceso son dos mediciones distintas.",
-                      "ACAPS Severity + Humanitarian Access", height=420):
-                table(crises, height=350,
-                      columns=["pais", "crisis", "puntuacion", "acceso"],
-                      labels={"pais": "País", "crisis": "Crisis",
-                              "puntuacion": "Severidad / 10", "acceso": "Acceso / 5"})
+                           formats=".1f", max_x=10), height=366)
+    st.markdown("#### Detalle de acceso por crisis")
+    acaps_detail(D, selected)
+
+
+def _subgroup(label, values, key):
+    """Única navegación secundaria por página: breve, horizontal y persistente."""
+    selected = st.segmented_control(
+        label, values, default=values[0],
+        selection_mode="single", key=key, width="stretch",
+        label_visibility="collapsed",
+    )
+    return selected or values[0]
 
 
 def amenazas_page(D, selected, names):
     title("01 / AMENAZAS Y EVENTOS", "Amenazas y eventos humanitarios",
-          "Examinar eventos de violencia y crisis evaluadas, con sus periodos y fuentes originales.")
-    st.markdown("### Eventos de violencia")
-    _event_tab(D, selected)
-    st.divider()
-    st.markdown("### Crisis evaluadas y acceso")
-    _crisis_tab(D, selected)
+          "Eventos de violencia y contexto de crisis: información verificable por país.")
+    topic = _subgroup("Subtema", ["Eventos de violencia", "Crisis evaluadas y acceso"],
+                      "op_amenazas_grupo")
+    if topic == "Eventos de violencia":
+        _event_tab(D, selected)
+    else:
+        _crisis_tab(D, selected)
 
 
 def _acnur_tab(D, selected):
@@ -377,16 +363,17 @@ def _pin_tab(D, selected):
 
 
 def movilidad_page(D, selected, names):
-    title("02 / MOVILIDAD Y NECESIDADES", "Población desplazada y necesidades humanitarias",
-          "Separar existencias de población, rondas operativas y estimaciones de necesidad.")
-    st.markdown("### Refugio y asilo")
-    _acnur_tab(D, selected)
-    st.divider()
-    st.markdown("### Desplazamiento interno")
-    _dtm_tab(D, selected)
-    st.divider()
-    st.markdown("### Personas en necesidad humanitaria")
-    _pin_tab(D, selected)
+    title("02 / MOVILIDAD Y NECESIDADES", "Movilidad y necesidades humanitarias",
+          "Refugio y asilo, desplazamiento por operación y estimaciones de necesidades.")
+    topic = _subgroup("Subtema",
+                      ["Refugio y asilo", "Desplazamiento interno", "Personas en necesidad"],
+                      "op_movilidad_grupo")
+    if topic == "Refugio y asilo":
+        _acnur_tab(D, selected)
+    elif topic == "Desplazamiento interno":
+        _dtm_tab(D, selected)
+    else:
+        _pin_tab(D, selected)
 
 
 def _ops_tab(D, selected):
@@ -540,19 +527,22 @@ def _response_tab(D, selected):
 
 
 def vulnerabilidad_page(D, selected, names):
-    title("03 / VULNERABILIDAD Y RESPUESTA", "Contexto de vulnerabilidad y respuesta",
-          "Indicadores sociales y sanitarios, seguridad alimentaria y recursos de respuesta.")
-    st.markdown("### Contexto social y sanitario")
-    _ops_tab(D, selected)
-    st.divider()
-    st.markdown("### Pobreza multidimensional")
-    _mpi_tab(D, selected)
-    st.divider()
-    st.markdown("### Seguridad alimentaria")
-    _ipc_tab(D, selected)
-    st.divider()
-    st.markdown("### Respuesta humanitaria")
-    _response_tab(D, selected)
+    title("03 / VULNERABILIDAD Y RESPUESTA", "Vulnerabilidad y respuesta",
+          "Riesgo estructural, condiciones sociales y sanitarias, seguridad alimentaria y respuesta.")
+    topic = _subgroup("Subtema",
+                      ["Riesgo INFORM", "Salud y sociedad", "Pobreza",
+                       "Seguridad alimentaria", "Respuesta"],
+                      "op_vulnerabilidad_grupo")
+    if topic == "Riesgo INFORM":
+        risk_page(D, selected)
+    elif topic == "Salud y sociedad":
+        _ops_tab(D, selected)
+    elif topic == "Pobreza":
+        _mpi_tab(D, selected)
+    elif topic == "Seguridad alimentaria":
+        _ipc_tab(D, selected)
+    else:
+        _response_tab(D, selected)
 
 
 def perfil_page(D, selected, names):
@@ -574,87 +564,94 @@ def perfil_page(D, selected, names):
     m3.metric("ACNUR · datos de acogida", "Disponible" if not un.empty else "Sin registros")
     _section_note("Los indicadores no describen la misma unidad ni año; no deben sumarse. "
                   f"Corte de eventos: {last.strftime('%Y-%m') if last is not None else 'no disponible'}.")
-    left, right = st.columns(2, gap="medium")
-    with left:
-        with card("Violencia política reciente",
-                  "Serie mensual de eventos reportados para el país.",
-                  "OCHA HAPI / ACLED", height=420):
-            source = filtered(D["conflict"], chosen)
-            if source.empty or last is None:
-                info_missing("eventos en el país")
-            else:
-                source = source[(source["tipo_evento"] == "political_violence") &
-                                source["fecha"].isin(list_months(last, 12))]
-                if source.empty:
-                    info_missing("eventos mensuales")
+    view = _subgroup("Detalle de la ficha",
+                     ["Indicadores", "Informes recientes"],
+                     "op_perfil_grupo")
+    if view == "Indicadores":
+        left, right = st.columns(2, gap="medium")
+        with left:
+            with card("Violencia política reciente",
+                      "Serie mensual de eventos reportados para el país.",
+                      "OCHA HAPI / ACLED", height=420):
+                source = filtered(D["conflict"], chosen)
+                if source.empty or last is None:
+                    info_missing("eventos en el país")
                 else:
-                    plot(trend(source.groupby("fecha", as_index=False)["eventos"].sum(),
-                               x="fecha", y="eventos", units="Eventos por mes"), height=345)
-    with right:
-        with card("Crisis evaluadas y restricciones de acceso",
-                  "Puntuaciones por crisis según metodología de ACAPS.",
-                  "ACAPS Severity + Access", height=420):
-            if c.empty:
-                info_missing("evaluaciones ACAPS")
-            else:
-                table(c, height=350, columns=["crisis", "puntuacion", "acceso", "corte_api"],
-                      labels={"crisis": "Contexto evaluado",
-                              "puntuacion": "Severidad / 10",
-                              "acceso": "Acceso / 5", "corte_api": "Corte"})
-    left, right = st.columns(2, gap="medium")
-    with left:
-        with card("Personas refugiadas y solicitantes de asilo",
-                  "Poblaciones de acogida según ACNUR, por año y grupo.",
-                  "ACNUR vía HAPI", height=410):
-            if un.empty:
-                info_missing("registros ACNUR")
-            else:
-                un = un.copy()
-                un["anio_num"] = pd.to_numeric(un["anio"], errors="coerce")
-                year = un["anio_num"].max()
-                un = un[un["anio_num"] == year]
-                g = un[un["grupo_poblacion"].isin(["REF", "ASY"])].copy()
-                if g.empty:
-                    info_missing("refugiados y solicitantes de asilo")
+                    source = source[(source["tipo_evento"] == "political_violence") &
+                                    source["fecha"].isin(list_months(last, 12))]
+                    if source.empty:
+                        info_missing("eventos mensuales")
+                    else:
+                        plot(trend(source.groupby("fecha", as_index=False)["eventos"].sum(),
+                                   x="fecha", y="eventos", units="Eventos por mes"), height=345)
+        with right:
+            with card("Crisis evaluadas y restricciones de acceso",
+                      "Puntuaciones por crisis según metodología de ACAPS.",
+                      "ACAPS Severity + Access", height=420):
+                if c.empty:
+                    info_missing("evaluaciones ACAPS")
                 else:
-                    g = g.groupby("grupo_poblacion", as_index=False)["personas"].sum(min_count=1)
-                    g["grupo_poblacion"] = g["grupo_poblacion"].map({
-                        "REF": "Personas refugiadas", "ASY": "Solicitantes de asilo"})
-                    table(g, height=260, columns=["grupo_poblacion", "personas"],
-                          labels={"grupo_poblacion": "Población", "personas": "Personas"})
-                    st.caption(f"Año {int(year)}. Categorías diferenciadas; no se suman.")
-    with right:
-        with card("Capacidad sanitaria de referencia",
-                  "Último indicador publicado; no representa recursos disponibles en la crisis.",
-                  "OPS Indicadores Básicos", height=410):
-            data = filtered(D["ops"], chosen)
-            rows = []
-            for key in ["Médicos", "Enfermería", "Camas hospitalarias", "DTP3", "SRP1"]:
-                latest = latest_ops(data, key)
-                if not latest.empty:
-                    r = latest.iloc[0]
-                    rows.append({"Indicador": OPS_LABELS.get(key, key),
-                                 "Valor": fmt(r["valor"], 1), "Año": int(r["periodo"])})
-            if rows:
-                table(pd.DataFrame(rows), height=320)
-            else:
-                info_missing("capacidad sanitaria")
-    if not n.empty:
-        n = n.copy()
-        n["anio"] = n["reference_period_start"].astype(str).str[:4]
-        n = n[~n.duplicated(["iso3", "anio"], keep=False)]
+                    table(c, height=350, columns=["crisis", "puntuacion", "acceso", "corte_api"],
+                          labels={"crisis": "Contexto evaluado",
+                                  "puntuacion": "Severidad / 10",
+                                  "acceso": "Acceso / 5", "corte_api": "Corte"})
+        left, right = st.columns(2, gap="medium")
+        with left:
+            with card("Personas refugiadas y solicitantes de asilo",
+                      "Poblaciones de acogida según ACNUR, por año y grupo.",
+                      "ACNUR vía HAPI", height=410):
+                if un.empty:
+                    info_missing("registros ACNUR")
+                else:
+                    un = un.copy()
+                    un["anio_num"] = pd.to_numeric(un["anio"], errors="coerce")
+                    year = un["anio_num"].max()
+                    un = un[un["anio_num"] == year]
+                    g = un[un["grupo_poblacion"].isin(["REF", "ASY"])].copy()
+                    if g.empty:
+                        info_missing("refugiados y solicitantes de asilo")
+                    else:
+                        g = g.groupby("grupo_poblacion", as_index=False)["personas"].sum(min_count=1)
+                        g["grupo_poblacion"] = g["grupo_poblacion"].map({
+                            "REF": "Personas refugiadas", "ASY": "Solicitantes de asilo"})
+                        table(g, height=260, columns=["grupo_poblacion", "personas"],
+                              labels={"grupo_poblacion": "Población", "personas": "Personas"})
+                        st.caption(f"Año {int(year)}. Categorías diferenciadas; no se suman.")
+        with right:
+            with card("Capacidad sanitaria de referencia",
+                      "Último indicador publicado; no representa recursos disponibles en la crisis.",
+                      "OPS Indicadores Básicos", height=410):
+                data = filtered(D["ops"], chosen)
+                rows = []
+                for key in ["Médicos", "Enfermería", "Camas hospitalarias", "DTP3", "SRP1"]:
+                    latest = latest_ops(data, key)
+                    if not latest.empty:
+                        r = latest.iloc[0]
+                        rows.append({"Indicador": OPS_LABELS.get(key, key),
+                                     "Valor": fmt(r["valor"], 1), "Año": int(r["periodo"])})
+                if rows:
+                    table(pd.DataFrame(rows), height=320)
+                else:
+                    info_missing("capacidad sanitaria")
         if not n.empty:
-            n = n.sort_values("anio").tail(1)
-            with st.container():
-                st.metric(f"Total intersectorial documentado · {n['anio'].iloc[0]}",
-                          fmt(n["population"].iloc[0]))
-                st.caption("PiN no es un conteo de víctimas de hechos violentos.")
-    with st.expander("Informes recientes y fuentes originales"):
+            n = n.copy()
+            n["anio"] = n["reference_period_start"].astype(str).str[:4]
+            n = n[~n.duplicated(["iso3", "anio"], keep=False)]
+            if not n.empty:
+                n = n.sort_values("anio").tail(1)
+                with st.container():
+                    st.metric(f"Total intersectorial documentado · {n['anio'].iloc[0]}",
+                              fmt(n["population"].iloc[0]))
+                    st.caption("PiN no es un conteo de víctimas de hechos violentos.")
+    else:
         d = reports(D, chosen, limit=12)
         if d.empty:
             info_missing("informes")
         else:
             d["Fecha"] = d["fecha_publicacion_rw"].astype(str).str[:10]
-            table(d, height=380, columns=["Fecha", "titulo", "fuentes", "url"],
-                  labels={"titulo": "Informe", "fuentes": "Organización",
-                          "url": "Documento"}, link="Documento")
+            with card("Informes humanitarios recientes",
+                      "Documentos y metadatos disponibles para el país seleccionado.",
+                      "OCHA ReliefWeb"):
+                table(d, height=450, columns=["Fecha", "titulo", "fuentes", "url"],
+                      labels={"titulo": "Informe", "fuentes": "Organización",
+                              "url": "Documento"}, link="Documento")
