@@ -62,12 +62,17 @@ def main():
         assert f"def {name}(" in operational
     for label in ("Eventos de violencia", "Crisis evaluadas y acceso",
                   "Refugio y asilo", "Desplazamiento interno",
-                  "Personas en necesidad", "Respuesta humanitaria"):
+                  "Personas en necesidad", "Riesgo INFORM",
+                  "Salud y sociedad", "Seguridad alimentaria", "Respuesta"):
         assert label in operational
+    risk=(ROOT/"detalle_riesgo.py").read_text(encoding="utf-8")
+    assert "def risk_page(" in risk and "def acaps_detail(" in risk
+    assert "brecha_info" in risk and "indicador_9" in risk
     assert "Minería ilegal" not in operational
     assert "muertes_reportadas" in operational
     assert "Último mes disponible" in operational
     assert "st.tabs(" not in operational
+    assert "st.segmented_control(" in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
     assert all(page in nav for page in PAGES)
     at=AppTest.from_file(str(APP),default_timeout=90)
