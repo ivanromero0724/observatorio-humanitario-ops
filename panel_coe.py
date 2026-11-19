@@ -29,11 +29,11 @@ def card(title: str, subtitle: str = "", source: str = "", height=None):
 
 @contextmanager
 def table_card(title: str, subtitle: str = "", source: str = "", height=None):
-    """Presentar tablas como superficies propias, no dentro de otra caja.
+    """Panel COE para tablas: marco y altura iguales a tarjetas de gráficos.
 
-    Se conserva la posición de títulos y fuentes respecto a los gráficos.
-    El parámetro height es compatible con las llamadas antiguas, pero no
-    fuerza una altura artificial ni deja grandes áreas vacías.
+    El único borde pertenece al panel exterior y la tabla se integra en su
+    interior. Las tablas emparejadas comparten altura con el gráfico vecino;
+    una tabla independiente conserva altura natural si no se solicita.
     """
     stamp = sha1((title + "\\0" + subtitle + "\\0" + source).encode("utf-8")).hexdigest()[:12]
     st.markdown(
@@ -41,9 +41,13 @@ def table_card(title: str, subtitle: str = "", source: str = "", height=None):
         + (f'<div class="obs-card-sub">{esc(subtitle)}</div>' if subtitle else ""),
         unsafe_allow_html=True,
     )
-    # Contenedor estructural sin borde ni altura fija: la tabla es la única
-    # superficie visual. Los controles y notas se quedan junto a sus datos.
-    with st.container(border=False, key=f"coe_table_{stamp}"):
+    # El COE usa el mismo marco #DFE9F1 de los gráficos, con contenido
+    # separado por un margen interior. El contenedor controla la altura.
+    with st.container(
+        border=True,
+        height=height if height is not None else "content",
+        key=f"coe_table_{stamp}",
+    ):
         yield
     if source:
         st.markdown(
