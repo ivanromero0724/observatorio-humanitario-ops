@@ -73,6 +73,16 @@ def main():
     assert "Último mes disponible" in operational
     assert "st.tabs(" not in operational
     assert "st.segmented_control(" in operational
+    profile=(ROOT/"perfil_integral.py").read_text(encoding="utf-8")
+    for label in ("Amenazas y crisis","Movilidad y necesidades",
+                  "Riesgo y vulnerabilidad","Respuesta e informes",
+                  "Crises evaluadas" if False else "Crisis humanitarias evaluadas"):
+        assert label in profile
+    for key in ('"inform_hapi"','"mpi"','"ipc"','"presence"',
+                '"funding"','"reports"','"acnur"','"dtm"','"needs"'):
+        assert key in profile, f"Falta fuente {key} en perfil integral"
+    assert "metric_strip(" in operational and "metric_strip(" in profile
+    assert "def perfil_page(" in operational and "profile_page(D, selected, names)" in operational
     nav=(ROOT/"observatorio_v6.py").read_text(encoding="utf-8")
     assert all(page in nav for page in PAGES)
     at=AppTest.from_file(str(APP),default_timeout=90)
