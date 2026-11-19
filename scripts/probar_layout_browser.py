@@ -119,6 +119,35 @@ def main():
             # entrar a pestañas para medirlos.
             geom=geometries(page)
             validate_grid(geom, label)
+            if label == "Amenazas y eventos":
+                controls = page.evaluate("""
+                    () => {
+                      const bounds = key => {
+                        const el = document.querySelector('.st-key-' + key);
+                        if (!el) return null;
+                        const r = el.getBoundingClientRect();
+                        return {x:r.x,width:r.width,y:r.y,height:r.height};
+                      };
+                      const root = document.querySelector('.st-key-op_event_months');
+                      const buttons = root ? Array.from(root.querySelectorAll('button')).map(
+                        b => ({text:b.innerText.trim(),
+                               radius:getComputedStyle(b).borderTopLeftRadius})
+                      ) : [];
+                      return {event:bounds('op_event_kind'),
+                              period:bounds('op_event_months'),buttons};
+                    }
+                """)
+                print("FILTROS_AMENAZAS",controls,flush=True)
+                if not controls["event"] or not controls["period"] or len(geom)<2:
+                    raise AssertionError("Faltan filtros de amenazas o tarjetas comparables")
+                if abs(controls["event"]["x"] - geom[0]["x"]) > 8:
+                    raise AssertionError("Tipo de evento no inicia en la columna del mapa")
+                if abs(controls["period"]["x"] - geom[1]["x"]) > 8:
+                    raise AssertionError("Periodo no inicia en la columna del ranking")
+                if abs(controls["event"]["width"] - geom[0]["w"]) > 10:
+                    raise AssertionError("Tipo de evento no ocupa el ancho del mapa")
+                if len(controls["buttons"]) != 3:
+                    raise AssertionError("Se esperaban 1, 6 y 12 meses en botones")
             print("GEOMETRIA",name,geom[:12],flush=True)
             if not geom:
                 chains=page.locator(".obs-card-title").evaluate_all("""
