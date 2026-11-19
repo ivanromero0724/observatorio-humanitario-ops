@@ -129,13 +129,17 @@ def main():
                         return {x:r.x,width:r.width,y:r.y,height:r.height};
                       };
                       const root = document.querySelector('.st-key-op_event_months');
-                      const slider = root ? root.querySelector('[role="slider"]') : null;
+                      const slider = root ? root.querySelector(
+                        '[role="slider"], [data-baseweb="slider"], [data-testid="stSlider"], input[type="range"]'
+                      ) : null;
                       return {event:bounds('op_event_kind'),
                               period:bounds('op_event_months'),
                               slider: slider ? {
-                                value: slider.getAttribute('aria-valuenow'),
-                                label: slider.getAttribute('aria-valuetext')
-                              } : null};
+                                tag:slider.tagName,
+                                type:slider.getAttribute('data-testid'),
+                                value: slider.getAttribute('aria-valuenow')
+                              } : null,
+                              html_sample:root ? root.innerHTML.slice(0, 1800) : ''};
                     }
                 """)
                 print("FILTROS_AMENAZAS",controls,flush=True)
