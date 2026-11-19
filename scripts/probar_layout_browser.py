@@ -203,7 +203,7 @@ def main():
           }).filter(Boolean)
         """)
         print("CENTRADO_GRAFICOS",chart_positions,flush=True)
-        if chart_positions and any(abs(x["arriba"]-x["abajo"])>28 for x in chart_positions):
+        if chart_positions and any(abs(x["arriba"]-x["abajo"])>12 for x in chart_positions):
             raise AssertionError(f"Gráfico descentrado verticalmente: {chart_positions}")
         browser.close()
     (OUTPUT/"resultado.json").write_text(json.dumps(results,indent=2),encoding="utf-8")
