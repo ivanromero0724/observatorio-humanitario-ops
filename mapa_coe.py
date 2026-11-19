@@ -57,8 +57,7 @@ def _legend_ticks(mode, maximum):
         if math.isclose(z, 1.0):
             actual = maximum
         value = int(round(actual)) if float(maximum).is_integer() else actual
-        label = (f"{value:,.0f}".replace(",", ".") if float(value).is_integer()
-                 else f"{value:,.1f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        label = f"{value:,.0f}" if float(value).is_integer() else f"{value:,.1f}"
         if not ticks or label != ticks[-1][1]:
             ticks.append((z, label))
     return ticks
