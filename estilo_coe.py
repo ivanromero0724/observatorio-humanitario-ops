@@ -222,12 +222,15 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
 /* Selector principal de subtema: compacto, horizontal y con identidad COE. */
 [data-testid="stSegmentedControl"] {
   background:#FFFFFF!important;border:1px solid #DFE9F1!important;
-  padding:8px 10px!important;border-radius:12px!important;
+  padding:3px 4px!important;border-radius:10px!important;
   margin:3px 0 14px!important;
+  display:inline-flex!important;width:fit-content!important;
+  max-width:100%!important;justify-content:flex-start!important;
 }
 [data-testid="stSegmentedControl"] button {
   font-size:.83rem!important;font-weight:700!important;
-  border-radius:8px!important;
+  border-radius:7px!important;
+  flex:0 0 auto!important;
 }
 [data-testid="stSegmentedControl"] button[aria-checked="true"],
 [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
