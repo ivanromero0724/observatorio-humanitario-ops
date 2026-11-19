@@ -116,7 +116,7 @@ div[data-testid="stMetricLabel"]{color:#607588!important;font-size:.79rem!import
 def fmt(n,decimals=0):
     try:
         if pd.isna(n):return "—"
-        return f"{float(n):,.{decimals}f}".replace(",","·").replace(".",",").replace("·",".")
+        return f"{float(n):,.{decimals}f}"
     except (ValueError,TypeError):return "—"
 
 def esc(s):return html.escape(str(s),quote=True)
@@ -167,19 +167,27 @@ def info_missing(what):
             "a ausencia de la situación.")
 
 def table(df,*,height=270,columns=None,labels=None,link=None):
+    """Tabla numérica: coma para miles y punto para decimales, sin alterar datos."""
     data=df[columns].rename(columns=labels or {}) if columns else df
     cfg={}
     for col in data.columns:
         if col in {"Contexto evaluado","Informe","Descripción",
-                   "Situación","Plan humanitario","Descriptores"}:
+                   "Situación","Plan humanitario","Descriptores","Dimensión",
+                   "Componente","Indicador","Crisis"}:
             cfg[col]=st.column_config.TextColumn(col,width="large")
-        if col in {"Severidad / 10","Acceso / 5",
-                   "Severidad ACAPS / 10"}:
-            cfg[col]=st.column_config.NumberColumn(col,format="%.1f")
+        if pd.api.types.is_numeric_dtype(data[col]) and not pd.api.types.is_bool_dtype(data[col]):
+            values=pd.to_numeric(data[col],errors="coerce").dropna()
+            is_integer=values.empty or ((values-values.round()).abs()<1e-9).all()
+            lower=str(col).lower()
+            decimals=(3 if lower in {"mpi","índice mpi"} else
+                      0 if is_integer else 1 if (values.abs()>=1).all() else 2)
+            cfg[col]=st.column_config.NumberColumn(
+                col,format=f"%,.{decimals}f")
     if link in data.columns:
         cfg[link]=st.column_config.LinkColumn(link,display_text="Abrir ↗")
     st.dataframe(data,use_container_width=True,hide_index=True,
                  height=height,column_config=cfg)
+
 
 def crisis_table(D,chosen):
     df=filtered(D["severity"],chosen)
