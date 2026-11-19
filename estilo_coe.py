@@ -351,6 +351,30 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
   color:#005A8B!important;
 }
 
+
+/* La clave Streamlit está en el contenedor del elemento; aplicar la
+   forma píldora directamente a sus botones independientemente del
+   nivel interno donde Streamlit monte el radiogroup. */
+[class*="st-key-op_event_months"] button {
+  border-radius:999px!important;
+  border:1px solid #D4E1EB!important;
+  background:#FFFFFF!important;
+  color:#36566E!important;
+  min-height:39px!important;
+  padding:7px 17px!important;
+  margin-right:6px!important;
+  flex:0 0 auto!important;
+}
+[class*="st-key-op_event_months"] [role="radiogroup"] {
+  gap:5px!important;
+}
+[class*="st-key-op_event_months"] button[aria-checked="true"],
+[class*="st-key-op_event_months"] button[aria-pressed="true"] {
+  border-radius:999px!important;
+  border-color:#009BDA!important;
+  background:#EAF5FC!important;
+  color:#005A8B!important;
+}
 </style>
 """
 
