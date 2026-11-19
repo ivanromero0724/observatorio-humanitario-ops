@@ -99,7 +99,25 @@ def main():
 
     assert "metric_strip(" in operational and "metric_strip(" in profile
     assert "OCHA ReliefWeb" in profile and "OIM DTM" in profile
-    assert 'f"indicador_{n}"' in profile, "Falta desglose I1-I9 de ACAPS"
+    assert "ACCESS_PILLARS.items()" in profile
+    assert "ACCESS_INDICATORS.items()" in profile
+    assert 'f"P{n} · Pilar"' not in profile
+    assert 'f"I{n} · Indicador"' not in profile
+    from detalle_riesgo import ACCESS_PILLARS, ACCESS_INDICATORS
+    assert len(ACCESS_PILLARS)==3 and len(ACCESS_INDICATORS)==9
+    assert all(not name.startswith(("P1", "P2", "P3", "I1", "I2", "I3"))
+               for name in [*ACCESS_PILLARS.values(), *ACCESS_INDICATORS.values()])
+    # Se deben conservar separadores coma (miles) y punto (decimales).
+    from observatorio_v4 import fmt
+    assert fmt(12500) == "12,500" and fmt(12500.75,2) == "12,500.75"
+    assert fmt(4.56,1) == "4.6"
+    from graficos import rank_bars
+    import pandas as pd
+    chart=rank_bars(pd.DataFrame({"nombre":["A"],"valor":[12345]}),
+                    label="nombre",value="valor",formats=".0f")
+    assert chart.data[0].text[0]=="12,345"
+    assert chart.layout.separators==".,"
+    assert 'options=[1, 3, 6, 9, 12]' in operational
     for field in ("impacto_geografico", "personas_idp_reportadas",
                   "headcount_ratio", "funding_usd"):
         assert field in profile, f"Perfil incompleto: falta {field}"
