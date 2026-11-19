@@ -8,14 +8,26 @@ from __future__ import annotations
 import math
 import pandas as pd
 import plotly.graph_objects as go
-from plotly.colors import sample_colorscale
 import streamlit as st
 from ui_ops import geography
 from estilo_coe import NAVY, CYAN, BORDER, TEXT, MUTED, FONT
 
 BLUES = ["#EAF3F9", "#75B8D6", "#009BDA", "#005A8B"]
 NODATA = "#E8EDF2"
+
 ZERO = "#F3F7FA"
+
+
+def _gradient(z):
+    """Interpolación RGB estable; no depende de cambios de Plotly."""
+    z = min(1.0, max(0.0, float(z)))
+    t = z * (len(BLUES) - 1)
+    i = min(len(BLUES) - 2, int(t))
+    mix = t - i
+    def rgb(color):
+        return tuple(int(color[j:j + 2], 16) for j in (1, 3, 5))
+    a, b = rgb(BLUES[i]), rgb(BLUES[i + 1])
+    return "#" + "".join(f"{round(x + (y - x) * mix):02X}" for x, y in zip(a, b))
 
 
 def _parts(geometry):
@@ -65,7 +77,7 @@ def pa_map(frame, mode, legend_title, height=428, unit="eventos"):
             z = (float(value) / 10) if mode == "severity" else (
                 math.log1p(max(0, float(value))) / math.log1p(float(maximum)))
             z = min(1, max(0, z))
-            color = sample_colorscale(BLUES, z)[0]
+            color = _gradient(z)
             shown = (f"{float(value):,.1f} / 10" if mode == "severity"
                      else f"{float(value):,.0f} {unit}")
         x, y = [], []
