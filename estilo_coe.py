@@ -220,7 +220,9 @@ div.stButton>button[kind="primary"]{
 }
 .ops-data-table tbody td:last-child{border-right:0}
 .ops-data-table tbody td:first-child{font-weight:680}
-.ops-data-table tbody tr:last-child td{border-bottom:0}
+.ops-data-table tbody tr:last-child td{
+  border-bottom:1px solid #DFE9F1!important;
+}
 .ops-data-table tbody tr:hover td{background:#F6FAFD}
 .ops-data-table .ops-numeric{
   text-align:right;font-variant-numeric:tabular-nums;
@@ -262,8 +264,10 @@ div.stButton>button[kind="primary"]{
 }
 
 [data-testid="stExpander"] {
-  border:1px solid #DFE9F1!important;border-radius:10px!important;
+  border:1px solid #DFE9F1!important;
+  border-radius:12px!important;
   background:#FFFFFF!important;
+  box-shadow:none!important;
 }
 [data-testid="stPlotlyChart"]{width:100%!important;}
 [data-testid="stVerticalBlockBorderWrapper"] [data-testid="stPlotlyChart"] {
@@ -309,6 +313,38 @@ div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlock"] {
   gap:.25rem!important;
 }
 
+
+/* UN ÚNICO MARCO para tablas Y gráficos. La clase key del contenedor
+   recibe el borde visible, mientras su estructura interna no lleva
+   borde, anillo ni sombra. Evita las líneas paralelas de Streamlit. */
+div[class*="st-key-coe_chart_"],
+div[class*="st-key-coe_table_"] {
+  border:1px solid #DFE9F1!important;
+  border-radius:12px!important;
+  box-shadow:none!important;
+  background:#FFFFFF!important;
+  box-sizing:border-box!important;
+}
+div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"],
+div[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] {
+  border:0!important;
+  box-shadow:none!important;
+  background:#FFFFFF!important;
+}
+div[class*="st-key-coe_chart_"] [data-testid="stVerticalBlockBorderWrapper"] > div,
+div[class*="st-key-coe_table_"] [data-testid="stVerticalBlockBorderWrapper"] > div {
+  border:0!important;
+  box-shadow:none!important;
+}
+.ops-data-table thead th {
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+.ops-table-scroll{
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+}
 
 /* Panel blanco de extremo a extremo: contenido, relleno, lienzo Plotly y marco. */
 [class*="st-key-coe_chart_"] {
