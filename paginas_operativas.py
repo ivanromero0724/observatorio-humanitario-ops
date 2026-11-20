@@ -481,42 +481,103 @@ def _movilidad_tab(D, selected):
         else:
             _dtm_tab(D, selected)
 
+POVERTY_CONTEXT_INDICATOR = "MPI_HEADCOUNT_RATIO"
+CONTEXT_INDICATOR_LABELS = {
+    **OPS_LABELS,
+    POVERTY_CONTEXT_INDICATOR: "Incidencia de pobreza multidimensional (%)",
+}
+
+
+def _poverty_context_frame(D, selected):
+    """Normalizar OPHI MPI a las columnas del comparador de Salud y sociedad.
+
+    headcount_ratio ya está expresado en porcentaje en el snapshot HAPI:
+    NO multiplicar por 100. Conservar el año real de cada país.
+    """
+    columns = ["iso3", "pais", "indicador", "valor", "periodo"]
+    mpi = filtered(D.get("mpi", pd.DataFrame()), selected)
+    required = {"iso3", "pais", "headcount_ratio", "reference_period_start"}
+    if mpi.empty or not required.issubset(mpi.columns):
+        return pd.DataFrame(columns=columns)
+    frame = mpi[["iso3", "pais", "headcount_ratio",
+                 "reference_period_start"]].copy()
+    frame["valor"] = pd.to_numeric(frame["headcount_ratio"], errors="coerce")
+    frame["periodo"] = pd.to_numeric(
+        frame["reference_period_start"].astype(str).str[:4], errors="coerce")
+    frame = frame.dropna(subset=["iso3", "valor", "periodo"]).copy()
+    frame = frame[frame["valor"].between(0, 100)]
+    if frame.empty:
+        return pd.DataFrame(columns=columns)
+    frame["periodo"] = frame["periodo"].astype(int)
+    frame["indicador"] = POVERTY_CONTEXT_INDICATOR
+    frame = (frame.sort_values("periodo")
+             .drop_duplicates(["iso3", "periodo"], keep="last"))
+    return frame[columns]
+
+
 def _ops_tab(D, selected):
-    df = filtered(D["ops"], selected)
-    if df.empty:
-        info_missing("indicadores OPS")
-        return
-    opts = [x for x in OPS_OPTIONS if x in set(df["indicador"].dropna())]
+    ops = filtered(D["ops"], selected)
+    poverty = _poverty_context_frame(D, selected)
+    existing = set(ops["indicador"].dropna()) if not ops.empty else set()
+    opts = [x for x in OPS_OPTIONS if x in existing]
+    if not poverty.empty:
+        opts.append(POVERTY_CONTEXT_INDICATOR)
     if not opts:
-        info_missing("indicadores comparables de salud y contexto")
+        info_missing("indicadores de salud, sociedad y pobreza")
         return
+
     l, r = st.columns([1.15, .85])
     with l:
-        choice = st.selectbox("Indicador", opts, key="op_ops_ind",
-                              format_func=lambda x: OPS_LABELS.get(x, x))
+        choice = st.selectbox(
+            "Indicador", opts, key="op_ops_ind",
+            format_func=lambda x: CONTEXT_INDICATOR_LABELS.get(x, x))
     with r:
-        common = st.checkbox("Mismo año en todos los países", key="op_ops_common")
-    years = sorted(df[df["indicador"] == choice]["periodo"].dropna().astype(int).unique(),
-                   reverse=True)
-    year = st.selectbox("Año", years, key="op_ops_year") if common and years else None
-    picked = latest_ops(df, choice, year).copy()
+        common = st.checkbox("Mismo año en todos los países",
+                             key="op_ops_common")
+
+    is_poverty = choice == POVERTY_CONTEXT_INDICATOR
+    source_data = poverty if is_poverty else ops
+    source_label = ("OPHI MPI · vía OCHA HAPI" if is_poverty
+                    else "OPS · Indicadores Básicos")
+    years = sorted(
+        source_data[source_data["indicador"].eq(choice)]["periodo"]
+        .dropna().astype(int).unique(), reverse=True)
+    year = (st.selectbox("Año", years, key="op_ops_year")
+            if common and years else None)
+    picked = latest_ops(source_data, choice, year).copy()
     if picked.empty:
         info_missing("observaciones para la selección")
         return
     picked["anio"] = picked["periodo"].astype(int)
+    label = CONTEXT_INDICATOR_LABELS.get(choice, choice)
+
     metric_strip([
-        (f"{picked['iso3'].nunique()}/{len(selected)}","PAÍSES CON DATO","Indicador OPS seleccionado"),
-        (str(year) if year is not None else "Según país","PERIODO","Último por país" if year is None else "Año común"),
+        (f"{picked['iso3'].nunique()}/{len(selected)}", "PAÍSES CON DATO",
+         "OPHI MPI · vía HAPI" if is_poverty else "Indicador OPS seleccionado"),
+        (str(year) if year is not None else "Según país",
+         "PERIODO", "Último por país" if year is None else "Año común"),
     ])
-    _section_note(
-        "Estos indicadores describen contexto y capacidad sanitaria nacional, no respuesta "
-        "operativa durante una crisis. Sin año común, cada país puede tener un corte diferente."
-    )
+    if is_poverty:
+        _section_note(
+            "Incidencia de pobreza multidimensional de OPHI, disponible "
+            "a través de OCHA HAPI (% de la población), no de Indicadores "
+            "Básicos de OPS. La cobertura y los años varían entre países; "
+            "al seleccionar un mismo año solo aparecen países con datos "
+            "para ese año."
+        )
+    else:
+        _section_note(
+            "Estos indicadores describen contexto y capacidad sanitaria nacional, "
+            "no respuesta operativa durante una crisis. Sin año común, cada país "
+            "puede tener un corte diferente."
+        )
+
     with card("Comparación entre países",
               "Valor publicado y año de referencia disponibles al pasar el cursor.",
-              "OPS · Indicadores Básicos"):
+              source_label):
         plot(strip_countries(picked, name="pais", val="valor", year="anio",
-                             units=OPS_LABELS.get(choice, choice), max_items=25), height=425)
+                             units=label, max_items=25), height=425)
+
 
 def _mpi_tab(D, selected):
     mpi = filtered(D["mpi"], selected)
