@@ -42,11 +42,6 @@ def main():
         scope=st.selectbox("Ámbito",["Todos los países"]+opts,
                format_func=lambda code:names.get(code,code),key="scope")
         selected=set(opts) if scope=="Todos los países" else {scope}
-        st.divider()
-        st.caption("Prototipo de monitoreo humanitario. "
-                   "Criterios y niveles de seguimiento sujetos "
-                   "a validación de Laura y OPS/PHE.")
-        st.caption("Datos: IDMC y AWSD · controles temporales actualizados")
     header()
     if page==PAGES[0]:
         amenazas_page(D,selected,names)
