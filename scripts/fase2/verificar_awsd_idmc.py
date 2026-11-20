@@ -116,39 +116,27 @@ def idmc():
 
 def awsd():
     secret=os.getenv("AWSD_API_KEY","").strip()
-    r={"fuente":"AWSD","secreto_configurado":bool(secret),"intentos":{}}
+    r={"fuente":"AWSD","secreto_configurado":bool(secret)}
     if not secret:
         r["estado"]="SIN_SECRETO"
         return r
-    root="https://www.aidworkersecurity.org/incidents/api"
-    base_params={"format":"json","start":"2025"}
-    # Son variantes comunes: el sitio no publica en su página el nombre
-    # del parámetro. No exponer credencial en informes ni logs.
-    options=[
-        ("query_key","key","query"),
-        ("query_api_key","api_key","query"),
-        ("query_apikey","apikey","query"),
-        ("header_x_api_key","X-API-Key","header"),
-        ("header_bearer","Authorization","bearer"),
-    ]
-    for tag,key,mode in options:
-        params=dict(base_params)
-        headers={}
-        if mode=="query":params[key]=secret
-        elif mode=="header":headers[key]=secret
-        else:headers["Authorization"]="Bearer "+secret
-        profile=query(root,params=params,headers=headers)
-        r["intentos"][tag]=profile
-        if profile.get("http")==200 and profile.get("estado") in ("JSON_VALIDO","JSON_GRANDE_PARCIAL"):
-            r["estado"]="CONECTADO"
-            r["metodo_autenticacion"]=tag
-            break
-        # No seguir probando si servicio limita solicitudes.
-        if profile.get("http")==429:
-            r["estado"]="LIMITADO_429"
-            break
-    r.setdefault("estado","POR_VALIDAR")
+    # Endpoint exacto entregado por AWSD al titular de la clave:
+    # /incidents/search?format=json&api_key={TOKEN}
+    # Usar un solo año/país para reducir la respuesta y evitar 429.
+    result=query(
+        "https://www.aidworkersecurity.org/incidents/search",
+        params={"format":"json","api_key":secret,
+                "country":"CO","start":"2025","end":"2025"},
+    )
+    r["prueba"]=result
+    r["estado"]=(
+        "CONECTADO" if result.get("http")==200
+        and result.get("estado") in ("JSON_VALIDO","JSON_GRANDE_PARCIAL")
+        else "LIMITADO_429" if result.get("http")==429
+        else "POR_VALIDAR"
+    )
     return r
+
 
 def main():
     record={"fecha_utc":datetime.now(timezone.utc).isoformat(),
