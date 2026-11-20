@@ -34,6 +34,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/observaciones/idmc_gidd_conflicto_pais_anio.csv \
                   data/observaciones/awsd_seguridad_pais_anio.csv \
+                  data/observaciones/awsd_tipos_pais_anio.csv \
+                  data/observaciones/idmc_idu_pais_mes.csv \
                   docs/fase2/monitoreo_idmc_awsd.json
           if ! git diff --cached --quiet; then
             git commit -m 'data: actualizar agregados IDMC GIDD y AWSD [skip ci]'
