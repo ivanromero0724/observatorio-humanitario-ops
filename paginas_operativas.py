@@ -629,7 +629,7 @@ def _response_tab(D, selected):
 
 
 def vulnerabilidad_page(D, selected, names):
-    title("03 / VULNERABILIDAD Y RESPUESTA", "Vulnerabilidad y respuesta",
+    title("02 / VULNERABILIDAD Y RESPUESTA", "Vulnerabilidad y respuesta",
           "Riesgo estructural, contexto social y sanitario, personas en necesidad, seguridad alimentaria y respuesta.")
     topic = _subgroup("Subtema",
                       ["Riesgo INFORM", "Salud y sociedad", "Personas en necesidad",
