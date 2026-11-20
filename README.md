@@ -13,8 +13,8 @@ personas y servicios. **No es un monitor de brotes ni de El Niño.**
 Las cuatro páginas visibles utilizan solo indicadores con información integrada:
 
 1. **Amenazas y eventos:** eventos de violencia agregados (HAPI/ACLED) y crisis/severidad/acceso (ACAPS).
-2. **Movilidad y necesidades:** refugiados y solicitantes de asilo (ACNUR/HAPI), desplazamiento por operación (OIM DTM) y PiN intersectorial (OCHA/HAPI).
-3. **Vulnerabilidad y respuesta:** indicadores sociales y de salud (OPS), pobreza MPI, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
+2. **Movilidad y desplazamiento:** refugiados y solicitantes de asilo (ACNUR/HAPI), desplazamiento por operación (OIM DTM), estimaciones anuales IDMC GIDD y eventos IDMC IDU por ventana temporal (6 meses por defecto).
+3. **Vulnerabilidad y respuesta:** personas en necesidad (PiN intersectorial y sectorial OCHA/HAPI), indicadores sociales y de salud (OPS), pobreza MPI, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
 4. **Perfiles por país:** resumen de eventos, crisis, movilidad, indicadores de capacidad sanitaria y reportes ReliefWeb.
 
 Las categorías aún sin datos integrados (crimen organizado, minería ilegal, ataques a salud y servicios esenciales afectados) no aparecen como filtros ni paneles vacíos; permanecen solo en documentación técnica para futura ampliación.
@@ -128,3 +128,7 @@ La matriz Excel validada y el informe de cierre Word se entregan aparte, listos 
 ## Identidad visual
 
 El observatorio usa la identidad del repositorio `COE-regional`: tipografía DM Sans, azul `#005A8B`, cian `#009BDA`, naranja `#F36B32`, fondo `#F7FAFC`, tarjetas blancas con borde `#DFE9F1`. Los mapas del observatorio utilizan una vista fija Plotly, sin zoom ni desplazamiento y con el mismo tratamiento de superficies y bordes del COE (dominio completo de las Américas). No se cambian fuentes ni niveles de seguimiento por motivos visuales. Componentes: `estilo_coe.py`, `mapa_coe.py`, `graficos.py`.
+
+### Lectura de datos recientes IDMC IDU
+
+La vista **Desplazamiento reciente** agrupa eventos únicos de conflicto y violencia registrados por IDMC IDU en una ventana seleccionable de 1, 3, 6 o 12 meses de **inicio del evento**, tomando como referencia el mes más reciente con registros en el ámbito consultado. El origen es una descarga de actualizaciones de los últimos 180 días; no equivale a una serie exhaustiva ni a cifras de personas desplazadas. Países sin actualizaciones publicadas se muestran sin dato, nunca como cero. El PiN se presenta en **Vulnerabilidad y respuesta**, no como cifra de movilidad.
