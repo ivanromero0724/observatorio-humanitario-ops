@@ -9,7 +9,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from observatorio_v2 import filtered
+from observatorio_v2 import filtered, ROOT, SOURCES
 from observatorio_v4 import info_missing, plot, table, fmt
 from graficos import rank_bars, trend
 from mapa_coe import pa_map
@@ -196,10 +196,20 @@ def idu_tab(D, selected):
     meta=_status(D).get("idu",{})
     all_idu=D.get("idu",pd.DataFrame())
     if all_idu is None or all_idu.empty:
-        st.info("No se han cargado datos agregados IDMC IDU en el tablero. "
-                "Verifica que la versión desplegada tenga la última extracción.")
-        st.caption(f"Estado de extracción: {meta.get('estado','sin procesamiento')}. "
-                   "Las cifras IDU son preliminares.")
+        file=ROOT/SOURCES["idu"]
+        file_present=file.is_file()
+        st.warning("No hay tabla IDMC IDU disponible en esta sesión. "
+                   "La ausencia de datos aquí no equivale a ausencia de desplazamientos.")
+        st.caption(
+            "Diagnóstico de despliegue: CSV IDU "
+            + ("presente" if file_present else "ausente")
+            + f" · extracción: {meta.get('estado','sin metadatos')}."
+            + (" Actualiza la página; si continúa, reinicia la app en "
+               "Streamlit Cloud para sincronizar archivos y caché."
+               if file_present else
+               " Esta versión no incluye el CSV: verifica el repositorio y "
+               "la rama configurados en Streamlit Cloud.")
+        )
         return
 
     names=_names(D)
