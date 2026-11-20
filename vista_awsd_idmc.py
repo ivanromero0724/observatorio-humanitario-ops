@@ -21,17 +21,6 @@ ORANGE = "#F36B32"
 AWS_SOURCE = "AWSD / Humanitarian Outcomes · registros agregados"
 IDMC_SOURCE = "IDMC GIDD · CC BY-NC-SA 3.0 IGO"
 
-ATTACK_LABELS = {
-    "Bodily assault":"Agresión física",
-    "Detention/arrest":"Detención o arresto",
-    "Kidnap-killing":"Secuestro con homicidio",
-    "Kidnapping":"Secuestro",
-    "Landmine":"Mina terrestre",
-    "Rape/sexual assault":"Violencia sexual",
-    "Shooting":"Ataque con arma de fuego",
-    "Unknown":"No especificado",
-}
-
 AWS_METRICS = (
     ("incidentes", "INCIDENTES REGISTRADOS"),
     ("trabajadores_muertos", "TRABAJADORES FALLECIDOS"),
@@ -77,27 +66,11 @@ def awsd_tab(D, selected):
     if not years:
         info_missing("años con incidentes AWSD")
         return
-    typed=_data(D,"awsd_types",selected)
-    left,right=st.columns(2,gap="medium")
-    with left:
-        year=st.selectbox("Año de incidentes",years,key="op_awsd_year",
-                          width="stretch")
-    types=[]
-    if not typed.empty and "tipo_ataque" in typed.columns:
-        types=sorted(typed[typed["anio"].eq(year)]["tipo_ataque"]
-                      .dropna().astype(str).unique())
-    with right:
-        attack=st.selectbox("Tipo de ataque",
-            ["Todos los tipos"]+types,
-            key="op_awsd_type",width="stretch",
-            format_func=lambda v: ATTACK_LABELS.get(v,v),
-            disabled=not types,
-            help="Tipos reportados en AWSD. Si el desglose no está disponible, "
-                 "se muestran todos los tipos.")
-    if attack!="Todos los tipos":
-        scope=typed[(typed["anio"].eq(year)) & (typed["tipo_ataque"].eq(attack))].copy()
-    else:
-        scope=a[a["anio"].eq(year)].copy()
+    # El tablero presenta únicamente totales anuales verificados por país;
+    # no ofrece un selector de tipo de ataque.
+    year=st.selectbox("Año de incidentes",years,key="op_awsd_year",
+                      width="stretch")
+    scope=a[a["anio"].eq(year)].copy()
     scope["pais"]=scope["iso3"].map(names).fillna(scope["iso3"])
     scope=scope.sort_values("incidentes",ascending=False)
     metric_strip([(_metric_number(scope[k]),label,
@@ -112,7 +85,7 @@ def awsd_tab(D, selected):
     a1,a2=st.columns(2,gap="medium")
     with a1:
         with card("Incidentes de seguridad por país",
-                  f"AWSD · {year} · {ATTACK_LABELS.get(attack,attack).lower()}.",
+                  f"AWSD · {year} · incidentes registrados.",
                   AWS_SOURCE,height=H):
             pa_map(_map_frame(D,selected,scope,"incidentes"),
                    "events","Incidentes registrados",height=366)
@@ -127,10 +100,7 @@ def awsd_tab(D, selected):
         with card("Evolución anual de incidentes",
                   "Solo años con registros; no se imputan ceros.",
                   AWS_SOURCE,height=H):
-            # Para el filtro por tipo, la serie usa datos de ese mismo tipo.
-            history=(typed[typed["tipo_ataque"].eq(attack)]
-                     if attack!="Todos los tipos" and not typed.empty else a)
-            yearly=history.groupby("anio",as_index=False)["incidentes"].sum()
+            yearly=a.groupby("anio",as_index=False)["incidentes"].sum()
             yearly["fecha"]=pd.to_datetime(yearly["anio"].astype(int).astype(str)+"-01-01")
             plot(trend(yearly,x="fecha",y="incidentes",units="Incidentes"),
                  height=366)
