@@ -22,6 +22,8 @@ on:
       - app.py
       - ui_ops.py
       - graficos.py
+      - vista_awsd_idmc.py
+      - data/observaciones/*.csv
 permissions:
   contents: read
 jobs:
