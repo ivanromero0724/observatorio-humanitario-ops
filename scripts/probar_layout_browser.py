@@ -17,7 +17,6 @@ OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
     ("Amenazas y eventos","amenazas_eventos"),
-    ("Movilidad y desplazamiento","movilidad_necesidades"),
     ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
     ("Perfiles por país","perfil_pais"),
 ]
@@ -199,11 +198,11 @@ def main():
              "Tres pilares de acceso", "acaps_desglose"),
             ("Amenazas y eventos", "Seguridad del personal humanitario",
              "Incidentes de seguridad por país", "amenazas_awsd"),
-            ("Movilidad y desplazamiento", "Desplazamiento interno",
+            ("Amenazas y eventos", "Movilidad y desplazamiento",
              "Distribución geográfica", "movilidad_gidd"),
-            ("Movilidad y desplazamiento", "Desplazamiento interno",
+            ("Amenazas y eventos", "Movilidad y desplazamiento",
              "Eventos IDU por país", "movilidad_idu"),
-            ("Movilidad y desplazamiento", "Desplazamiento interno",
+            ("Amenazas y eventos", "Movilidad y desplazamiento",
              "Población desplazada registrada en la operación", "movilidad_dtm"),
             ("Vulnerabilidad y respuesta", "Personas en necesidad",
               "Estimaciones nacionales de PiN", "vulnerabilidad_pin"),
@@ -232,6 +231,12 @@ def main():
                     topic, exact=True).last.click(timeout=25000)
                 previous_pair = (page_label, topic)
             if shot in ("movilidad_gidd","movilidad_idu","movilidad_dtm"):
+                # Movilidad está dentro de Amenazas. Abrir primero su subtema
+                # Desplazamiento interno y luego el modo GIDD / IDU / OIM.
+                mobility=page.locator(".st-key-op_movilidad_grupo")
+                mobility.wait_for(timeout=30000)
+                mobility.get_by_text("Desplazamiento interno",exact=True).last.click(
+                    timeout=25000,force=True)
                 option={"movilidad_gidd":"Estimaciones anuales",
                         "movilidad_idu":"Desplazamiento reciente",
                         "movilidad_dtm":"Operaciones OIM"}[shot]
