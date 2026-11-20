@@ -21,6 +21,17 @@ ORANGE = "#F36B32"
 AWS_SOURCE = "AWSD / Humanitarian Outcomes · registros agregados"
 IDMC_SOURCE = "IDMC GIDD · CC BY-NC-SA 3.0 IGO"
 
+ATTACK_LABELS = {
+    "Bodily assault":"Agresión física",
+    "Detention/arrest":"Detención o arresto",
+    "Kidnap-killing":"Secuestro con homicidio",
+    "Kidnapping":"Secuestro",
+    "Landmine":"Mina terrestre",
+    "Rape/sexual assault":"Violencia sexual",
+    "Shooting":"Ataque con arma de fuego",
+    "Unknown":"No especificado",
+}
+
 AWS_METRICS = (
     ("incidentes", "INCIDENTES REGISTRADOS"),
     ("trabajadores_muertos", "TRABAJADORES FALLECIDOS"),
@@ -79,6 +90,7 @@ def awsd_tab(D, selected):
         attack=st.selectbox("Tipo de ataque",
             ["Todos los tipos"]+types,
             key="op_awsd_type",width="stretch",
+            format_func=lambda v: ATTACK_LABELS.get(v,v),
             disabled=not types,
             help="Tipos reportados en AWSD. Si el desglose no está disponible, "
                  "se muestran todos los tipos.")
@@ -100,7 +112,7 @@ def awsd_tab(D, selected):
     a1,a2=st.columns(2,gap="medium")
     with a1:
         with card("Incidentes de seguridad por país",
-                  f"AWSD · {year} · {attack.lower()}.",
+                  f"AWSD · {year} · {ATTACK_LABELS.get(attack,attack).lower()}.",
                   AWS_SOURCE,height=H):
             pa_map(_map_frame(D,selected,scope,"incidentes"),
                    "events","Incidentes registrados",height=366)
@@ -227,24 +239,27 @@ def idu_tab(D, selected):
                        key="op_idu_month",width="stretch")
     data=n[n["periodo"].eq(chosen)].copy()
     data["pais"]=data["iso3"].map(names).fillna(data["iso3"])
-    metric_strip([(fmt(data["actualizaciones"].sum()),"ACTUALIZACIONES IDU",
+    metric_strip([(fmt(data["actualizaciones"].sum()),"EVENTOS IDU",
                    "Informes preliminares"),
                   (fmt(data["iso3"].nunique()),"PAÍSES CON ACTUALIZACIONES",
                    "No implica cobertura completa")])
-    st.caption("Actualizaciones preliminares IDMC de los últimos 180 días. "
-       "Se presenta el número de actualizaciones recibidas, no una suma "
-       "de movimientos, porque pueden existir revisiones del mismo evento.")
+    st.caption("IDMC IDU · eventos de conflicto identificados en la "
+       "descarga de actualizaciones de los últimos 180 días. "
+       "El mes corresponde a la fecha reportada de inicio del evento; "
+       "no necesariamente a su fecha de publicación. Cada evento se cuenta "
+       "una sola vez por país y mes. No se suman cifras de desplazamiento "
+       "porque pueden existir varias estimaciones y revisiones del mismo evento.")
     l,r=st.columns(2,gap="medium")
     with l:
-        with card("Actualizaciones por país",chosen,
+        with card("Eventos IDU por país",chosen,
                   "IDMC IDU · preliminar",height=H):
             pa_map(_map_frame(D,selected,data,"actualizaciones"),
-                   "events","Actualizaciones IDU",height=366)
+                   "events","Eventos IDU",height=366)
     with r:
-        with card("Países con actualizaciones",chosen,
+        with card("Países con eventos IDU",chosen,
                   "IDMC IDU · preliminar",height=H):
             plot(rank_bars(data,label="pais",value="actualizaciones",
-                           limit=13,formats=".0f",units="Actualizaciones"),height=366)
+                           limit=13,formats=".0f",units="Eventos IDU"),height=366)
     st.caption("Fuente: IDMC, Internal Displacement Updates (IDU). "
                "Registros preliminares sujetos a revisión; no sumarlos "
                "a GIDD ni a cifras de OIM DTM.")
