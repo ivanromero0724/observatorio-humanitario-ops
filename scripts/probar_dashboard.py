@@ -89,6 +89,24 @@ def main():
     assert "2026" in html and "2,026" not in html
     assert "<script>" not in html and "&lt;script&gt;" in html
     assert "ops-data-table" in html
+    # PiN intersectorial y sectorial son medidas separadas: filtrado por
+    # categoría agregada y selección de un solo año/país para el desglose.
+    from pin_utils import intersectoral_pin, sectoral_pin, SECTOR_LABELS
+    raw_pin=pd.read_csv(ROOT/"data/observaciones/hapi_necesidades_nacional.csv")
+    pin_general=intersectoral_pin(raw_pin)
+    pin_sector=sectoral_pin(raw_pin)
+    assert pin_general.duplicated(["iso3","anio"]).sum()==0
+    assert pin_sector.duplicated(["iso3","anio","sector_code"]).sum()==0
+    assert pin_sector["category"].fillna("").eq("").all()
+    assert not pin_sector["sector_code"].eq("Intersectoral").any()
+    assert pin_general.query("iso3=='COL' and anio==2026")["population"].iloc[0]==6900000
+    assert len(pin_sector.query("iso3=='COL' and anio==2025"))==10
+    assert pin_sector.query("iso3=='COL' and anio==2026").empty
+    assert len(pin_sector.query("iso3=='HTI' and anio==2026"))==8
+    assert pin_general.query("iso3=='SLV' and anio==2025")["population"].iloc[0]==818700
+    assert SECTOR_LABELS["HEA"]=="Salud"
+    assert pin_sector.query("iso3=='COL' and anio==2025")["population"].sum() != (
+        pin_general.query("iso3=='COL' and anio==2025")["population"].iloc[0])
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
@@ -136,6 +154,12 @@ def main():
     assert chart.data[0].text[0]=="12,345"
     assert chart.layout.separators==".,"
     assert 'options=[1, 3, 6, 9, 12]' in operational
+    assert "PiN intersectorial (general)" in operational
+    assert "PiN por sector" in operational
+    assert "op_pin_sector_country" in operational and "op_pin_sector_year" in operational
+    assert "sectoral_pin(needs)" in operational
+    assert "sectoral_pin(needs)" in profile
+
     for field in ("impacto_geografico", "personas_idp_reportadas",
                   "headcount_ratio", "funding_usd"):
         assert field in profile, f"Perfil incompleto: falta {field}"
