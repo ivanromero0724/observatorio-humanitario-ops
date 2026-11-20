@@ -196,6 +196,12 @@ def main():
         for page_label, topic, expected, shot in [
             ("Amenazas y eventos", "Crisis evaluadas y acceso",
              "Tres pilares de acceso", "acaps_desglose"),
+            ("Amenazas y eventos", "Seguridad del personal humanitario",
+             "Incidentes de seguridad por país", "amenazas_awsd"),
+            ("Movilidad y necesidades", "Desplazamiento interno",
+             "Distribución geográfica", "movilidad_gidd"),
+            ("Movilidad y necesidades", "Desplazamiento interno",
+             "Actualizaciones por país", "movilidad_idu"),
             ("Movilidad y necesidades", "Desplazamiento interno",
              "Población desplazada registrada en la operación", "movilidad_dtm"),
             ("Movilidad y necesidades", "Personas en necesidad",
@@ -221,11 +227,18 @@ def main():
             # de la barra lateral (p. ej. "Movilidad y necesidades").
             page.locator('[data-testid="stMainBlockContainer"]').get_by_text(
                 topic, exact=True).last.click(timeout=25000)
+            if shot in ("movilidad_gidd","movilidad_idu","movilidad_dtm"):
+                option={"movilidad_gidd":"Estimaciones anuales",
+                        "movilidad_idu":"Desplazamiento reciente",
+                        "movilidad_dtm":"Operaciones OIM"}[shot]
+                page.locator('[data-testid="stMainBlockContainer"]').get_by_text(
+                    option, exact=True).last.click(timeout=25000)
             page.get_by_text(expected, exact=True).first.wait_for(timeout=50000)
             page.wait_for_timeout(900)
             if page.locator('[data-testid="stException"]').count():
                 raise RuntimeError(f"{page_label} / {topic}: excepción en la app")
-            if shot in ("acaps_desglose", "vulnerabilidad_ops",
+            if shot in ("acaps_desglose", "amenazas_awsd", "movilidad_gidd",
+                        "movilidad_idu", "vulnerabilidad_ops",
                         "vulnerabilidad_respuesta_3w", "perfil_movilidad",
                         "perfil_riesgo", "perfil_informes"):
                 page.screenshot(path=str(OUTPUT/f"{shot}.png"),
