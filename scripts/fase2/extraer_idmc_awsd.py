@@ -229,7 +229,7 @@ def awsd(token,cat,stamp):
             "ids_repetidos_omitidos":duplicates,
             "endpoint":"/incidents/search"}
 
-def inspect_idu(token):
+def inspect_idu(token,cat,stamp):
     """Descarga solo para verificar ESQUEMA, sin guardar filas ni publicar cifras.
     El endpoint redirige a S3. Mantener URL firmada fuera de logs y archivos.
     """
@@ -265,6 +265,44 @@ def inspect_idu(token):
     if not isinstance(items,list):
         return {"estado":"SIN_LISTA","forma":shape,"campos_superiores":keys[:35]}
     sample=[row for row in items if isinstance(row,dict)]
+    # IDU puede aportar varias figuras para el MISMO evento: usar solo
+    # cifras recomendadas, conflicto/violencia y contar eventos únicos
+    # por país y mes del evento. NO sumar 'figure' ni publicar geometrías.
+    event_groups=defaultdict(set)
+    valid_conflict=0
+    for row in sample:
+        iso=str(row.get("iso3") or "").strip().upper()
+        if iso not in cat:continue
+        if str(row.get("displacement_type","")).casefold()!="conflict":
+            continue
+        if str(row.get("role","")).casefold()!="recommended figure":
+            continue
+        if as_nonnegative(row.get("figure")) is None:continue
+        ident=row.get("event_id")
+        if ident is None or not str(ident).strip():continue
+        dt=None
+        for name in ("displacement_start_date","displacement_date",
+                     "event_start_date"):
+            v=str(row.get(name) or "")[:10]
+            try:
+                dt=datetime.fromisoformat(v).date()
+                break
+            except ValueError:pass
+        if dt is None:continue
+        # La consulta es últimos 180 días de actualizaciones, pero las
+        # fechas de eventos pueden ser más antiguas. Conservamos meses
+        # reportados sin afirmar que cada evento haya comenzado hoy.
+        if not 1990<=dt.year<=datetime.now(timezone.utc).year:continue
+        period=dt.strftime("%Y-%m")
+        event_groups[(iso,period)].add(str(ident))
+        valid_conflict+=1
+    idu_records=[{"iso3":iso,"anio":int(period[:4]),
+                  "mes":int(period[5:7]),"periodo":period,
+                  "actualizaciones":len(ids),"fecha_extraccion_utc":stamp}
+                 for (iso,period),ids in sorted(event_groups.items())]
+    write_csv(IDU,["iso3","anio","mes","periodo","actualizaciones",
+                   "fecha_extraccion_utc"],idu_records)
+
     from collections import Counter
     summaries={}
     for key in ("displacement_type","category","type","displacement_occurred",
@@ -281,7 +319,11 @@ def inspect_idu(token):
             "categorias":summaries,
             "iso3_35_paises":{k:v for k,v in iso_codes.items() if k in catalog()},
             "eventos_id_repetidos":len(ids)-len(set(ids)),
-            "figuras_numericas":figures_valid}
+            "figuras_numericas":figures_valid,
+            "eventos_idu_agrupados":len(idu_records),
+            "paises_conflicto_con_registros":len({r["iso3"] for r in idu_records}),
+            "registros_conflicto_recomendados_procesados":valid_conflict,
+            "criterio":"event_id único por país y mes de inicio; sin sumar figuras"}
 
 def main():
     cat=catalog()
@@ -295,7 +337,7 @@ def main():
     failures=[]
     for name,fn in (("gidd",lambda:idmc_gidd(g,cat,stamp)),
                     ("awsd",lambda:awsd(w,cat,stamp)),
-                    ("idu",lambda:inspect_idu(g))):
+                    ("idu",lambda:inspect_idu(g,cat,stamp))):
         try:
             report[name]=fn()
         except Exception as exc:
