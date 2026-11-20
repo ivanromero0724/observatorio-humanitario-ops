@@ -13,7 +13,7 @@ from paginas_operativas import amenazas_page, movilidad_page, vulnerabilidad_pag
 
 PAGES=[
     "Amenazas y eventos",
-    "Movilidad y necesidades",
+    "Movilidad y desplazamiento",
     "Vulnerabilidad y respuesta",
     "Perfiles por país",
 ]
