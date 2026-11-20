@@ -454,10 +454,10 @@ def _pin_tab(D, selected):
 
 
 def movilidad_page(D, selected, names):
-    title("02 / MOVILIDAD Y NECESIDADES", "Movilidad y necesidades humanitarias",
-          "Refugio, desplazamiento interno IDMC/OIM y necesidades humanitarias.")
+    title("02 / MOVILIDAD Y DESPLAZAMIENTO", "Movilidad y desplazamiento",
+          "Refugio, asilo y desplazamiento interno documentado por IDMC y OIM.")
     topic = _subgroup("Subtema",
-                      ["Refugio y asilo", "Desplazamiento interno", "Personas en necesidad"],
+                      ["Refugio y asilo", "Desplazamiento interno"],
                       "op_movilidad_grupo")
     if topic == "Refugio y asilo":
         _acnur_tab(D, selected)
@@ -471,9 +471,6 @@ def movilidad_page(D, selected, names):
             idu_tab(D, selected)
         else:
             _dtm_tab(D, selected)
-    else:
-        _pin_tab(D, selected)
-
 
 def _ops_tab(D, selected):
     df = filtered(D["ops"], selected)
@@ -628,22 +625,23 @@ def _response_tab(D, selected):
 
 def vulnerabilidad_page(D, selected, names):
     title("03 / VULNERABILIDAD Y RESPUESTA", "Vulnerabilidad y respuesta",
-          "Riesgo estructural, condiciones sociales y sanitarias, seguridad alimentaria y respuesta.")
+          "Riesgo estructural, contexto social y sanitario, personas en necesidad, seguridad alimentaria y respuesta.")
     topic = _subgroup("Subtema",
-                      ["Riesgo INFORM", "Salud y sociedad", "Pobreza",
-                       "Seguridad alimentaria", "Respuesta"],
+                      ["Riesgo INFORM", "Salud y sociedad", "Personas en necesidad",
+                       "Pobreza", "Seguridad alimentaria", "Respuesta"],
                       "op_vulnerabilidad_grupo")
     if topic == "Riesgo INFORM":
         risk_page(D, selected)
     elif topic == "Salud y sociedad":
         _ops_tab(D, selected)
+    elif topic == "Personas en necesidad":
+        _pin_tab(D, selected)
     elif topic == "Pobreza":
         _mpi_tab(D, selected)
     elif topic == "Seguridad alimentaria":
         _ipc_tab(D, selected)
     else:
         _response_tab(D, selected)
-
 
 def perfil_page(D, selected, names):
     """Mantener contrato de navegación; la ficha completa vive en perfil_integral."""
