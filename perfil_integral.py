@@ -481,7 +481,7 @@ def profile_page(D, selected, names):
     scope={country}
     _summary(D,country,scope)
     group=st.segmented_control("Contenido del país",
-          ["Amenazas y crisis","Movilidad y necesidades",
+          ["Amenazas y crisis","Movilidad y desplazamiento",
            "Riesgo y vulnerabilidad","Respuesta e informes"],
           default="Amenazas y crisis",selection_mode="single",
           width="content",label_visibility="collapsed",key="op_perfil_grupo")
@@ -490,13 +490,13 @@ def profile_page(D, selected, names):
         _violence(D,scope)
         profile_awsd(D,scope)
         _acaps(D,scope)
-    elif group=="Movilidad y necesidades":
+    elif group=="Movilidad y desplazamiento":
         profile_idmc(D,scope)
         _movement(D,scope)
-        _needs(D,scope)
     elif group=="Riesgo y vulnerabilidad":
         _risk(D,scope)
         _poverty(D,scope)
+        _needs(D,scope)
     else:
         _response(D,scope)
         _documents(D,scope)
