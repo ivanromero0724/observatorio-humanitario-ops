@@ -199,6 +199,8 @@ def main():
             ("Amenazas y eventos", "Seguridad del personal humanitario",
              "Incidentes de seguridad por país", "amenazas_awsd"),
             ("Amenazas y eventos", "Movilidad y desplazamiento",
+             "Países de acogida con mayor población registrada", "movilidad_acnur"),
+            ("Amenazas y eventos", "Movilidad y desplazamiento",
              "Distribución geográfica", "movilidad_gidd"),
             ("Amenazas y eventos", "Movilidad y desplazamiento",
              "Eventos IDU por país", "movilidad_idu"),
@@ -233,10 +235,11 @@ def main():
             if shot in ("movilidad_gidd","movilidad_idu","movilidad_dtm"):
                 # Movilidad está dentro de Amenazas. Abrir primero su subtema
                 # Desplazamiento interno y luego el modo GIDD / IDU / OIM.
-                mobility=page.locator(".st-key-op_movilidad_grupo")
-                mobility.wait_for(timeout=30000)
-                mobility.get_by_text("Desplazamiento interno",exact=True).last.click(
-                    timeout=25000,force=True)
+                if shot == "movilidad_gidd":
+                    mobility=page.locator(".st-key-op_movilidad_grupo")
+                    mobility.wait_for(timeout=30000)
+                    mobility.get_by_text("Desplazamiento interno",exact=True).last.click(
+                        timeout=25000,force=True)
                 option={"movilidad_gidd":"Estimaciones anuales",
                         "movilidad_idu":"Desplazamiento reciente",
                         "movilidad_dtm":"Operaciones OIM"}[shot]
@@ -248,7 +251,7 @@ def main():
             page.wait_for_timeout(900)
             if page.locator('[data-testid="stException"]').count():
                 raise RuntimeError(f"{page_label} / {topic}: excepción en la app")
-            if shot in ("acaps_desglose", "amenazas_awsd", "movilidad_gidd",
+            if shot in ("acaps_desglose", "amenazas_awsd", "movilidad_acnur", "movilidad_gidd",
                         "movilidad_idu", "vulnerabilidad_ops",
                         "vulnerabilidad_respuesta_3w", "perfil_movilidad",
                         "perfil_riesgo", "perfil_informes"):
