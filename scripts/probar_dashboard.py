@@ -127,8 +127,26 @@ def main():
             assert csv(relative)["actualizaciones"].iloc[0]==4, (
                 "El CSV IDU quedó bloqueado en caché negativa")
     D=load_all()
-    for key in ("idmc_gidd","idu","awsd","awsd_types"):
+    for key in ("idmc_gidd","idu","awsd","awsd_types","acled_conflict_index"):
         assert key in D and not D[key].empty, f"Falta fuente: {key}"
+    # ACLED Conflict Index 2025 es una instantánea nacional, no un índice OPS.
+    acled=D["acled_conflict_index"]
+    assert len(acled)==35 and acled["iso3"].nunique()==35
+    assert acled["anio"].eq(2025).all()
+    assert not acled.duplicated(["iso3","anio"]).any()
+    assert set(acled["nivel_indice"])=={
+        "Extreme","High","Turbulent","Low/Inactive"}
+    assert acled["nivel_indice"].value_counts().to_dict()=={
+        "Low/Inactive":22,"Turbulent":5,"High":4,"Extreme":4}
+    assert int(acled.set_index("iso3").loc["COL","ranking_global"])==14
+    assert int(acled.set_index("iso3").loc["MEX","ranking_global"])==4
+    assert abs(float(acled.set_index("iso3").loc["MEX","proporcion_difusion"])*100-1.2)<1e-9
+    ci_module=(ROOT/"vista_conflict_index.py").read_text(encoding="utf-8")
+    assert "def acled_conflict_tab(" in ci_module
+    assert "def profile_acled_conflict(" in ci_module
+    assert "No se suman" in ci_module or "no se suman" in ci_module
+    assert '"Índice de conflicto (ACLED)"' in (
+        ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     gidd=D["idmc_gidd"]
     awsd=D["awsd"]
     typed=D["awsd_types"]
@@ -218,6 +236,7 @@ def main():
     assert "op_pin_sector_country" in operational and "op_pin_sector_year" in operational
     assert "sectoral_pin(needs)" in operational
     assert "sectoral_pin(needs)" in profile
+    assert "profile_acled_conflict(D,scope)" in profile
     assert "profile_awsd(D,scope)" in profile
     assert "profile_idmc(D,scope)" in profile
     assert "Seguridad del personal humanitario" in operational
