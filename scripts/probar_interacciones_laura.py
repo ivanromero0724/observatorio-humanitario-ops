@@ -70,6 +70,24 @@ def main():
         elif page == "Vulnerabilidad y respuesta":
             select_if_present(at, "op_ops_ind")
             select_if_present(at, "op_ipc_country")
+            # La incidencia de pobreza debe poder seleccionarse en Salud y
+            # sociedad, no únicamente dentro del subtema separado Pobreza.
+            groups = [x for x in at.get("segmented_control")
+                      if x.key == "op_vulnerabilidad_grupo"]
+            if groups:
+                groups[0].set_value("Salud y sociedad").run()
+                check(at, "vulnerabilidad · salud y sociedad")
+                indicators = [x for x in at.selectbox if x.key == "op_ops_ind"]
+                assert indicators, "Falta selector de indicadores de contexto"
+                assert "MPI_HEADCOUNT_RATIO" in indicators[0].options, (
+                    "No aparece pobreza multidimensional en Salud y sociedad")
+                indicators[0].set_value("MPI_HEADCOUNT_RATIO").run()
+                check(at, "vulnerabilidad · incidencia de pobreza")
+                years = [x for x in at.checkbox if x.key == "op_ops_common"]
+                if years:
+                    years[0].set_value(True).run()
+                    check(at, "vulnerabilidad · pobreza con año común")
+                    assert any(x.key == "op_ops_year" for x in at.selectbox)
         else:
             select_if_present(at, "op_profile_country")
     print("OK: tres páginas temáticas; movilidad dentro de amenazas")
