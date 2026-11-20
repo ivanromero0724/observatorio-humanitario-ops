@@ -1,0 +1,36 @@
+iso3,pais_fuente,anio,nivel_indice,ranking_global,ranking_letalidad,ranking_difusion,ranking_peligro_civiles,ranking_fragmentacion,fallecidos_reportados,proporcion_difusion,eventos_violencia_dirigida_civiles,grupos_armados_activos,periodo_inicio,periodo_fin,fuente
+CAN,Canada,2025,Low/Inactive,128,124,54,115,93,0,0,5,1,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+USA,United States,2025,Low/Inactive,51,52,54,53,42,55,0,90,9,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+MEX,Mexico,2025,Extreme,4,8,16,2,3,8124,0.012,6263,113,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+BLZ,Belize,2025,Turbulent,49,59,30,66,42,32,0.004,40,9,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+CRI,Costa Rica,2025,Low/Inactive,84,76,54,85,93,8,0,15,1,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+SLV,El Salvador,2025,Low/Inactive,75,73,54,97,56,9,0,9,5,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+GTM,Guatemala,2025,High,17,28,14,23,19,678,0.014,581,28,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+HND,Honduras,2025,High,26,31,26,25,23,537,0.006,411,22,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+NIC,Nicaragua,2025,Low/Inactive,79,76,54,100,71,8,0,8,3,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+PAN,Panama,2025,Low/Inactive,116,97,54,105,115,2,0,7,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+ATG,Antigua and Barbuda,2025,Low/Inactive,145,104,54,145,115,1,0,1,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+BHS,Bahamas,2025,Low/Inactive,151,124,54,145,115,0,0,1,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+BRB,Barbados,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+CUB,Cuba,2025,Low/Inactive,83,87,42,63,115,5,0.001,45,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+DMA,Dominica,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+DOM,Dominican Republic,2025,Low/Inactive,69,62,54,82,62,25,0,17,4,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+GRD,Grenada,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+HTI,Haiti,2025,Extreme,8,14,6,20,13,4505,0.063,722,48,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+JAM,Jamaica,2025,High,28,38,9,48,16,284,0.04,138,36,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+KNA,Saint Kitts and Nevis,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+LCA,Saint Lucia,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+VCT,Saint Vincent and the Grenadines,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+TTO,Trinidad and Tobago,2025,Turbulent,32,45,3,34,42,191,0.147,213,9,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+ARG,Argentina,2025,Low/Inactive,92,97,54,100,80,2,0,8,2,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+BOL,Bolivia,2025,Low/Inactive,52,61,54,57,33,27,0,65,12,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+BRA,Brazil,2025,Extreme,7,9,30,4,4,8109,0.004,4971,94,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+CHL,Chile,2025,Turbulent,46,69,42,52,27,16,0.001,100,16,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+COL,Colombia,2025,High,14,19,24,14,5,2271,0.008,1509,88,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+ECU,Ecuador,2025,Extreme,6,15,11,8,12,3943,0.028,2501,53,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+GUY,Guyana,2025,Low/Inactive,87,79,54,115,71,7,0,5,3,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+PRY,Paraguay,2025,Low/Inactive,113,104,54,115,93,1,0,5,1,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+PER,Peru,2025,Turbulent,43,57,42,37,33,40,0.001,196,12,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+SUR,Suriname,2025,Low/Inactive,130,124,54,136,80,0,0,2,2,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+URY,Uruguay,2025,Low/Inactive,156,124,54,154,115,0,0,0,0,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
+VEN,Venezuela,2025,Turbulent,34,33,39,47,7,451,0.002,140,80,2024-12-01,2025-11-28,ACLED | https://acleddata.com/series/acled-conflict-index
