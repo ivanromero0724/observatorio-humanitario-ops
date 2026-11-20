@@ -73,6 +73,10 @@ SOURCES={
     "presence":"data/observaciones/hapi_presencia_sector.csv",
     "ipc":"data/observaciones/hapi_seguridad_alimentaria_ipc.csv",
     "reports":"data/observaciones/reliefweb_reportes_americas.csv",
+    "idmc_gidd":"data/observaciones/idmc_gidd_conflicto_pais_anio.csv",
+    "awsd":"data/observaciones/awsd_seguridad_pais_anio.csv",
+    "idu":"data/observaciones/idmc_idu_pais_mes.csv",
+    "awsd_types":"data/observaciones/awsd_tipos_pais_anio.csv",
 }
 META={
     "acaps":"docs/fase2/acaps_actualizacion.json",
@@ -83,6 +87,7 @@ META={
     "reports":"docs/fase2/reliefweb_actualizacion.json",
     "presence":"docs/fase2/hapi_presencia_actualizacion.json",
     "security":"docs/fase2/accesos_awsd_reliefweb.json",
+    "idmc_awsd":"docs/fase2/monitoreo_idmc_awsd.json",
 }
 
 @st.cache_data(show_spinner=False)
@@ -145,6 +150,19 @@ def load_all()->dict:
             elif key=="dtm":
                 df["personas_idp_reportadas"]=pd.to_numeric(
                     df["personas_idp_reportadas"],errors="coerce")
+            elif key=="idmc_gidd":
+                for col in ("anio","nuevos_desplazamientos",
+                            "personas_desplazadas_fin_anio"):
+                    df[col]=pd.to_numeric(df[col],errors="coerce")
+            elif key in ("awsd","awsd_types"):
+                for col in ("anio","incidentes","trabajadores_muertos",
+                            "trabajadores_heridos","trabajadores_secuestrados",
+                            "trabajadores_afectados"):
+                    if col in df:
+                        df[col]=pd.to_numeric(df[col],errors="coerce")
+            elif key=="idu":
+                for col in ("anio","mes","actualizaciones","cifra_maxima_reportada"):
+                    if col in df:df[col]=pd.to_numeric(df[col],errors="coerce")
             elif key=="needs":
                 df["population"]=pd.to_numeric(df["population"],errors="coerce")
             elif key=="mpi":
