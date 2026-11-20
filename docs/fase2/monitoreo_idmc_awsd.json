@@ -1,10 +1,11 @@
 {
-  "fecha_utc": "2026-11-20T16:29:55.693156+00:00",
+  "fecha_utc": "2026-11-20T16:32:55.835025+00:00",
   "alcance": "35 países OPS; solo agregados nacionales",
   "derechos": "IDMC: CC BY-NC-SA 3.0 IGO; AWSD: atribución a Humanitarian Outcomes",
   "awsd": {
     "estado": "PUBLICADO",
     "filas": 79,
+    "desgloses_tipos": 107,
     "paises_con_registros": 17,
     "anio_min": 1999,
     "anio_max": 2026,
