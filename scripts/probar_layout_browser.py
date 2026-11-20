@@ -307,6 +307,21 @@ def main():
                                          f"{style} / {graph_bounds}")
                 if style["bottom_space"]>35:
                     raise AssertionError(f"Demasiado espacio vacío bajo la tabla: {style}")
+                # La nueva segunda fila muestra PiN sectorial del mismo año
+                # sin duplicar subgrupos de población o sumar sectores.
+                page.get_by_text("PiN por sector", exact=True).wait_for(timeout=20000)
+                sector_table=page.locator(".ops-data-table").nth(1)
+                sector_table.wait_for(timeout=20000)
+                sector_names=sector_table.locator("tbody tr td:first-child").all_text_contents()
+                if len(sector_names)<5 or len(sector_names)!=len(set(sector_names)):
+                    raise AssertionError(f"Desglose sectorial incompleto o duplicado: {sector_names}")
+                if not page.locator('.st-key-op_pin_sector_country').count():
+                    raise AssertionError("Falta selector de país del PiN sectorial")
+                if not page.locator('.st-key-op_pin_sector_year').count():
+                    raise AssertionError("Falta selector de año del PiN sectorial")
+                page.get_by_text("Necesidades por sector", exact=True).wait_for(timeout=10000)
+                print("PIN_SECTORIAL", {"sectores":len(sector_names),
+                      "nombres":sector_names[:5]},flush=True)
                 print("TABLA_PIN_COMPACTA", {"filas":num_rows,
                       "cifras":numbers[:4],"estilo":style},flush=True)
             validate_grid(geometries(page), f"{page_label} / {topic}")
