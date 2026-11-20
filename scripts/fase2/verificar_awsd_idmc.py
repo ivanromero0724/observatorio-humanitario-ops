@@ -8,7 +8,7 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urljoin
 
 import requests
 
@@ -80,6 +80,20 @@ def query(url, params=None, headers=None):
         # Sin redirects: no transmitir una credencial a otro dominio.
         res=S.get(url,params=params,headers=headers or {},
                   allow_redirects=False,stream=True,timeout=(12,45))
+        if res.is_redirect:
+            # Publicar solo el host y la clase de destino, nunca la
+            # cabecera Location completa (puede contener claves o firmas).
+            destination=urlsplit(urljoin(url, res.headers.get("Location","")))
+            source=urlsplit(url)
+            profile=response_profile(res)
+            profile["redirect_host"]=destination.hostname or "desconocido"
+            profile["redirect_same_host"]=(destination.hostname==source.hostname
+                                           and destination.scheme=="https")
+            profile["redirect_kind"]=(
+                "API_IDU" if destination.path.startswith("/external-api/idus/")
+                else "OTRA_RUTA"
+            )
+            return profile
         return response_profile(res)
     except requests.Timeout:
         return {"estado":"TIMEOUT"}
