@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T16:28:14.224433+00:00",
+  "fecha_utc": "2026-11-20T16:29:55.693156+00:00",
   "alcance": "35 países OPS; solo agregados nacionales",
   "derechos": "IDMC: CC BY-NC-SA 3.0 IGO; AWSD: atribución a Humanitarian Outcomes",
   "awsd": {
@@ -63,6 +63,77 @@
       "subtype",
       "type",
       "year"
-    ]
+    ],
+    "categorias": {
+      "displacement_type": {
+        "Disaster": 3564,
+        "Conflict": 1737
+      },
+      "category": {
+        "Weather related": 3365,
+        "None": 1737,
+        "Geophysical": 165,
+        "Mixed disasters": 34
+      },
+      "type": {
+        "Flood": 1168,
+        "Storm": 992,
+        "International armed conflict (IAC)": 696,
+        "Drought": 583,
+        "Non-International armed conflict (NIAC)": 552,
+        "Wildfire": 458,
+        "Unclear/Unknown": 280,
+        "Other situations of violence (OSV)": 209,
+        "Mass Movement": 169,
+        "Earthquake": 129,
+        "Mixed disasters": 34,
+        "Volcanic activity": 17
+      },
+      "displacement_occurred": {
+        "Displacement without preventive evacuations reported": 3098,
+        "None": 2104,
+        "Displacement reporting preventive evacuations": 99
+      },
+      "qualifier": {
+        "total": 4509,
+        "more than or equal to": 540,
+        "approximately": 238,
+        "less than or equal to": 14
+      },
+      "role": {
+        "Recommended figure": 4732,
+        "Triangulation": 569
+      },
+      "year": {
+        "2026": 5299,
+        "2011": 1,
+        "2010": 1
+      }
+    },
+    "iso3_35_paises": {
+      "MEX": 57,
+      "ARG": 59,
+      "USA": 141,
+      "BRA": 386,
+      "HTI": 60,
+      "PER": 516,
+      "PRY": 2,
+      "URY": 11,
+      "PAN": 1,
+      "VCT": 1,
+      "CHL": 85,
+      "NIC": 4,
+      "HND": 1,
+      "ECU": 4,
+      "VEN": 8,
+      "CRI": 1,
+      "COL": 14,
+      "CAN": 25,
+      "GTM": 6,
+      "SLV": 10,
+      "BLZ": 1
+    },
+    "eventos_id_repetidos": 3000,
+    "figuras_numericas": 5301
   }
 }
