@@ -20,6 +20,7 @@ from mapa_coe import pa_map
 from detalle_riesgo import risk_page, acaps_detail
 from tarjetas_resumen import metric_strip
 from perfil_integral import profile_page
+from pin_utils import intersectoral_pin, sectoral_pin
 
 BLUE = "#009BDA"
 ORANGE = "#F36B32"
@@ -337,43 +338,114 @@ def _dtm_tab(D, selected):
 
 
 def _pin_tab(D, selected):
-    n = valid_needs(filtered(D["needs"], selected))
-    if n.empty:
-        info_missing("totales intersectoriales de personas en necesidad")
+    """PiN intersectorial entre países y desglose sectorial por país y año.
+
+    Las estimaciones de sectores no son categorías mutuamente excluyentes,
+    ni pueden agregarse para calcular un PiN regional o nacional.
+    """
+    needs = filtered(D["needs"], selected)
+    general = intersectoral_pin(needs)
+    sectors = sectoral_pin(needs)
+    if general.empty and sectors.empty:
+        info_missing("estimaciones HAPI de personas en necesidad (PiN)")
         return
-    n = n.copy()
-    n["anio"] = pd.to_numeric(n["reference_period_start"].astype(str).str[:4],
-                              errors="coerce")
-    # Evitar dobles conteos: seleccionar solo país-año con una fila inequívoca.
-    n = n[~n.duplicated(["iso3", "anio"], keep=False)]
-    n = n.sort_values("anio").drop_duplicates("iso3", keep="last")
-    n = n.dropna(subset=["population", "anio"])
-    if n.empty:
-        info_missing("totales nacionales no duplicados de PiN")
+
+    names = _countries(D)
+    st.markdown("#### PiN intersectorial (general)")
+    if general.empty:
+        info_missing("estimaciones intersectoriales nacionales")
+    else:
+        n = (general.sort_values("anio")
+             .drop_duplicates("iso3", keep="last").copy())
+        n["pais"] = n["iso3"].map(names).fillna(n["iso3"])
+        n["anio"] = n["anio"].astype(int)
+        metric_strip([
+            (n["iso3"].nunique(), "PAÍSES CON PiN", "Estimación intersectorial"),
+            (f"{n['anio'].min()}–{n['anio'].max()}",
+             "AÑOS DE REFERENCIA", "Último corte disponible por país"),
+        ])
+        _section_note(
+            "PiN intersectorial = estimación general de personas que necesitan "
+            "asistencia humanitaria. Los años pueden variar entre países; "
+            "no se presenta un total regional."
+        )
+        left, right = st.columns(2, gap="medium")
+        with left:
+            with card("Estimaciones nacionales de PiN",
+                      "Última estimación publicada para cada país y su año.",
+                      "OCHA Humanitarian Needs vía HAPI", height=H):
+                plot(strip_countries(
+                    n, name="pais", val="population", year="anio",
+                    units="Personas en necesidad", decimals=0,
+                ), height=365)
+        with right:
+            with table_card("Valores y años de referencia",
+                            "Cada país tiene una estimación intersectorial.",
+                            "OCHA Humanitarian Needs vía HAPI", height=H):
+                table(n.sort_values("population", ascending=False),
+                      height=390, columns=["pais", "anio", "population"],
+                      labels={"pais": "País", "anio": "Año",
+                              "population": "Personas en necesidad"})
+
+    st.markdown("#### PiN por sector")
+    _section_note(
+        "Consulta las necesidades por sector para un solo país y año. "
+        "Una persona puede necesitar atención en varios sectores; las cifras "
+        "no se suman ni representan partes excluyentes del PiN general. "
+        "Los subsectores de protección pueden solaparse con Protección."
+    )
+    if sectors.empty:
+        info_missing("desglose de necesidades por sector en el ámbito seleccionado")
         return
-    n["pais"] = n["iso3"].map(_countries(D))
-    n["anio"] = n["anio"].astype(int)
-    metric_strip([
-        (n["iso3"].nunique(),"PAÍSES CON PiN","Estimación intersectorial"),
-        (f"{n['anio'].min()}–{n['anio'].max()}","AÑOS DE REFERENCIA","No necesariamente comparables"),
-    ])
-    _section_note("PiN = personas en necesidad de asistencia humanitaria. Los años difieren "
-                  "entre países; no se suman sectores ni se presenta un total regional.")
-    left, right = st.columns(2, gap="medium")
-    with left:
-        with card("Estimaciones nacionales de PiN",
-                  "Último año inequívoco disponible para cada país, visible en el gráfico.",
+    available = sorted(sectors["iso3"].dropna().unique(),
+                       key=lambda iso: names.get(iso, iso))
+    left_filter, right_filter = st.columns(2, gap="medium")
+    with left_filter:
+        country = st.selectbox(
+            "País", available, index=available.index("COL") if "COL" in available else 0,
+            format_func=lambda iso: names.get(iso, iso), key="op_pin_sector_country",
+            width="stretch",
+        )
+    chosen = sectors[sectors["iso3"].eq(country)].copy()
+    years = sorted(chosen["anio"].dropna().astype(int).unique(), reverse=True)
+    with right_filter:
+        year = st.selectbox(
+            "Año de referencia sectorial", years,
+            key="op_pin_sector_year", width="stretch",
+        )
+    chosen = chosen[chosen["anio"].eq(year)].copy()
+    chosen = chosen.sort_values("population", ascending=False)
+    matched = general[(general["iso3"].eq(country)) &
+                      (general["anio"].eq(year))]
+    if matched.empty:
+        _section_note(
+            f"{names.get(country, country)} · {year}: hay {len(chosen)} sectores "
+            "reportados, pero no un PiN intersectorial inequívoco del mismo año. "
+            "No se calculan totales a partir de los sectores."
+        )
+    else:
+        general_value = fmt(matched["population"].iloc[0], 0)
+        _section_note(
+            f"{names.get(country, country)} · {year}: PiN intersectorial "
+            f"{general_value} personas y {len(chosen)} sectores con estimaciones. "
+            "Las cifras sectoriales pueden superponerse."
+        )
+
+    l, r = st.columns(2, gap="medium")
+    with l:
+        with card("Necesidades por sector",
+                  f"{names.get(country, country)} · {year} · personas en necesidad.",
                   "OCHA Humanitarian Needs vía HAPI", height=H):
-            plot(strip_countries(n, name="pais", val="population", year="anio",
-                                 units="Personas en necesidad", decimals=0), height=365)
-    with right:
-        with table_card("Valores y años de referencia",
-                  "Cada fila corresponde a una estimación intersectorial distinta.",
-                  "OCHA Humanitarian Needs vía HAPI", height=H):
-            table(n.sort_values("population", ascending=False),
-                  height=390, columns=["pais", "anio", "population"],
-                  labels={"pais": "País", "anio": "Año",
-                          "population": "Personas en necesidad"})
+            plot(rank_bars(
+                chosen, label="sector", value="population", limit=13,
+                units="Personas en necesidad", formats=".0f",
+            ), height=365)
+    with r:
+        with table_card("Estimaciones sectoriales",
+                        "Valores por sector del año seleccionado; no sumables.",
+                        "OCHA Humanitarian Needs vía HAPI", height=H):
+            table(chosen, height=390, columns=["sector", "population"],
+                  labels={"sector": "Sector", "population": "Personas en necesidad"})
 
 
 def movilidad_page(D, selected, names):
