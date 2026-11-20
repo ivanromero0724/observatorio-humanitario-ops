@@ -6,7 +6,7 @@ from streamlit.testing.v1 import AppTest
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "app.py"
 PAGES = [
-    "Amenazas y eventos", "Movilidad y necesidades",
+    "Amenazas y eventos", "Movilidad y desplazamiento",
     "Vulnerabilidad y respuesta", "Perfiles por país",
 ]
 
@@ -55,7 +55,7 @@ def main():
                 assert "st.select_slider(" in (ROOT / "paginas_operativas.py").read_text(
                     encoding="utf-8")
                 check(at, "deslizador renderizado")
-        elif page == "Movilidad y necesidades":
+        elif page == "Movilidad y desplazamiento":
             select_if_present(at, "op_un_group")
             select_if_present(at, "op_un_year")
             select_if_present(at, "op_dtm_country")
