@@ -201,7 +201,7 @@ def main():
             ("Movilidad y necesidades", "Desplazamiento interno",
              "Distribución geográfica", "movilidad_gidd"),
             ("Movilidad y necesidades", "Desplazamiento interno",
-             "Actualizaciones por país", "movilidad_idu"),
+             "Eventos IDU por país", "movilidad_idu"),
             ("Movilidad y necesidades", "Desplazamiento interno",
              "Población desplazada registrada en la operación", "movilidad_dtm"),
             ("Movilidad y necesidades", "Personas en necesidad",
