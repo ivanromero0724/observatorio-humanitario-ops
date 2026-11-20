@@ -70,8 +70,8 @@ def main():
         elif page == "Vulnerabilidad y respuesta":
             select_if_present(at, "op_ops_ind")
             select_if_present(at, "op_ipc_country")
-            # La incidencia de pobreza debe poder seleccionarse en Salud y
-            # sociedad, no únicamente dentro del subtema separado Pobreza.
+            # Pobreza aparece al principio del selector de Salud y sociedad,
+            # sin una pestaña separada que duplique la visualización.
             groups = [x for x in at.get("segmented_control")
                       if x.key == "op_vulnerabilidad_grupo"]
             if groups:
@@ -81,6 +81,10 @@ def main():
                 assert indicators, "Falta selector de indicadores de contexto"
                 assert "MPI_HEADCOUNT_RATIO" in indicators[0].options, (
                     "No aparece pobreza multidimensional en Salud y sociedad")
+                assert list(indicators[0].options).index("MPI_HEADCOUNT_RATIO") <= 1, (
+                    "La opción de pobreza debe ser visible sin desplazar el menú")
+                assert "Pobreza" not in groups[0].options, (
+                    "Pobreza debe estar integrada en Salud y sociedad")
                 indicators[0].set_value("MPI_HEADCOUNT_RATIO").run()
                 check(at, "vulnerabilidad · incidencia de pobreza")
                 years = [x for x in at.checkbox if x.key == "op_ops_common"]
