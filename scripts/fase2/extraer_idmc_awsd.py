@@ -240,10 +240,24 @@ def inspect_idu(token):
         return {"estado":"ESQUEMA_DESCONOCIDO"}
     if not isinstance(items,list):
         return {"estado":"SIN_LISTA","forma":shape,"campos_superiores":keys[:35]}
+    sample=[row for row in items if isinstance(row,dict)]
+    from collections import Counter
+    summaries={}
+    for key in ("displacement_type","category","type","displacement_occurred",
+                "qualifier","role","year"):
+        counts=Counter(str(row.get(key,""))[:60] for row in sample)
+        summaries[key]=dict(counts.most_common(12))
+    iso_codes=Counter(str(row.get("iso3",""))[:4] for row in sample)
+    ids=[str(row.get("event_id")) for row in sample if row.get("event_id") is not None]
+    figures_valid=sum(as_nonnegative(row.get("figure")) is not None for row in sample)
     return {"estado":"ESQUEMA_IDENTIFICADO","forma":shape,
             "registros":len(items),"campos_superiores":keys[:35],
             "campos_registro":sorted(items[0].keys())[:70]
-               if items and isinstance(items[0],dict) else []}
+               if items and isinstance(items[0],dict) else [],
+            "categorias":summaries,
+            "iso3_35_paises":{k:v for k,v in iso_codes.items() if k in catalog()},
+            "eventos_id_repetidos":len(ids)-len(set(ids)),
+            "figuras_numericas":figures_valid}
 
 def main():
     cat=catalog()
