@@ -157,55 +157,31 @@ def acled_conflict_tab(D: dict, selected: set[str]) -> None:
     counts = frame["nivel_indice"].value_counts().to_dict()
     metric_strip([
         (fmt(counts.get(key, 0)), f"CONFLICTO {label.upper()}",
-         "Clasificación ACLED 2025, no prioridad OPS")
+         "Clasificación ACLED 2025")
         for key, (label, _) in CLASSES.items()
     ])
     st.caption(
         f"ACLED Conflict Index 2025 · periodo {PERIOD}. "
         "La clasificación y el ranking son mundiales; se muestra el subconjunto "
-        "de países de las Américas seleccionado. No equivale al riesgo INFORM, "
-        "a la severidad ACAPS ni a un nivel de prioridad institucional OPS."
+        "de países de las Américas seleccionado. Se interpreta por separado "
+        "de los índices INFORM y ACAPS."
     )
 
     a, b = st.columns(2, gap="medium")
     with a:
         with card("Clasificación del conflicto por país",
-                  "Cuatro niveles originales de ACLED · no escala OPS.",
+                  "Cuatro niveles originales de ACLED.",
                   SOURCE, height=H):
             _class_map(frame)
     with b:
-        with card("Países mejor posicionados en el ranking de conflicto",
+        with card("Países con mayor conflicto según ACLED",
                   "15 primeros del ámbito · puesto mundial (1 = mayor conflicto).",
                   SOURCE, height=H):
             plot(_world_ranking(frame), height=362)
 
-    st.markdown("#### Cuatro dimensiones del índice")
-    choices = sorted(frame["iso3"].unique(), key=lambda c:
-                     frame.set_index("iso3").loc[c, "pais"])
-    default = "COL" if "COL" in choices else choices[0]
-    country = st.selectbox(
-        "País para examinar las dimensiones", choices,
-        index=choices.index(default),
-        format_func=lambda c: frame.set_index("iso3").loc[c, "pais"],
-        key="op_acled_index_country", width="stretch",
-    )
-    r = frame.set_index("iso3").loc[country]
-    metric_strip([
-        (fmt(r["fallecidos_reportados"], 0), "LETALIDAD",
-         "Fallecidos reportados, no estimación exhaustiva"),
-        (f'{r["difusion_pct"]:.1f} %', "DIFUSIÓN TERRITORIAL",
-         "Porcentaje de celdas habitadas de alta violencia"),
-        (fmt(r["eventos_violencia_dirigida_civiles"], 0),
-         "PELIGRO PARA CIVILES", "Eventos de violencia dirigidos a civiles"),
-        (fmt(r["grupos_armados_activos"], 0), "FRAGMENTACIÓN",
-         "Grupos activos conforme a la definición ACLED"),
-    ])
-    st.caption(
-        f'{r["pais"]} · clasificación {r["nivel_es"]} · puesto mundial '
-        f'{int(r["ranking_global"])}. Cada dimensión tiene unidades diferentes: '
-        "no se suman ni se interpretan como puntuaciones comparables."
-    )
-
+    st.markdown("#### Comparación regional de las dimensiones")
+    st.caption("Selecciona una dimensión para comparar los países del ámbito. "
+               "Esta gráfica y su tabla no dependen del país seleccionado en el detalle.")
     selected_dimension = st.selectbox(
         "Indicador para comparar países", list(DIMENSIONS),
         key="op_acled_index_dimension", width="stretch",
@@ -236,6 +212,35 @@ def acled_conflict_tab(D: dict, selected: set[str]) -> None:
                           "difusion_pct": "Difusión (%)",
                           "eventos_violencia_dirigida_civiles": "Eventos contra civiles",
                           "grupos_armados_activos": "Grupos activos"})
+    st.markdown("#### Detalle de un país")
+    st.caption("El selector de país modifica solamente estos indicadores; "
+               "la comparación anterior siempre usa todos los países del ámbito.")
+    choices = sorted(frame["iso3"].unique(), key=lambda c:
+                     frame.set_index("iso3").loc[c, "pais"])
+    default = "COL" if "COL" in choices else choices[0]
+    country = st.selectbox(
+        "País para examinar las dimensiones", choices,
+        index=choices.index(default),
+        format_func=lambda c: frame.set_index("iso3").loc[c, "pais"],
+        key="op_acled_index_country", width="stretch",
+    )
+    r = frame.set_index("iso3").loc[country]
+    metric_strip([
+        (fmt(r["fallecidos_reportados"], 0), "LETALIDAD",
+         "Fallecidos reportados, no estimación exhaustiva"),
+        (f'{r["difusion_pct"]:.1f} %', "DIFUSIÓN TERRITORIAL",
+         "Porcentaje de celdas habitadas de alta violencia"),
+        (fmt(r["eventos_violencia_dirigida_civiles"], 0),
+         "PELIGRO PARA CIVILES", "Eventos de violencia dirigidos a civiles"),
+        (fmt(r["grupos_armados_activos"], 0), "FRAGMENTACIÓN",
+         "Grupos activos conforme a la definición ACLED"),
+    ])
+    st.caption(
+        f'{r["pais"]} · clasificación {r["nivel_es"]} · puesto mundial '
+        f'{int(r["ranking_global"])}. Cada dimensión tiene unidades diferentes: '
+        "no se suman ni se interpretan como puntuaciones comparables."
+    )
+
     st.caption(
         "Fuente: ACLED, Conflict Index (edición diciembre 2025). "
         "Datos por país del archivo original, asociados con códigos ISO3 y "
@@ -257,5 +262,5 @@ def profile_acled_conflict(D: dict, selected: set[str]) -> None:
         st.metric("Puesto mundial", f'{int(r["ranking_global"])}')
         st.metric("Fallecidos reportados", fmt(r["fallecidos_reportados"], 0))
         st.metric("Difusión territorial", f'{r["difusion_pct"]:.1f} %')
-        st.caption("Ranking global, no prioridad OPS. Indicadores y método: "
+        st.caption("Clasificación y puesto mundial de ACLED. Indicadores y método: "
                    + SOURCE_URL)
