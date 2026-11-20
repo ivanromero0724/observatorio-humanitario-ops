@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T15:45:45.667857+00:00",
+  "fecha_utc": "2026-11-20T15:46:55.491395+00:00",
   "proposito": "Prueba de conexiones, sin microdatos ni credenciales",
   "IDMC": {
     "fuente": "IDMC",
@@ -138,13 +138,19 @@
         "http": 302,
         "content_type": "text/html",
         "redirect": true,
-        "estado": "REDIRECCION_NO_SEGUIDA"
+        "estado": "REDIRECCION_NO_SEGUIDA",
+        "redirect_host": "helix-copilot-prod-helix-media-external.s3.amazonaws.com",
+        "redirect_same_host": false,
+        "redirect_kind": "OTRA_RUTA"
       },
       "idu_todos": {
         "http": 302,
         "content_type": "text/html",
         "redirect": true,
-        "estado": "REDIRECCION_NO_SEGUIDA"
+        "estado": "REDIRECCION_NO_SEGUIDA",
+        "redirect_host": "helix-copilot-prod-helix-media-external.s3.amazonaws.com",
+        "redirect_same_host": false,
+        "redirect_kind": "OTRA_RUTA"
       }
     },
     "estado": "PARCIAL"
