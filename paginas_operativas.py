@@ -520,8 +520,10 @@ def _ops_tab(D, selected):
     poverty = _poverty_context_frame(D, selected)
     existing = set(ops["indicador"].dropna()) if not ops.empty else set()
     opts = [x for x in OPS_OPTIONS if x in existing]
-    if not poverty.empty:
-        opts.append(POVERTY_CONTEXT_INDICATOR)
+    # El indicador debe ser visible sin desplazarse al final del selector.
+    # Mantenerlo aunque el país seleccionado no disponga de registros MPI.
+    if not D.get("mpi", pd.DataFrame()).empty:
+        opts.insert(1 if "GINI" in opts else 0, POVERTY_CONTEXT_INDICATOR)
     if not opts:
         info_missing("indicadores de salud, sociedad y pobreza")
         return
@@ -546,7 +548,8 @@ def _ops_tab(D, selected):
             if common and years else None)
     picked = latest_ops(source_data, choice, year).copy()
     if picked.empty:
-        info_missing("observaciones para la selección")
+        info_missing("incidencia de pobreza multidimensional para el ámbito y año seleccionados"
+                     if is_poverty else "observaciones para la selección")
         return
     picked["anio"] = picked["periodo"].astype(int)
     label = CONTEXT_INDICATOR_LABELS.get(choice, choice)
@@ -578,29 +581,6 @@ def _ops_tab(D, selected):
         plot(strip_countries(picked, name="pais", val="valor", year="anio",
                              units=label, max_items=25), height=425)
 
-
-def _mpi_tab(D, selected):
-    mpi = filtered(D["mpi"], selected)
-    if mpi.empty:
-        info_missing("pobreza multidimensional")
-        return
-    mpi = mpi.copy()
-    mpi["anio"] = pd.to_numeric(mpi["reference_period_start"].astype(str).str[:4],
-                                errors="coerce")
-    mpi = mpi.sort_values("anio").drop_duplicates("iso3", keep="last")
-    mpi = mpi.dropna(subset=["headcount_ratio", "anio"])
-    if mpi.empty:
-        info_missing("incidencia de pobreza multidimensional")
-        return
-    mpi["anio"] = mpi["anio"].astype(int)
-    st.metric("Países con estimaciones", mpi["iso3"].nunique())
-    _section_note("Incidencia de pobreza multidimensional (porcentaje de población). "
-                  "La publicación y el año de referencia varían entre países.")
-    with card("Incidencia de pobreza multidimensional",
-              "Comparación del último dato disponible por país.",
-              "OPHI MPI vía OCHA HAPI"):
-        plot(strip_countries(mpi, name="pais", val="headcount_ratio",
-                             year="anio", units="Población (%)"), height=430)
 
 
 def _ipc_tab(D, selected):
@@ -698,7 +678,7 @@ def vulnerabilidad_page(D, selected, names):
           "Riesgo estructural, contexto social y sanitario, personas en necesidad, seguridad alimentaria y respuesta.")
     topic = _subgroup("Subtema",
                       ["Riesgo INFORM", "Salud y sociedad", "Personas en necesidad",
-                       "Pobreza", "Seguridad alimentaria", "Respuesta"],
+                       "Seguridad alimentaria", "Respuesta"],
                       "op_vulnerabilidad_grupo")
     if topic == "Riesgo INFORM":
         risk_page(D, selected)
@@ -706,8 +686,6 @@ def vulnerabilidad_page(D, selected, names):
         _ops_tab(D, selected)
     elif topic == "Personas en necesidad":
         _pin_tab(D, selected)
-    elif topic == "Pobreza":
-        _mpi_tab(D, selected)
     elif topic == "Seguridad alimentaria":
         _ipc_tab(D, selected)
     else:
