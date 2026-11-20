@@ -17,7 +17,7 @@ OUTPUT=Path("docs/qa_capturas")
 OUTPUT.mkdir(parents=True,exist_ok=True)
 PAGES=[
     ("Amenazas y eventos","amenazas_eventos"),
-    ("Movilidad y necesidades","movilidad_necesidades"),
+    ("Movilidad y desplazamiento","movilidad_necesidades"),
     ("Vulnerabilidad y respuesta","vulnerabilidad_respuesta"),
     ("Perfiles por país","perfil_pais"),
 ]
@@ -199,14 +199,14 @@ def main():
              "Tres pilares de acceso", "acaps_desglose"),
             ("Amenazas y eventos", "Seguridad del personal humanitario",
              "Incidentes de seguridad por país", "amenazas_awsd"),
-            ("Movilidad y necesidades", "Desplazamiento interno",
+            ("Movilidad y desplazamiento", "Desplazamiento interno",
              "Distribución geográfica", "movilidad_gidd"),
-            ("Movilidad y necesidades", "Desplazamiento interno",
+            ("Movilidad y desplazamiento", "Desplazamiento interno",
              "Eventos IDU por país", "movilidad_idu"),
-            ("Movilidad y necesidades", "Desplazamiento interno",
+            ("Movilidad y desplazamiento", "Desplazamiento interno",
              "Población desplazada registrada en la operación", "movilidad_dtm"),
-            ("Movilidad y necesidades", "Personas en necesidad",
-             "Estimaciones nacionales de PiN", "movilidad_pin"),
+            ("Vulnerabilidad y respuesta", "Personas en necesidad",
+              "Estimaciones nacionales de PiN", "vulnerabilidad_pin"),
             ("Vulnerabilidad y respuesta", "Salud y sociedad",
              "Comparación entre países", "vulnerabilidad_ops"),
             ("Vulnerabilidad y respuesta", "Pobreza",
@@ -215,7 +215,7 @@ def main():
              "Población estimada por fase IPC", "vulnerabilidad_ipc"),
             ("Vulnerabilidad y respuesta", "Respuesta",
              "Organizaciones reportadas por sector", "vulnerabilidad_respuesta_3w"),
-            ("Perfiles por país", "Movilidad y necesidades",
+            ("Perfiles por país", "Movilidad y desplazamiento",
              "Refugio y asilo en el país de acogida", "perfil_movilidad"),
             ("Perfiles por país", "Riesgo y vulnerabilidad",
              "Riesgo estructural INFORM", "perfil_riesgo"),
@@ -249,7 +249,7 @@ def main():
                         "perfil_riesgo", "perfil_informes"):
                 page.screenshot(path=str(OUTPUT/f"{shot}.png"),
                                 full_page=True, animations="disabled", timeout=60000)
-            if shot == "movilidad_pin":
+            if shot == "vulnerabilidad_pin":
                 # No filas de relleno ni valores pegados como 7900000.
                 compact=page.locator(".ops-data-table").first
                 compact.wait_for(timeout=15000)
