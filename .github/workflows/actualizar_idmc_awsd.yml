@@ -1,0 +1,42 @@
+name: Actualizar IDMC GIDD y AWSD
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 13 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase2/extraer_idmc_awsd.py
+      - .github/workflows/actualizar_idmc_awsd.yml
+permissions:
+  contents: write
+concurrency:
+  group: actualizar-idmc-awsd
+  cancel-in-progress: true
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.31,<3'
+      - name: Descargar datos validados sin exponer credenciales
+        env:
+          IDMC_API_TOKEN: ${{ secrets.IDMC_API_TOKEN }}
+          AWSD_API_KEY: ${{ secrets.AWSD_API_KEY }}
+        run: python scripts/fase2/extraer_idmc_awsd.py
+      - name: Publicar solo datos agregados y metadatos seguros
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/observaciones/idmc_gidd_conflicto_pais_anio.csv \
+                  data/observaciones/awsd_seguridad_pais_anio.csv \
+                  docs/fase2/monitoreo_idmc_awsd.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: actualizar agregados IDMC GIDD y AWSD [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
