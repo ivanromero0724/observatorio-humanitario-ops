@@ -194,6 +194,8 @@ def main():
         # comprobar que la navegación secundaria evita páginas larguísimas.
         previous_pair = None
         for page_label, topic, expected, shot in [
+            ("Amenazas y eventos", "Índice de conflicto (ACLED)",
+             "Clasificación del conflicto por país", "amenazas_acled_index"),
             ("Amenazas y eventos", "Crisis evaluadas y acceso",
              "Tres pilares de acceso", "acaps_desglose"),
             ("Amenazas y eventos", "Seguridad del personal humanitario",
@@ -251,7 +253,7 @@ def main():
             page.wait_for_timeout(900)
             if page.locator('[data-testid="stException"]').count():
                 raise RuntimeError(f"{page_label} / {topic}: excepción en la app")
-            if shot in ("acaps_desglose", "amenazas_awsd", "movilidad_acnur", "movilidad_gidd",
+            if shot in ("amenazas_acled_index", "acaps_desglose", "amenazas_awsd", "movilidad_acnur", "movilidad_gidd",
                         "movilidad_idu", "vulnerabilidad_ops",
                         "vulnerabilidad_respuesta_3w", "perfil_movilidad",
                         "perfil_riesgo", "perfil_informes"):
