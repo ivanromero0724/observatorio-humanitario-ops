@@ -12,7 +12,7 @@ personas y servicios. **No es un monitor de brotes ni de El Niño.**
 **Interfaz activa:** [`app.py`](app.py) → [`observatorio_v6.py`](observatorio_v6.py).
 Las tres páginas principales utilizan solo indicadores con información integrada:
 
-1. **Amenazas y eventos:** violencia agregada (HAPI/ACLED), crisis y acceso (ACAPS), seguridad del personal humanitario (AWSD) y **Movilidad y desplazamiento** como subtema con ACNUR/HAPI, IDMC GIDD/IDU y OIM DTM.
+1. **Amenazas y eventos:** violencia agregada (HAPI/ACLED), **ACLED Conflict Index 2025** con clasificación mundial, ranking y cuatro dimensiones, crisis y acceso (ACAPS), seguridad del personal humanitario (AWSD) y **Movilidad y desplazamiento** como subtema con ACNUR/HAPI, IDMC GIDD/IDU y OIM DTM.
 2. **Vulnerabilidad y respuesta:** personas en necesidad (PiN intersectorial y sectorial OCHA/HAPI), indicadores sociales y de salud (OPS), pobreza MPI, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
 3. **Perfiles por país:** resumen de eventos, crisis, movilidad, indicadores de capacidad sanitaria y reportes ReliefWeb.
 
@@ -131,3 +131,11 @@ El observatorio usa la identidad del repositorio `COE-regional`: tipografía DM 
 ### Lectura de datos recientes IDMC IDU
 
 La vista **Desplazamiento reciente** agrupa eventos únicos de conflicto y violencia registrados por IDMC IDU en una ventana seleccionable de 1, 3, 6 o 12 meses de **inicio del evento**, tomando como referencia el mes más reciente con registros en el ámbito consultado. El origen es una descarga de actualizaciones de los últimos 180 días; no equivale a una serie exhaustiva ni a cifras de personas desplazadas. Países sin actualizaciones publicadas se muestran sin dato, nunca como cero. El PiN se presenta en **Vulnerabilidad y respuesta**, no como cifra de movilidad.
+
+### Índice de conflicto ACLED 2025
+
+Fuente: [ACLED Conflict Index](https://acleddata.com/series/acled-conflict-index) (edición diciembre 2025); datos originales proporcionados en el archivo `ACLED_Conflict_Index_2025.xlsx` y reducidos a los 35 Estados soberanos del catálogo OPS en [data/observaciones/acled_conflict_index_2025.csv](data/observaciones/acled_conflict_index_2025.csv). Periodo de eventos: **1 de diciembre de 2024 a 28 de noviembre de 2025**. Los códigos ISO3 y los nombres en español se incorporan para interoperabilidad; no se recalculan los niveles ni los rangos originales de ACLED.
+
+En la sección **Amenazas y eventos → Índice de conflicto (ACLED)** se muestran: mapa de las cuatro categorías originales (extremo, alto, turbulento, bajo/inactivo), distribución por país, **ranking mundial** (no ranking exclusivo de América) y las cuatro dimensiones: letalidad (fallecidos reportados), difusión territorial (valor fuente en proporción convertido a **porcentaje**), peligro para civiles (eventos dirigidos a civiles) y fragmentación (grupos armados activos). Estas medidas tienen distintas unidades, no se suman ni constituyen un índice de prioridad OPS. La clasificación anual no se actualiza semanalmente; la edición 2025 es un corte histórico.
+
+**Atribución:** ACLED (Armed Conflict Location & Event Data), *Conflict Index, December 2025*, [acleddata.com/series/acled-conflict-index](https://acleddata.com/series/acled-conflict-index). Consulta del archivo original proporcionado: 20 de noviembre de 2026. Uso transformado: selección de 35 países, adición de código ISO3, etiquetas traducidas y difusión presentada como porcentaje. [Política de atribución](https://acleddata.com/attributionpolicy).
