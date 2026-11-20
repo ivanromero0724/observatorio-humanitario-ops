@@ -212,8 +212,6 @@ def main():
               "Estimaciones nacionales de PiN", "vulnerabilidad_pin"),
             ("Vulnerabilidad y respuesta", "Salud y sociedad",
              "Comparación entre países", "vulnerabilidad_ops"),
-            ("Vulnerabilidad y respuesta", "Pobreza",
-             "Incidencia de pobreza multidimensional", "vulnerabilidad_pobreza"),
             ("Vulnerabilidad y respuesta", "Seguridad alimentaria",
              "Población estimada por fase IPC", "vulnerabilidad_ipc"),
             ("Vulnerabilidad y respuesta", "Respuesta",
