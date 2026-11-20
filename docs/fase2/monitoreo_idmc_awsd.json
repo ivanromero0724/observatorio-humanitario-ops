@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T16:34:21.579928+00:00",
+  "fecha_utc": "2026-11-20T16:40:29.073106+00:00",
   "alcance": "35 países OPS; solo agregados nacionales",
   "derechos": "IDMC: CC BY-NC-SA 3.0 IGO; AWSD: atribución a Humanitarian Outcomes",
   "awsd": {
@@ -24,7 +24,7 @@
     "registros_descargados": 1010
   },
   "idu": {
-    "estado": "ESQUEMA_IDENTIFICADO",
+    "estado": "PUBLICADO",
     "forma": "list",
     "registros": 5301,
     "campos_superiores": [],
