@@ -13,7 +13,7 @@ personas y servicios. **No es un monitor de brotes ni de El Niño.**
 Las tres páginas principales utilizan solo indicadores con información integrada:
 
 1. **Amenazas y eventos:** violencia agregada (HAPI/ACLED), **ACLED Conflict Index 2025** con clasificación mundial, ranking y cuatro dimensiones, crisis y acceso (ACAPS), seguridad del personal humanitario (AWSD) y **Movilidad y desplazamiento** como subtema con ACNUR/HAPI, IDMC GIDD/IDU y OIM DTM.
-2. **Vulnerabilidad y respuesta:** personas en necesidad (PiN intersectorial y sectorial OCHA/HAPI), **Salud y sociedad** con indicadores OPS y **la incidencia de pobreza multidimensional de OPHI MPI/HAPI** (porcentaje con fecha propia y opción de año común), desglose adicional de pobreza MPI, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
+2. **Vulnerabilidad y respuesta:** personas en necesidad (PiN intersectorial y sectorial OCHA/HAPI), **Salud y sociedad** con indicadores OPS y **la incidencia de pobreza multidimensional de OPHI MPI/HAPI** (porcentaje con fecha propia y opción de año común), sin una pestaña de pobreza duplicada, inseguridad alimentaria IPC, presencia 3W y financiación FTS.
 3. **Perfiles por país:** resumen de eventos, crisis, movilidad, indicadores de capacidad sanitaria y reportes ReliefWeb.
 
 Las categorías aún sin datos integrados (crimen organizado, minería ilegal, ataques a salud y servicios esenciales afectados) no aparecen como filtros ni paneles vacíos; permanecen solo en documentación técnica para futura ampliación.
