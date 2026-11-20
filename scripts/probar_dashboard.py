@@ -121,7 +121,7 @@ def main():
             before=_data_file_signature()
             assert csv(relative).empty
             source.parent.mkdir(parents=True,exist_ok=True)
-            source.write_text("iso3,anio,mes,periodo,actualizaciones\\nCOL,2026,10,2026-10,4\\n",
+            source.write_text("iso3,anio,mes,periodo,actualizaciones\nCOL,2026,10,2026-10,4\n",
                               encoding="utf-8")
             after=_data_file_signature()
             assert before!=after, "No se detectó nuevo snapshot IDU"
