@@ -230,17 +230,21 @@ def _subgroup(label, values, key):
 
 def amenazas_page(D, selected, names):
     title("01 / AMENAZAS Y EVENTOS", "Amenazas y eventos humanitarios",
-          "Eventos de violencia y contexto de crisis: información verificable por país.")
+          "Violencia, crisis, seguridad humanitaria y movilidad forzada: "
+          "información verificable por país.")
     topic = _subgroup("Subtema", ["Eventos de violencia",
                                   "Crisis evaluadas y acceso",
-                                  "Seguridad del personal humanitario"],
+                                  "Seguridad del personal humanitario",
+                                  "Movilidad y desplazamiento"],
                       "op_amenazas_grupo")
     if topic == "Eventos de violencia":
         _event_tab(D, selected)
     elif topic == "Crisis evaluadas y acceso":
         _crisis_tab(D, selected)
-    else:
+    elif topic == "Seguridad del personal humanitario":
         awsd_tab(D, selected)
+    else:
+        _movilidad_tab(D, selected)
 
 
 def _acnur_tab(D, selected):
@@ -453,10 +457,11 @@ def _pin_tab(D, selected):
                   labels={"sector": "Sector", "population": "Personas en necesidad"})
 
 
-def movilidad_page(D, selected, names):
-    title("02 / MOVILIDAD Y DESPLAZAMIENTO", "Movilidad y desplazamiento",
-          "Refugio, asilo y desplazamiento interno documentado por IDMC y OIM.")
-    topic = _subgroup("Subtema",
+def _movilidad_tab(D, selected):
+    """Refugio, asilo y desplazamiento forzado dentro de Amenazas y eventos."""
+    st.caption("Refugio y asilo (ACNUR), desplazamiento interno (IDMC) "
+               "y operaciones de movilidad (OIM DTM); son indicadores distintos.")
+    topic = _subgroup("Tipo de movilidad",
                       ["Refugio y asilo", "Desplazamiento interno"],
                       "op_movilidad_grupo")
     if topic == "Refugio y asilo":
