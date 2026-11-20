@@ -145,6 +145,11 @@ def main():
     assert "def acled_conflict_tab(" in ci_module
     assert "def profile_acled_conflict(" in ci_module
     assert "No se suman" in ci_module or "no se suman" in ci_module
+    assert '"Clasificación ACLED 2025, no prioridad OPS"' not in ci_module
+    assert (ci_module.index('#### Comparación regional de las dimensiones')
+            < ci_module.index('#### Detalle de un país'))
+    assert ci_module.index('key="op_acled_index_dimension"') < ci_module.index(
+        'key="op_acled_index_country"')
     assert '"Índice de conflicto (ACLED)"' in (
         ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     gidd=D["idmc_gidd"]
@@ -179,11 +184,26 @@ def main():
     six_start=str(pd.Period(idu["periodo"].max(),freq="M")-5)
     recent=idu[idu["periodo"].astype(str).between(six_start,idu["periodo"].max())]
     assert recent["actualizaciones"].sum()>0
+    # El selector Salud y sociedad incluye incidencia OPHI MPI, preservando
+    # exactamente el porcentaje fuente (headcount_ratio ya está en %).
+    from paginas_operativas import _poverty_context_frame, POVERTY_CONTEXT_INDICATOR
+    poverty=_poverty_context_frame(D,set(D["countries"]["iso3"]))
+    assert not poverty.empty
+    assert poverty["iso3"].nunique()>=20
+    assert poverty["indicador"].eq(POVERTY_CONTEXT_INDICATOR).all()
+    assert not poverty.duplicated(["iso3","periodo"]).any()
+    mex=poverty[(poverty["iso3"]=="MEX")&(poverty["periodo"]==2023)]
+    assert len(mex)==1 and abs(float(mex["valor"].iloc[0])-5.274)<1e-7
+    assert "OPHI MPI" in (ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     assert operational.index('elif topic == "Personas en necesidad"') > operational.index('def vulnerabilidad_page(')
     assert '["Refugio y asilo", "Desplazamiento interno"]' in operational
     for name in ("amenazas_page", "_movilidad_tab", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
+    assert '"Incidencia de pobreza multidimensional (%)"' in operational
+    assert "POVERTY_CONTEXT_INDICATOR" in operational
+    assert '"op_ops_ind"' in operational
+    assert '"op_ops_common"' in operational
     assert '"Movilidad y desplazamiento"' in operational.split(
         'def amenazas_page(')[1].split('def _acnur_tab(')[0]
     assert "_movilidad_tab(D, selected)" in operational
