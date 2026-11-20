@@ -469,7 +469,7 @@ def _documents(D,chosen):
 
 
 def profile_page(D, selected, names):
-    title("04 / PERFILES POR PAÍS","Ficha humanitaria por país",
+    title("03 / PERFILES POR PAÍS","Ficha humanitaria por país",
           "Todos los ámbitos del observatorio, reunidos para un país con sus fuentes y fechas.")
     choices=sorted(selected,key=lambda c:names.get(c,c))
     if not choices:
