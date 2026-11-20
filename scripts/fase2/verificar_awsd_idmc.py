@@ -90,9 +90,23 @@ def query(url, params=None, headers=None):
             profile["redirect_same_host"]=(destination.hostname==source.hostname
                                            and destination.scheme=="https")
             profile["redirect_kind"]=(
-                "API_IDU" if destination.path.startswith("/external-api/idus/")
+                "ALMACENAMIENTO_IDMC" if destination.hostname==
+                "helix-copilot-prod-helix-media-external.s3.amazonaws.com"
                 else "OTRA_RUTA"
             )
+            if (destination.hostname==
+                "helix-copilot-prod-helix-media-external.s3.amazonaws.com"
+                and destination.scheme=="https"):
+                try:
+                    # URL S3 firmada por IDMC: no anexar token original,
+                    # no imprimir ni almacenar URL, firma o contenido.
+                    download=S.get(destination.geturl(),stream=True,
+                                   allow_redirects=False,
+                                   headers={"Range":"bytes=0-65535"},
+                                   timeout=(12,40))
+                    profile["archivo"]=response_profile(download)
+                except requests.RequestException:
+                    profile["archivo"]={"estado":"ERROR_DESCARGA"}
             return profile
         return response_profile(res)
     except requests.Timeout:
@@ -122,10 +136,16 @@ def idmc():
     for tag,path in paths.items():
         r["endpoints"][tag]=query(base+path,
               params={"client_id":secret,"format":"json","limit":2,"page_size":2})
-    main=[r["endpoints"]["gidd_conflicto"],r["endpoints"]["idu_ultimos_180_dias"]]
-    r["estado"]=("CONECTADO" if all(x.get("estado") in
-                   ("JSON_VALIDO","JSON_GRANDE_PARCIAL") and x.get("http")==200 for x in main)
-                 else "PARCIAL" if any(x.get("http")==200 for x in main) else "POR_VALIDAR")
+    gidd=r["endpoints"]["gidd_conflicto"]
+    idu=r["endpoints"]["idu_ultimos_180_dias"]
+    gidd_ok=(gidd.get("http")==200 and gidd.get("estado")=="JSON_VALIDO")
+    idu_file=idu.get("archivo",{})
+    idu_ok=(idu.get("http")==302
+            and idu.get("redirect_kind")=="ALMACENAMIENTO_IDMC"
+            and idu_file.get("http") in (200,206)
+            and idu_file.get("estado") in ("JSON_VALIDO","JSON_GRANDE_PARCIAL"))
+    r["estado"]=("CONECTADO" if gidd_ok and idu_ok
+                 else "GIDD_OK_IDU_PENDIENTE" if gidd_ok else "POR_VALIDAR")
     return r
 
 def awsd():
