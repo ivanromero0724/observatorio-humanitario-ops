@@ -202,6 +202,9 @@ def main():
         assert f"def {name}(" in operational
     assert '"Incidencia de pobreza multidimensional (%)"' in operational
     assert "POVERTY_CONTEXT_INDICATOR" in operational
+    assert 'opts.insert(1 if "GINI" in opts else 0, POVERTY_CONTEXT_INDICATOR)' in operational
+    assert '"Pobreza", "Seguridad alimentaria"' not in operational
+    assert 'elif topic == "Pobreza":' not in operational
     assert '"op_ops_ind"' in operational
     assert '"op_ops_common"' in operational
     assert '"Movilidad y desplazamiento"' in operational.split(
