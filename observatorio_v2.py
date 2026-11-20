@@ -77,6 +77,7 @@ SOURCES={
     "awsd":"data/observaciones/awsd_seguridad_pais_anio.csv",
     "idu":"data/observaciones/idmc_idu_pais_mes.csv",
     "awsd_types":"data/observaciones/awsd_tipos_pais_anio.csv",
+    "acled_conflict_index":"data/observaciones/acled_conflict_index_2025.csv",
 }
 META={
     "acaps":"docs/fase2/acaps_actualizacion.json",
@@ -171,6 +172,14 @@ def _load_all(file_signature:tuple)->dict:
             elif key=="dtm":
                 df["personas_idp_reportadas"]=pd.to_numeric(
                     df["personas_idp_reportadas"],errors="coerce")
+            elif key=="acled_conflict_index":
+                for col in ("anio","ranking_global","ranking_letalidad",
+                            "ranking_difusion","ranking_peligro_civiles",
+                            "ranking_fragmentacion","fallecidos_reportados",
+                            "proporcion_difusion",
+                            "eventos_violencia_dirigida_civiles",
+                            "grupos_armados_activos"):
+                    df[col]=pd.to_numeric(df[col],errors="coerce")
             elif key=="idmc_gidd":
                 for col in ("anio","nuevos_desplazamientos",
                             "personas_desplazadas_fin_anio"):
