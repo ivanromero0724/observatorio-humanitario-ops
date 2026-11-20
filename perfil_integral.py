@@ -16,6 +16,7 @@ from graficos import rank_bars, trend
 from panel_coe import card, table_card
 from tarjetas_resumen import metric_strip
 from detalle_riesgo import ACCESS_PILLARS, ACCESS_INDICATORS
+from pin_utils import intersectoral_pin, sectoral_pin
 
 PAHO_BLUE="#009BDA"
 ORANGE="#F36B32"
@@ -79,17 +80,13 @@ def _un_latest(un, group):
 
 
 def _pin_latest(needs):
-    """Una sola estimación intersectorial sin duplicar año, categoría o fuente."""
-    n=valid_needs(needs)
+    """La misma estimación PiN intersectorial que en la vista regional."""
+    n = intersectoral_pin(needs)
     if n.empty:
         return None
-    n=n.copy()
-    n["anio"]=_year(n)
-    n=n[n["anio"].notna()]
-    # Si una misma referencia publica dos cifras distintas, se considera ambigua.
-    n=n[~n.duplicated(["iso3","anio"],keep=False)]
-    n=n.dropna(subset=["population"]).sort_values("anio")
-    return None if n.empty else n.iloc[-1]
+    n = n.sort_values("anio")
+    return n.iloc[-1]
+
 
 
 def _data_note(message):
@@ -296,18 +293,22 @@ def _needs(D,chosen):
             else:
                 st.metric("PiN · "+str(top["anio"]),_number(top["population"]))
                 st.caption("No sumar PiN entre sectores o grupos de población.")
-            if not needs.empty:
-                sector=needs[(needs["population_status"]=="INN")&
-                    (needs["sector_code"].astype(str).str.lower()!="intersectoral")].copy()
-                if not sector.empty:
-                    sector["year"]=_year(sector)
-                    yr=sector["year"].max()
-                    sector=sector[sector["year"]==yr].copy()
-                    sector=sector.sort_values("population",ascending=False)
-                    st.caption(f"Necesidades sectoriales publicadas ({yr}); pueden superponerse.")
-                    table(sector.head(5),height=174,
-                          columns=["sector_name","population"],
-                          labels={"sector_name":"Sector","population":"Personas"})
+            sector = sectoral_pin(needs)
+            if not sector.empty:
+                yr = int(sector["anio"].max())
+                sector = sector[sector["anio"].eq(yr)].sort_values(
+                    "population", ascending=False)
+                st.caption(
+                    f"PiN por sector ({yr}), {len(sector)} sectores. "
+                    "Las necesidades se superponen y no se suman. "
+                    + ("El total intersectorial es de otro año."
+                       if top is not None and int(top["anio"]) != yr
+                       else "Corresponde al mismo año del PiN general."
+                       if top is not None else "Sin total intersectorial comparable.")
+                )
+                table(sector, height=174,
+                      columns=["sector", "population"],
+                      labels={"sector": "Sector", "population": "Personas"})
     with right:
         with card("Seguridad alimentaria · IPC",
                   "Fases individuales de la evaluación actual más reciente.",
