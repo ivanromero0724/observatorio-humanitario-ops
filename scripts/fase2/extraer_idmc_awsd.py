@@ -24,6 +24,8 @@ META=ROOT/"docs/fase2/monitoreo_idmc_awsd.json"
 CATALOG=ROOT/"data/catalogos/paises_americas.csv"
 GIDD=DATA/"idmc_gidd_conflicto_pais_anio.csv"
 AWSD=DATA/"awsd_seguridad_pais_anio.csv"
+AWSD_TYPES=DATA/"awsd_tipos_pais_anio.csv"
+IDU=DATA/"idmc_idu_pais_mes.csv"
 S=requests.Session()
 S.headers.update({"Accept":"application/json","User-Agent":"OPS-Observatorio-Humanitario/1.0"})
 BASE="https://helix-tools-api.idmcdb.org/external-api/"
@@ -196,7 +198,29 @@ def awsd(token,cat,stamp):
     write_csv(AWSD,["iso3","anio","incidentes","trabajadores_muertos",
                     "trabajadores_heridos","trabajadores_secuestrados",
                     "trabajadores_afectados","fecha_extraccion_utc"],rows)
-    return {"estado":"PUBLICADO","filas":len(rows),
+    # Un solo tipo principal por incidente, sin publicar identificadores.
+    by_type={}
+    for (iso,year),items in agg.items():
+        for row in items:
+            method=str(row.get("means_of_attack_description") or
+                       row.get("means_of_attack") or "No especificado").strip()
+            method=method[:85] or "No especificado"
+            by_type.setdefault((iso,year,method),[]).append(row)
+    typed=[]
+    for (iso,year,method),items in sorted(by_type.items()):
+        rec={"iso3":iso,"anio":year,"tipo_ataque":method,
+             "incidentes":len(items),"fecha_extraccion_utc":stamp}
+        for key,outkey in fields.items():
+            vals=[as_nonnegative(x.get(key)) for x in items]
+            rec[outkey]=(pretty_number(float(sum(x for x in vals if x is not None)))
+                         if all(x is not None for x in vals) else "")
+        typed.append(rec)
+    assert sum(x["incidentes"] for x in typed)==sum(x["incidentes"] for x in rows)
+    write_csv(AWSD_TYPES,["iso3","anio","tipo_ataque","incidentes",
+              "trabajadores_muertos","trabajadores_heridos",
+              "trabajadores_secuestrados","trabajadores_afectados",
+              "fecha_extraccion_utc"],typed)
+    return {"estado":"PUBLICADO","filas":len(rows),"desgloses_tipos":len(typed),
             "paises_con_registros":len({r["iso3"] for r in rows}),
             "anio_min":min(r["anio"] for r in rows),
             "anio_max":max(r["anio"] for r in rows),
