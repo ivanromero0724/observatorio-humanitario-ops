@@ -108,7 +108,25 @@ def main():
     assert pin_sector.query("iso3=='COL' and anio==2025")["population"].sum() != (
         pin_general.query("iso3=='COL' and anio==2025")["population"].iloc[0])
     # Nuevas bases IDMC y AWSD: publicar únicamente agregados seguros.
-    from observatorio_v2 import load_all
+    from observatorio_v2 import load_all, csv, _data_file_signature
+    from unittest.mock import patch
+    from tempfile import TemporaryDirectory
+    # Evitar que Streamlit conserve en caché una tabla vacía si el CSV se
+    # publica en GitHub Actions después del primer arranque del tablero.
+    with TemporaryDirectory() as tmp:
+        root=Path(tmp)
+        relative="data/observaciones/idmc_idu_pais_mes.csv"
+        source=root/relative
+        with patch("observatorio_v2.ROOT",root):
+            before=_data_file_signature()
+            assert csv(relative).empty
+            source.parent.mkdir(parents=True,exist_ok=True)
+            source.write_text("iso3,anio,mes,periodo,actualizaciones\\nCOL,2026,10,2026-10,4\\n",
+                              encoding="utf-8")
+            after=_data_file_signature()
+            assert before!=after, "No se detectó nuevo snapshot IDU"
+            assert csv(relative)["actualizaciones"].iloc[0]==4, (
+                "El CSV IDU quedó bloqueado en caché negativa")
     D=load_all()
     for key in ("idmc_gidd","idu","awsd","awsd_types"):
         assert key in D and not D[key].empty, f"Falta fuente: {key}"
