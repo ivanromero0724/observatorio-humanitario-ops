@@ -47,7 +47,7 @@ def main():
         st.caption("Prototipo de monitoreo humanitario. "
                    "Criterios y niveles de seguimiento sujetos "
                    "a validación de Laura y OPS/PHE.")
-        st.caption("Versión de interfaz: 2026-11-19 · controles 1 / 6 / 12 meses")
+        st.caption("Datos: IDMC y AWSD · controles temporales actualizados")
     header()
     if page==PAGES[0]:
         amenazas_page(D,selected,names)
@@ -59,7 +59,7 @@ def main():
         perfil_page(D,selected,names)
     quality_footer(D,selected)
     st.caption("Fuentes: OCHA HAPI/ACLED, ACAPS, ACNUR, OIM DTM, "
-      "OPS y ReliefWeb. Sin asignación automática de riesgo OPS. "
+      "IDMC, AWSD, OPS y ReliefWeb. Sin asignación automática de riesgo OPS. "
       "No implica alerta institucional ni reemplaza validación técnica.")
 
 if __name__=="__main__":
