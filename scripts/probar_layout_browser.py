@@ -193,6 +193,7 @@ def main():
             print(label,results[name],flush=True)
         # Abrir opciones que no están visibles por defecto. El objetivo es
         # comprobar que la navegación secundaria evita páginas larguísimas.
+        previous_pair = None
         for page_label, topic, expected, shot in [
             ("Amenazas y eventos", "Crisis evaluadas y acceso",
              "Tres pilares de acceso", "acaps_desglose"),
@@ -221,18 +222,23 @@ def main():
             ("Perfiles por país", "Respuesta e informes",
              "Informes humanitarios asociados al país", "perfil_informes"),
         ]:
-            page.locator('[data-testid="stSidebar"]').get_by_text(
-                page_label, exact=True).click(timeout=25000)
-            # Evitar confundir el botón del subtema con la sección homónima
-            # de la barra lateral (p. ej. "Movilidad y necesidades").
-            page.locator('[data-testid="stMainBlockContainer"]').get_by_text(
-                topic, exact=True).last.click(timeout=25000)
+            if (page_label, topic) != previous_pair:
+                page.locator('[data-testid="stSidebar"]').get_by_text(
+                    page_label, exact=True).click(timeout=25000)
+                # Entrar al subtema solo al cambiar de página/sección:
+                # volver a pulsarlo provocaba rerenders que desprendían
+                # de DOM al control secundario mientras se intentaba clicar.
+                page.locator('[data-testid="stMainBlockContainer"]').get_by_text(
+                    topic, exact=True).last.click(timeout=25000)
+                previous_pair = (page_label, topic)
             if shot in ("movilidad_gidd","movilidad_idu","movilidad_dtm"):
                 option={"movilidad_gidd":"Estimaciones anuales",
                         "movilidad_idu":"Desplazamiento reciente",
                         "movilidad_dtm":"Operaciones OIM"}[shot]
-                page.locator('[data-testid="stMainBlockContainer"]').get_by_text(
-                    option, exact=True).last.click(timeout=25000)
+                control=page.locator(".st-key-op_desplazamiento_modo")
+                control.wait_for(timeout=30000)
+                control.get_by_text(option,exact=True).last.click(
+                    timeout=25000,force=True)
             page.get_by_text(expected, exact=True).first.wait_for(timeout=50000)
             page.wait_for_timeout(900)
             if page.locator('[data-testid="stException"]').count():
