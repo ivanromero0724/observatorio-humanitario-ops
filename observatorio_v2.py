@@ -90,7 +90,6 @@ META={
     "idmc_awsd":"docs/fase2/monitoreo_idmc_awsd.json",
 }
 
-@st.cache_data(show_spinner=False)
 def csv(path:str)->pd.DataFrame:
     file=ROOT/path
     if not file.is_file():
@@ -98,15 +97,37 @@ def csv(path:str)->pd.DataFrame:
     return pd.read_csv(file,encoding="utf-8",low_memory=False,
                        dtype={"iso3":"str","asilo_iso3":"str","origen_iso3":"str"})
 
-@st.cache_data(show_spinner=False)
 def json_file(path:str)->dict:
     file=ROOT/path
     if not file.is_file():return {}
     try:return json.loads(file.read_text(encoding="utf-8"))
     except (ValueError,OSError):return {}
 
-@st.cache_data(show_spinner=False)
+def _data_file_signature()->tuple:
+    """Detectar archivos nuevos, modificados o eliminados sin caché negativa.
+
+    El repositorio recibe CSV por GitHub Actions sin cambiar el código Python.
+    Streamlit no debe reutilizar una lectura vacía anterior a la publicación.
+    """
+    paths=("data/catalogos/paises_americas.csv", *SOURCES.values(), *META.values())
+    versions=[]
+    for path in paths:
+        try:
+            stat=(ROOT/path).stat()
+            versions.append((path, stat.st_size, stat.st_mtime_ns))
+        except OSError:
+            versions.append((path, None, None))
+    return tuple(versions)
+
+
 def load_all()->dict:
+    """Versión de los datos determinada por los archivos presentes en disco."""
+    return _load_all(_data_file_signature())
+
+
+@st.cache_data(show_spinner=False)
+def _load_all(file_signature:tuple)->dict:
+    # El argumento forma parte de la clave de caché (cambia con cada snapshot).
     countries=csv("data/catalogos/paises_americas.csv")
     if countries.empty or "iso3" not in countries:
         return {"countries":pd.DataFrame()}
