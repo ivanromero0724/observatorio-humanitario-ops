@@ -1,0 +1,38 @@
+name: Diagnosticar acceso IDMC y AWSD
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/fase2/verificar_awsd_idmc.py
+      - .github/workflows/verificar_awsd_idmc.yml
+permissions:
+  contents: write
+concurrency:
+  group: diagnosticar-awsd-idmc
+  cancel-in-progress: true
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.31,<3'
+      - name: Verificar IDMC y AWSD sin mostrar credenciales
+        env:
+          IDMC_API_TOKEN: ${{ secrets.IDMC_API_TOKEN }}
+          AWSD_API_KEY: ${{ secrets.AWSD_API_KEY }}
+        run: python scripts/fase2/verificar_awsd_idmc.py
+      - name: Registrar solo metadatos de conexión
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/fase2/estado_awsd_idmc.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'ci: comprobar conexiones IDMC y AWSD [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
