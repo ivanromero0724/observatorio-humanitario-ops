@@ -22,6 +22,7 @@ from tarjetas_resumen import metric_strip
 from perfil_integral import profile_page
 from pin_utils import intersectoral_pin, sectoral_pin
 from vista_awsd_idmc import awsd_tab, gidd_tab, idu_tab
+from vista_conflict_index import acled_conflict_tab
 
 BLUE = "#009BDA"
 ORANGE = "#F36B32"
@@ -233,12 +234,15 @@ def amenazas_page(D, selected, names):
           "Violencia, crisis, seguridad humanitaria y movilidad forzada: "
           "información verificable por país.")
     topic = _subgroup("Subtema", ["Eventos de violencia",
+                                  "Índice de conflicto (ACLED)",
                                   "Crisis evaluadas y acceso",
                                   "Seguridad del personal humanitario",
                                   "Movilidad y desplazamiento"],
                       "op_amenazas_grupo")
     if topic == "Eventos de violencia":
         _event_tab(D, selected)
+    elif topic == "Índice de conflicto (ACLED)":
+        acled_conflict_tab(D, selected)
     elif topic == "Crisis evaluadas y acceso":
         _crisis_tab(D, selected)
     elif topic == "Seguridad del personal humanitario":
