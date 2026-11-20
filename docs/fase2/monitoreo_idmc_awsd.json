@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T16:32:55.835025+00:00",
+  "fecha_utc": "2026-11-20T16:34:21.579928+00:00",
   "alcance": "35 países OPS; solo agregados nacionales",
   "derechos": "IDMC: CC BY-NC-SA 3.0 IGO; AWSD: atribución a Humanitarian Outcomes",
   "awsd": {
@@ -135,6 +135,10 @@
       "BLZ": 1
     },
     "eventos_id_repetidos": 3000,
-    "figuras_numericas": 5301
+    "figuras_numericas": 5301,
+    "eventos_idu_agrupados": 16,
+    "paises_conflicto_con_registros": 5,
+    "registros_conflicto_recomendados_procesados": 76,
+    "criterio": "event_id único por país y mes de inicio; sin sumar figuras"
   }
 }
