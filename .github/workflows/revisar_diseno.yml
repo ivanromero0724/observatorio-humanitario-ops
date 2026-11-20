@@ -23,6 +23,7 @@ on:
       - ui_ops.py
       - graficos.py
       - vista_awsd_idmc.py
+      - vista_conflict_index.py
       - data/observaciones/*.csv
 permissions:
   contents: read
