@@ -18,6 +18,7 @@ from tarjetas_resumen import metric_strip
 from detalle_riesgo import ACCESS_PILLARS, ACCESS_INDICATORS
 from pin_utils import intersectoral_pin, sectoral_pin
 from vista_awsd_idmc import profile_awsd, profile_idmc
+from vista_conflict_index import profile_acled_conflict
 
 PAHO_BLUE="#009BDA"
 ORANGE="#F36B32"
@@ -488,6 +489,7 @@ def profile_page(D, selected, names):
     group=group or "Amenazas y crisis"
     if group=="Amenazas y crisis":
         _violence(D,scope)
+        profile_acled_conflict(D,scope)
         profile_awsd(D,scope)
         _acaps(D,scope)
     elif group=="Movilidad y desplazamiento":
