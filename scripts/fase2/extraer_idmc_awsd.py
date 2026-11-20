@@ -312,7 +312,8 @@ def inspect_idu(token,cat,stamp):
     iso_codes=Counter(str(row.get("iso3",""))[:4] for row in sample)
     ids=[str(row.get("event_id")) for row in sample if row.get("event_id") is not None]
     figures_valid=sum(as_nonnegative(row.get("figure")) is not None for row in sample)
-    return {"estado":"ESQUEMA_IDENTIFICADO","forma":shape,
+    return {"estado":"PUBLICADO" if idu_records else "SIN_REGISTROS",
+            "forma":shape,
             "registros":len(items),"campos_superiores":keys[:35],
             "campos_registro":sorted(items[0].keys())[:70]
                if items and isinstance(items[0],dict) else [],
