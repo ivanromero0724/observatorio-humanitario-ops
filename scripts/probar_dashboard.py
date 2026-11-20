@@ -107,6 +107,36 @@ def main():
     assert SECTOR_LABELS["HEA"]=="Salud"
     assert pin_sector.query("iso3=='COL' and anio==2025")["population"].sum() != (
         pin_general.query("iso3=='COL' and anio==2025")["population"].iloc[0])
+    # Nuevas bases IDMC y AWSD: publicar únicamente agregados seguros.
+    from observatorio_v2 import load_all
+    D=load_all()
+    for key in ("idmc_gidd","idu","awsd","awsd_types"):
+        assert key in D and not D[key].empty, f"Falta fuente: {key}"
+    gidd=D["idmc_gidd"]
+    awsd=D["awsd"]
+    typed=D["awsd_types"]
+    idu=D["idu"]
+    assert not gidd.duplicated(["iso3","anio"]).any()
+    assert not awsd.duplicated(["iso3","anio"]).any()
+    assert not typed.duplicated(["iso3","anio","tipo_ataque"]).any()
+    assert not idu.duplicated(["iso3","periodo"]).any()
+    assert len(gidd)>=100 and len(awsd)>=70 and len(idu)>=1
+    assert gidd["anio"].max()>=2025
+    assert (pd.to_numeric(awsd["incidentes"],errors="coerce")>=0).all()
+    assert (pd.to_numeric(idu["actualizaciones"],errors="coerce")>0).all()
+    # Los incidentes anuales deben ser iguales al desglose exhaustivo por tipo.
+    checktypes=typed.groupby(["iso3","anio"],as_index=False)["incidentes"].sum()
+    cmp=awsd.merge(checktypes,on=["iso3","anio"],suffixes=("_anual","_tipos"),
+                   validate="one_to_one")
+    assert len(cmp)==len(awsd)
+    assert (cmp["incidentes_anual"]==cmp["incidentes_tipos"]).all()
+    # Verificar explícitamente que no se publicaron filas individuales.
+    for forbidden in ("latitude","longitude","incident_id","event_id","details"):
+        assert forbidden not in awsd.columns and forbidden not in idu.columns
+    new_module=(ROOT/"vista_awsd_idmc.py").read_text(encoding="utf-8")
+    assert "def awsd_tab(" in new_module and "def gidd_tab(" in new_module
+    assert "def idu_tab(" in new_module
+    assert "No se suman" in new_module or "no se suman" in new_module
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
@@ -159,6 +189,12 @@ def main():
     assert "op_pin_sector_country" in operational and "op_pin_sector_year" in operational
     assert "sectoral_pin(needs)" in operational
     assert "sectoral_pin(needs)" in profile
+    assert "profile_awsd(D,scope)" in profile
+    assert "profile_idmc(D,scope)" in profile
+    assert "Seguridad del personal humanitario" in operational
+    assert "Desplazamiento reciente" in operational and "Estimaciones anuales" in operational
+    assert "Operaciones OIM" in operational
+
 
     for field in ("impacto_geografico", "personas_idp_reportadas",
                   "headcount_ratio", "funding_usd"):
