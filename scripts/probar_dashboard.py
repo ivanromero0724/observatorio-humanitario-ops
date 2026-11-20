@@ -7,7 +7,6 @@ ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
     "Amenazas y eventos",
-    "Movilidad y desplazamiento",
     "Vulnerabilidad y respuesta",
     "Perfiles por país",
 ]
@@ -165,8 +164,11 @@ def main():
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
     assert operational.index('elif topic == "Personas en necesidad"') > operational.index('def vulnerabilidad_page(')
     assert '["Refugio y asilo", "Desplazamiento interno"]' in operational
-    for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
+    for name in ("amenazas_page", "_movilidad_tab", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
+    assert '"Movilidad y desplazamiento"' in operational.split(
+        'def amenazas_page(')[1].split('def _acnur_tab(')[0]
+    assert "_movilidad_tab(D, selected)" in operational
     for label in ("Eventos de violencia", "Crisis evaluadas y acceso",
                   "Refugio y asilo", "Desplazamiento interno",
                   "Personas en necesidad", "Riesgo INFORM",
@@ -235,7 +237,7 @@ def main():
     for page in PAGES[1:]:
         at.sidebar.radio[0].set_value(page).run()
         check(at,page)
-    # Regresión: las cuatro páginas deben soportar países con cobertura limitada.
+    # Regresión: las tres páginas principales deben soportar países con cobertura limitada.
     at.sidebar.selectbox[0].set_value("Caribe").run()
     at.sidebar.selectbox[1].set_value("ATG").run()
     for page in PAGES:
