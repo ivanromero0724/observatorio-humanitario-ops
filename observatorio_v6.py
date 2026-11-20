@@ -1,7 +1,7 @@
 """Observatorio OPS/OMS · organización funcional definida por Laura.
 
-Cuatro vistas de datos integrados: amenazas, movilidad, vulnerabilidad/respuesta
- y fichas nacionales. Sin categorías vacías ni niveles OPS no validados.
+Tres vistas principales: amenazas (incluye movilidad y desplazamiento),
+vulnerabilidad/respuesta y fichas nacionales. Sin niveles OPS no validados.
 """
 from __future__ import annotations
 import streamlit as st
@@ -9,11 +9,10 @@ import streamlit as st
 from observatorio_v2 import load_all
 from observatorio_v5 import quality_footer
 from estilo_coe import STYLE, header
-from paginas_operativas import amenazas_page, movilidad_page, vulnerabilidad_page, perfil_page
+from paginas_operativas import amenazas_page, vulnerabilidad_page, perfil_page
 
 PAGES=[
     "Amenazas y eventos",
-    "Movilidad y desplazamiento",
     "Vulnerabilidad y respuesta",
     "Perfiles por país",
 ]
@@ -52,8 +51,6 @@ def main():
     if page==PAGES[0]:
         amenazas_page(D,selected,names)
     elif page==PAGES[1]:
-        movilidad_page(D,selected,names)
-    elif page==PAGES[2]:
         vulnerabilidad_page(D,selected,names)
     else:
         perfil_page(D,selected,names)
