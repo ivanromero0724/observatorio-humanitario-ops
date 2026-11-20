@@ -21,6 +21,7 @@ from detalle_riesgo import risk_page, acaps_detail
 from tarjetas_resumen import metric_strip
 from perfil_integral import profile_page
 from pin_utils import intersectoral_pin, sectoral_pin
+from vista_awsd_idmc import awsd_tab, gidd_tab, idu_tab
 
 BLUE = "#009BDA"
 ORANGE = "#F36B32"
@@ -230,12 +231,16 @@ def _subgroup(label, values, key):
 def amenazas_page(D, selected, names):
     title("01 / AMENAZAS Y EVENTOS", "Amenazas y eventos humanitarios",
           "Eventos de violencia y contexto de crisis: información verificable por país.")
-    topic = _subgroup("Subtema", ["Eventos de violencia", "Crisis evaluadas y acceso"],
+    topic = _subgroup("Subtema", ["Eventos de violencia",
+                                  "Crisis evaluadas y acceso",
+                                  "Seguridad del personal humanitario"],
                       "op_amenazas_grupo")
     if topic == "Eventos de violencia":
         _event_tab(D, selected)
-    else:
+    elif topic == "Crisis evaluadas y acceso":
         _crisis_tab(D, selected)
+    else:
+        awsd_tab(D, selected)
 
 
 def _acnur_tab(D, selected):
@@ -450,14 +455,22 @@ def _pin_tab(D, selected):
 
 def movilidad_page(D, selected, names):
     title("02 / MOVILIDAD Y NECESIDADES", "Movilidad y necesidades humanitarias",
-          "Refugio y asilo, desplazamiento por operación y estimaciones de necesidades.")
+          "Refugio, desplazamiento interno IDMC/OIM y necesidades humanitarias.")
     topic = _subgroup("Subtema",
                       ["Refugio y asilo", "Desplazamiento interno", "Personas en necesidad"],
                       "op_movilidad_grupo")
     if topic == "Refugio y asilo":
         _acnur_tab(D, selected)
     elif topic == "Desplazamiento interno":
-        _dtm_tab(D, selected)
+        mode = _subgroup("Fuente de desplazamiento",
+            ["Estimaciones anuales", "Desplazamiento reciente", "Operaciones OIM"],
+            "op_desplazamiento_modo")
+        if mode == "Estimaciones anuales":
+            gidd_tab(D, selected)
+        elif mode == "Desplazamiento reciente":
+            idu_tab(D, selected)
+        else:
+            _dtm_tab(D, selected)
     else:
         _pin_tab(D, selected)
 
