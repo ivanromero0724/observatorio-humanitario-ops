@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T15:44:07.248196+00:00",
+  "fecha_utc": "2026-11-20T15:45:45.667857+00:00",
   "proposito": "Prueba de conexiones, sin microdatos ni credenciales",
   "IDMC": {
     "fuente": "IDMC",
@@ -152,48 +152,64 @@
   "AWSD": {
     "fuente": "AWSD",
     "secreto_configurado": true,
-    "intentos": {
-      "query_key": {
-        "http": 200,
-        "content_type": "text/html",
-        "redirect": false,
-        "bytes_primera_muestra": 15071,
-        "limite_muestra_alcanzado": false,
-        "estado": "HTML_NO_ES_API"
-      },
-      "query_api_key": {
-        "http": 200,
-        "content_type": "text/html",
-        "redirect": false,
-        "bytes_primera_muestra": 15087,
-        "limite_muestra_alcanzado": false,
-        "estado": "HTML_NO_ES_API"
-      },
-      "query_apikey": {
-        "http": 200,
-        "content_type": "text/html",
-        "redirect": false,
-        "bytes_primera_muestra": 15083,
-        "limite_muestra_alcanzado": false,
-        "estado": "HTML_NO_ES_API"
-      },
-      "header_x_api_key": {
-        "http": 200,
-        "content_type": "text/html",
-        "redirect": false,
-        "bytes_primera_muestra": 14841,
-        "limite_muestra_alcanzado": false,
-        "estado": "HTML_NO_ES_API"
-      },
-      "header_bearer": {
-        "http": 429,
-        "content_type": "text/html",
-        "redirect": false,
-        "bytes_primera_muestra": 162,
-        "limite_muestra_alcanzado": false,
-        "estado": "HTML_NO_ES_API"
-      }
+    "prueba": {
+      "http": 200,
+      "content_type": "application/json",
+      "redirect": false,
+      "bytes_primera_muestra": 1075,
+      "limite_muestra_alcanzado": false,
+      "estado": "JSON_VALIDO",
+      "json_forma": "list",
+      "registros_muestra": 1,
+      "campos_registro": [
+        "actor_name",
+        "actor_type",
+        "attack_context",
+        "attack_context_description",
+        "city",
+        "country",
+        "country_code",
+        "day",
+        "details",
+        "district",
+        "gender_female",
+        "gender_male",
+        "gender_unknown",
+        "ifrc_icrc",
+        "incident_id",
+        "ingo",
+        "internationals_detained",
+        "internationals_kidnapped",
+        "internationals_killed",
+        "internationals_wounded",
+        "latitude",
+        "location",
+        "location_description",
+        "longitude",
+        "means_of_attack",
+        "means_of_attack_description",
+        "month",
+        "motive",
+        "nationals_detained",
+        "nationals_kidnapped",
+        "nationals_killed",
+        "nationals_wounded",
+        "nngo",
+        "nrcs",
+        "other",
+        "region",
+        "source",
+        "total_affected",
+        "total_internationals",
+        "total_kidnapped",
+        "total_killed",
+        "total_nationals",
+        "total_wounded",
+        "un",
+        "verified",
+        "year"
+      ]
     },
-    "estado": "LIMITADO_429"
+    "estado": "CONECTADO"
   }
 }
