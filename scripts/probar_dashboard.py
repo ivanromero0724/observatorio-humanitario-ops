@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 APP=ROOT/"app.py"
 PAGES=[
     "Amenazas y eventos",
-    "Movilidad y necesidades",
+    "Movilidad y desplazamiento",
     "Vulnerabilidad y respuesta",
     "Perfiles por país",
 ]
@@ -136,8 +136,17 @@ def main():
     new_module=(ROOT/"vista_awsd_idmc.py").read_text(encoding="utf-8")
     assert "def awsd_tab(" in new_module and "def gidd_tab(" in new_module
     assert "def idu_tab(" in new_module
+    assert 'key="op_idu_lookback"' in new_module
+    assert 'options=[1,3,6,12],value=6' in new_module
     assert "No se suman" in new_module or "no se suman" in new_module
+    # La ventana IDU de 6 meses conserva eventos válidos incluso si
+    # el mes más reciente tiene información para muy pocos países.
+    six_start=str(pd.Period(idu["periodo"].max(),freq="M")-5)
+    recent=idu[idu["periodo"].astype(str).between(six_start,idu["periodo"].max())]
+    assert recent["actualizaciones"].sum()>0
     operational=(ROOT/"paginas_operativas.py").read_text(encoding="utf-8")
+    assert operational.index('elif topic == "Personas en necesidad"') > operational.index('def vulnerabilidad_page(')
+    assert '["Refugio y asilo", "Desplazamiento interno"]' in operational
     for name in ("amenazas_page", "movilidad_page", "vulnerabilidad_page", "perfil_page"):
         assert f"def {name}(" in operational
     for label in ("Eventos de violencia", "Crisis evaluadas y acceso",
@@ -154,7 +163,7 @@ def main():
     assert "st.tabs(" not in operational
     assert "st.segmented_control(" in operational
     profile=(ROOT/"perfil_integral.py").read_text(encoding="utf-8")
-    for label in ("Amenazas y crisis","Movilidad y necesidades",
+    for label in ("Amenazas y crisis","Movilidad y desplazamiento",
                   "Riesgo y vulnerabilidad","Respuesta e informes",
                   "Crisis humanitarias evaluadas"):
         assert label in profile
