@@ -192,47 +192,92 @@ def gidd_tab(D, selected):
        "Las estimaciones se someten a validación y pueden actualizarse retrospectivamente.")
 
 def idu_tab(D, selected):
-    """Actualizaciones preliminares; solo agregados aprobados para publicación."""
-    n=_data(D,"idu",selected)
+    """Actualizaciones IDMC IDU de conflicto, por ventana de inicio del evento."""
     meta=_status(D).get("idu",{})
-    if n.empty:
-        st.info("La conexión de IDMC IDU está verificada. "
-                "El archivo mundial de actualizaciones recientes está en "
-                "validación metodológica antes de publicar agregados.")
+    all_idu=D.get("idu",pd.DataFrame())
+    if all_idu is None or all_idu.empty:
+        st.info("No se han cargado datos agregados IDMC IDU en el tablero. "
+                "Verifica que la versión desplegada tenga la última extracción.")
         st.caption(f"Estado de extracción: {meta.get('estado','sin procesamiento')}. "
-                   "Las cifras IDU son preliminares y no deben mezclarse "
-                   "con las estimaciones anuales GIDD.")
+                   "Las cifras IDU son preliminares.")
         return
+
     names=_names(D)
-    months=sorted(n["periodo"].dropna().unique(),reverse=True)
-    chosen=st.selectbox("Mes de desplazamientos reportados",months,
-                       key="op_idu_month",width="stretch")
-    data=n[n["periodo"].eq(chosen)].copy()
-    data["pais"]=data["iso3"].map(names).fillna(data["iso3"])
-    metric_strip([(fmt(data["actualizaciones"].sum()),"EVENTOS IDU",
-                   "Informes preliminares"),
-                  (fmt(data["iso3"].nunique()),"PAÍSES CON ACTUALIZACIONES",
-                   "No implica cobertura completa")])
-    st.caption("IDMC IDU · eventos de conflicto identificados en la "
-       "descarga de actualizaciones de los últimos 180 días. "
-       "El mes corresponde a la fecha reportada de inicio del evento; "
-       "no necesariamente a su fecha de publicación. Cada evento se cuenta "
-       "una sola vez por país y mes. No se suman cifras de desplazamiento "
-       "porque pueden existir varias estimaciones y revisiones del mismo evento.")
+    n=_data(D,"idu",selected)
+    if n.empty:
+        available=sorted(all_idu["iso3"].dropna().unique(),
+                         key=lambda iso:names.get(iso,iso))
+        st.info("No hay eventos de conflicto/violencia IDMC IDU publicados para "
+                "los países seleccionados. Esto no significa ausencia de desplazamientos.")
+        st.caption("Países con registros en esta extracción: "
+                   + ", ".join(names.get(iso,iso) for iso in available)
+                   + ". Selecciona uno de ellos o amplía el ámbito.")
+        return
+
+    n=n.dropna(subset=["periodo","actualizaciones"]).copy()
+    n["periodo"]=n["periodo"].astype(str)
+    n["actualizaciones"]=pd.to_numeric(n["actualizaciones"],errors="coerce")
+    n=n.dropna(subset=["actualizaciones"])
+    if n.empty:
+        info_missing("eventos IDU con periodos válidos")
+        return
+
+    latest=pd.Period(n["periodo"].max(),freq="M")
+    months=st.select_slider(
+        "Meses de inicio de eventos",options=[1,3,6,12],value=6,
+        format_func=lambda v: f"{v} mes" if v==1 else f"{v} meses",
+        key="op_idu_lookback",
+        help="Ventana relativa al último mes de inicio registrado en el ámbito; "
+             "no equivale a la fecha de publicación.")
+    earliest=str(latest-(months-1))
+    last=str(latest)
+    scope=n[n["periodo"].between(earliest,last)].copy()
+    if scope.empty:
+        info_missing("eventos IDU para la ventana consultada")
+        return
+    by_country=scope.groupby("iso3",as_index=False).agg(
+        actualizaciones=("actualizaciones","sum"),
+        meses_reportados=("periodo","nunique"),
+        ultimo_mes=("periodo","max"))
+    by_country["pais"]=by_country["iso3"].map(names).fillna(by_country["iso3"])
+    by_country=by_country.sort_values("actualizaciones",ascending=False)
+
+    period=f"{earliest} a {last}"
+    metric_strip([
+        (fmt(by_country["actualizaciones"].sum()),"EVENTOS IDU",
+         "Eventos identificados en la ventana"),
+        (fmt(by_country["iso3"].nunique()),"PAÍSES CON REGISTROS",
+         "Sin asumir cobertura completa"),
+        (last,"ÚLTIMO MES REPORTADO","Inicio del evento"),
+    ])
+    st.caption(
+        f"IDMC IDU · conflicto y violencia · meses de inicio {period}. "
+        "Fuente: archivo de actualizaciones de los últimos 180 días, "
+        "que también puede incluir eventos de inicio anterior. "
+        "Se cuentan eventos únicos por país y mes, no personas desplazadas. "
+        "Las ausencias no equivalen a cero; la serie no es exhaustiva ni "
+        "directamente comparable con las estimaciones anuales GIDD."
+    )
     l,r=st.columns(2,gap="medium")
     with l:
-        with card("Eventos IDU por país",chosen,
+        with card("Eventos IDU por país",period,
                   "IDMC IDU · preliminar",height=H):
-            pa_map(_map_frame(D,selected,data,"actualizaciones"),
+            pa_map(_map_frame(D,selected,by_country,"actualizaciones"),
                    "events","Eventos IDU",height=366)
     with r:
-        with card("Países con eventos IDU",chosen,
+        with card("Países con eventos IDU",period,
                   "IDMC IDU · preliminar",height=H):
-            plot(rank_bars(data,label="pais",value="actualizaciones",
+            plot(rank_bars(by_country,label="pais",value="actualizaciones",
                            limit=13,formats=".0f",units="Eventos IDU"),height=366)
+    with st.expander("Ver periodos reportados por país"):
+        table(by_country.sort_values("pais"),height=325,
+              columns=["pais","actualizaciones","meses_reportados","ultimo_mes"],
+              labels={"pais":"País","actualizaciones":"Eventos IDU",
+                      "meses_reportados":"Meses con registros",
+                      "ultimo_mes":"Último mes de inicio"})
     st.caption("Fuente: IDMC, Internal Displacement Updates (IDU). "
-               "Registros preliminares sujetos a revisión; no sumarlos "
-               "a GIDD ni a cifras de OIM DTM.")
+               "Registros preliminares sujetos a revisión; no sumar con GIDD "
+               "ni con las cifras OIM DTM.")
 
 def profile_awsd(D, selected):
     n=_data(D,"awsd",selected)
