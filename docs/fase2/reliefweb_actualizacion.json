@@ -1,63 +1,63 @@
 {
-  "fecha_utc": "2026-11-16T22:27:54.320409+00:00",
-  "desde_utc": "2026-08-18T22:27:54+00:00",
+  "fecha_utc": "2026-11-24T00:15:37.180711+00:00",
+  "desde_utc": "2026-08-26T00:15:37+00:00",
   "ventana_dias": 90,
   "paises_evaluados": 35,
   "paises_completos": 35,
-  "filas_pais_reporte": 1696,
-  "reportes_unicos": 879,
+  "filas_pais_reporte": 1692,
+  "reportes_unicos": 851,
   "metodologia": "Todos los reportes de 90 días asociados al país, con paginación exhaustiva. Un reporte regional puede aparecer para varios países; no son eventos ni totales de crisis.",
   "datos_guardados": "Solo metadatos enlazados a ReliefWeb, sin cuerpos o adjuntos",
   "detalle": [
     {
       "iso3": "CAN",
       "estado": "COMPLETO",
-      "reportes": 18
+      "reportes": 19
     },
     {
       "iso3": "USA",
       "estado": "COMPLETO",
-      "reportes": 32
+      "reportes": 37
     },
     {
       "iso3": "MEX",
       "estado": "COMPLETO",
-      "reportes": 56
+      "reportes": 62
     },
     {
       "iso3": "BLZ",
       "estado": "COMPLETO",
-      "reportes": 18
+      "reportes": 17
     },
     {
       "iso3": "CRI",
       "estado": "COMPLETO",
-      "reportes": 33
+      "reportes": 32
     },
     {
       "iso3": "SLV",
       "estado": "COMPLETO",
-      "reportes": 60
+      "reportes": 64
     },
     {
       "iso3": "GTM",
       "estado": "COMPLETO",
-      "reportes": 74
+      "reportes": 84
     },
     {
       "iso3": "HND",
       "estado": "COMPLETO",
-      "reportes": 80
+      "reportes": 78
     },
     {
       "iso3": "NIC",
       "estado": "COMPLETO",
-      "reportes": 15
+      "reportes": 14
     },
     {
       "iso3": "PAN",
       "estado": "COMPLETO",
-      "reportes": 118
+      "reportes": 121
     },
     {
       "iso3": "ATG",
@@ -72,22 +72,22 @@
     {
       "iso3": "BRB",
       "estado": "COMPLETO",
-      "reportes": 7
+      "reportes": 5
     },
     {
       "iso3": "CUB",
       "estado": "COMPLETO",
-      "reportes": 53
+      "reportes": 54
     },
     {
       "iso3": "DMA",
       "estado": "COMPLETO",
-      "reportes": 6
+      "reportes": 8
     },
     {
       "iso3": "DOM",
       "estado": "COMPLETO",
-      "reportes": 42
+      "reportes": 39
     },
     {
       "iso3": "GRD",
@@ -97,12 +97,12 @@
     {
       "iso3": "HTI",
       "estado": "COMPLETO",
-      "reportes": 228
+      "reportes": 241
     },
     {
       "iso3": "JAM",
       "estado": "COMPLETO",
-      "reportes": 20
+      "reportes": 21
     },
     {
       "iso3": "KNA",
@@ -112,7 +112,7 @@
     {
       "iso3": "LCA",
       "estado": "COMPLETO",
-      "reportes": 14
+      "reportes": 16
     },
     {
       "iso3": "VCT",
@@ -127,62 +127,62 @@
     {
       "iso3": "ARG",
       "estado": "COMPLETO",
-      "reportes": 24
+      "reportes": 26
     },
     {
       "iso3": "BOL",
       "estado": "COMPLETO",
-      "reportes": 29
+      "reportes": 32
     },
     {
       "iso3": "BRA",
       "estado": "COMPLETO",
-      "reportes": 43
+      "reportes": 46
     },
     {
       "iso3": "CHL",
       "estado": "COMPLETO",
-      "reportes": 35
+      "reportes": 31
     },
     {
       "iso3": "COL",
       "estado": "COMPLETO",
-      "reportes": 257
+      "reportes": 222
     },
     {
       "iso3": "ECU",
       "estado": "COMPLETO",
-      "reportes": 69
+      "reportes": 76
     },
     {
       "iso3": "GUY",
       "estado": "COMPLETO",
-      "reportes": 8
+      "reportes": 7
     },
     {
       "iso3": "PRY",
       "estado": "COMPLETO",
-      "reportes": 18
+      "reportes": 17
     },
     {
       "iso3": "PER",
       "estado": "COMPLETO",
-      "reportes": 77
+      "reportes": 72
     },
     {
       "iso3": "SUR",
       "estado": "COMPLETO",
-      "reportes": 10
+      "reportes": 11
     },
     {
       "iso3": "URY",
       "estado": "COMPLETO",
-      "reportes": 10
+      "reportes": 12
     },
     {
       "iso3": "VEN",
       "estado": "COMPLETO",
-      "reportes": 195
+      "reportes": 181
     }
   ]
 }
