@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-20T16:40:29.073106+00:00",
+  "fecha_utc": "2026-11-24T00:48:40.844749+00:00",
   "alcance": "35 países OPS; solo agregados nacionales",
   "derechos": "IDMC: CC BY-NC-SA 3.0 IGO; AWSD: atribución a Humanitarian Outcomes",
   "awsd": {
@@ -26,7 +26,7 @@
   "idu": {
     "estado": "PUBLICADO",
     "forma": "list",
-    "registros": 5301,
+    "registros": 5216,
     "campos_superiores": [],
     "campos_registro": [
       "category",
@@ -67,57 +67,57 @@
     ],
     "categorias": {
       "displacement_type": {
-        "Disaster": 3564,
-        "Conflict": 1737
+        "Disaster": 3518,
+        "Conflict": 1698
       },
       "category": {
-        "Weather related": 3365,
-        "None": 1737,
+        "Weather related": 3320,
+        "None": 1698,
         "Geophysical": 165,
-        "Mixed disasters": 34
+        "Mixed disasters": 33
       },
       "type": {
-        "Flood": 1168,
-        "Storm": 992,
-        "International armed conflict (IAC)": 696,
+        "Flood": 1138,
+        "Storm": 983,
+        "International armed conflict (IAC)": 693,
         "Drought": 583,
-        "Non-International armed conflict (NIAC)": 552,
-        "Wildfire": 458,
+        "Non-International armed conflict (NIAC)": 521,
+        "Wildfire": 457,
         "Unclear/Unknown": 280,
-        "Other situations of violence (OSV)": 209,
-        "Mass Movement": 169,
+        "Other situations of violence (OSV)": 204,
+        "Mass Movement": 167,
         "Earthquake": 129,
-        "Mixed disasters": 34,
-        "Volcanic activity": 17
+        "Mixed disasters": 33,
+        "Volcanic activity": 15
       },
       "displacement_occurred": {
-        "Displacement without preventive evacuations reported": 3098,
-        "None": 2104,
+        "Displacement without preventive evacuations reported": 3044,
+        "None": 2073,
         "Displacement reporting preventive evacuations": 99
       },
       "qualifier": {
-        "total": 4509,
-        "more than or equal to": 540,
-        "approximately": 238,
+        "total": 4433,
+        "more than or equal to": 532,
+        "approximately": 237,
         "less than or equal to": 14
       },
       "role": {
-        "Recommended figure": 4732,
-        "Triangulation": 569
+        "Recommended figure": 4649,
+        "Triangulation": 567
       },
       "year": {
-        "2026": 5299,
+        "2026": 5214,
         "2011": 1,
         "2010": 1
       }
     },
     "iso3_35_paises": {
-      "MEX": 57,
+      "MEX": 58,
       "ARG": 59,
       "USA": 141,
       "BRA": 386,
-      "HTI": 60,
-      "PER": 516,
+      "HTI": 59,
+      "PER": 505,
       "PRY": 2,
       "URY": 11,
       "PAN": 1,
@@ -130,15 +130,15 @@
       "CRI": 1,
       "COL": 14,
       "CAN": 25,
-      "GTM": 6,
+      "GTM": 5,
       "SLV": 10,
       "BLZ": 1
     },
-    "eventos_id_repetidos": 3000,
-    "figuras_numericas": 5301,
-    "eventos_idu_agrupados": 16,
-    "paises_conflicto_con_registros": 5,
-    "registros_conflicto_recomendados_procesados": 76,
+    "eventos_id_repetidos": 2968,
+    "figuras_numericas": 5216,
+    "eventos_idu_agrupados": 14,
+    "paises_conflicto_con_registros": 4,
+    "registros_conflicto_recomendados_procesados": 72,
     "criterio": "event_id único por país y mes de inicio; sin sumar figuras"
   }
 }
